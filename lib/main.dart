@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'MixCosechas App',
       debugShowCheckedModeBanner: false,
       theme:AppTheme().theme(),
-      home: LoginApp()
+      home: const LoginApp()
     );
   }
 }

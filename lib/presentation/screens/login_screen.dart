@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'registration_scren.dart';
 
-void main() => runApp(LoginApp());
+void main() => runApp(const LoginApp());
 
 class LoginApp extends StatelessWidget {
+  const LoginApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -72,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Correo electronico',
                       contentPadding: EdgeInsets.all(12),
+                      labelStyle:TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -83,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Contraseña',
                       contentPadding: const EdgeInsets.all(12),
+                      labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
