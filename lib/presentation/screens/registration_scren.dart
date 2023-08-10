@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-class RegistrationPage extends StatelessWidget {
-  const RegistrationPage({super.key});
+class RegistrationScreen extends StatelessWidget {
+  const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //ToDo: Hacer registro de usuario
     return const RegisterPage();
   }
 }
@@ -47,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 26,
-                      color: Color(0XFF35424A)
+                      //color: Color(0XFF35424A)
                     ),
                   ),
                 ),

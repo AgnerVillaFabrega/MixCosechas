@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'registration_scren.dart';
+import 'package:mixcosechas_app/presentation/screens/registration_scren.dart';
 
-void main() => runApp(const LoginApp());
-
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 26,
-                      color: Color(0XFF35424A)
+                      //color: Color(0XFF35424A)
                     ),
                   ),
                 ),
@@ -123,7 +121,7 @@ class _RegistrarseTextButtom extends StatelessWidget {
         // Navegar a la pantalla de registro
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RegistrationPage()),
+          MaterialPageRoute(builder: (context) => const RegistrationScreen()),
         );
       },
       child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600),),
@@ -165,4 +163,3 @@ class _IniciarSesionButtom extends StatelessWidget {
     );
   }
 }
-

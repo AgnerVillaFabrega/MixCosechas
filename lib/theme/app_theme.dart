@@ -23,6 +23,9 @@ class AppTheme {
       fontFamily: 'Asap',
       useMaterial3: true,
       colorSchemeSeed: _colorTheme[selectedColor],
+      appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: _customColor), // Cambia el color de los íconos
+        ),
       //* ACTIVAR MODO OSCURO
       //brightness: Brightness.dark
     );
