@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/registration_scren.dart';
+import 'registration_clients_scren.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -121,7 +121,7 @@ class _RegistrarseTextButtom extends StatelessWidget {
         // Navegar a la pantalla de registro
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+          MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
         );
       },
       child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600),),

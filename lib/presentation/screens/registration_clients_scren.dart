@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+class RegistrationClientScreen extends StatelessWidget {
+  const RegistrationClientScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: TextField(
+                    keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       labelText: 'Nombre',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
@@ -75,6 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Identificación',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
@@ -84,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       labelText: 'Teléfono',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
@@ -93,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Correo electrónico',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),

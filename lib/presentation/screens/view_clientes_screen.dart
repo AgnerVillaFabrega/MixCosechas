@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'registration_scren.dart';
+import 'registration_clients_scren.dart';
 
 class ViewClientScreen extends StatefulWidget {
   const ViewClientScreen({super.key});
@@ -62,7 +62,7 @@ class _ViewClientScreenState extends State<ViewClientScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+                MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
               );
             },
           ),
