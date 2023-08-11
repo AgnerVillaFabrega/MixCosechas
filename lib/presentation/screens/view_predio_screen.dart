@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/registration_predio_screen.dart';
 
-class ViewPredioScreen extends StatefulWidget {
+class ViewPredioScreen extends StatelessWidget {
   const ViewPredioScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ViewPredioScreenState createState() => _ViewPredioScreenState();
+  Widget build(BuildContext context) {
+    return const PredioPage();
+  }
 }
 
-class _ViewPredioScreenState extends State<ViewPredioScreen> {
+
+class PredioPage extends StatefulWidget {
+  const PredioPage({super.key});
+  @override
+  // ignore: library_private_types_in_public_api
+  _PredioPageState createState() => _PredioPageState();
+}
+
+class _PredioPageState extends State<PredioPage> {
   List<String> clientes = [
     'El Manglar',
     'Flora Real',
@@ -44,25 +54,15 @@ class _ViewPredioScreenState extends State<ViewPredioScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Predios'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            //Todo: Logica para volver a la vista principal
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => const LoginApp()),
-            // );
-          },
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               //Todo: Logica para registrar predios
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const RegistrationScreen()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RegistrationPredioScreen()),
+              );
             },
           ),
         ],

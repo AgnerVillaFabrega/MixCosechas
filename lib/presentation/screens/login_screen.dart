@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
 import 'registration_clients_scren.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -111,24 +112,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class _RegistrarseTextButtom extends StatelessWidget {
-  const _RegistrarseTextButtom();
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        // Navegar a la pantalla de registro
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
-        );
-      },
-      child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600),),
-    );
-  }
-}
-
 class _IniciarSesionButtom extends StatelessWidget {
   const _IniciarSesionButtom();
 
@@ -140,6 +123,10 @@ class _IniciarSesionButtom extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           //ToDo Acción cuando se presiona el botón de inicio de sesión
+          Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),
@@ -160,6 +147,24 @@ class _IniciarSesionButtom extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _RegistrarseTextButtom extends StatelessWidget {
+  const _RegistrarseTextButtom();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        // Navegar a la pantalla de registro
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
+        );
+      },
+      child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600),),
     );
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/login_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/view_clientes_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/view_predio_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -50,33 +53,38 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Item 1'),
+              leading: const Icon(Icons.groups),
+              title: const Text('Clientes'),
               onTap: () {
-                // Lógica para manejar la selección del ítem
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ViewClientScreen()),
+                  );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Item 2'),
+              leading: const Icon(Icons.domain),
+              title: const Text('Predios'),
               onTap: () {
-                // Lógica para manejar la selección del ítem
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ViewPredioScreen()),
+                  );
               },
             ),
+            
+            const Divider(),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Item 3'),
-              onTap: () {
-                // Lógica para manejar la selección del ítem
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Item 4'),
-              onTap: () {
-                // Lógica para manejar la selección del ítem
-              },
-            ),
+                title: const Text('Cerrar Sesión'),
+                leading: const Icon(Icons.exit_to_app), // Icono de salida
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) =>const LoginScreen()),
+                    (route) => false, // Elimina todas las rutas anteriores
+                  );
+                },
+              ),
             // Agrega más ítems del menú aquí
           ],
         ),

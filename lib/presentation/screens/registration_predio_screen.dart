@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     items: [
                       const DropdownMenuItem<String>(
                         value: '',
-                        child: Text('Seleccione'), // O cualquier otro texto que desees
+                        child: Text('Seleccione'),
                       ),
                       ...['Antioquia','Cesar', 'Bolivar'].map((role) {
                         return DropdownMenuItem<String>(value: role, child: Text(role));
@@ -166,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     items: [
                       const DropdownMenuItem<String>(
                         value: '',
-                        child: Text('Seleccione'), // O cualquier otro texto que desees
+                        child: Text('Seleccione'),
                       ),
                       ...['Presiembra', 'Siembra'].map((role) {
                         return DropdownMenuItem<String>(value: role, child: Text(role));

@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'registration_clients_scren.dart';
 
-class ViewClientScreen extends StatefulWidget {
+class ViewClientScreen extends StatelessWidget {
   const ViewClientScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ViewClientScreenState createState() => _ViewClientScreenState();
+  Widget build(BuildContext context) {
+    return const ClientPage();
+  }
 }
 
-class _ViewClientScreenState extends State<ViewClientScreen> {
+class ClientPage extends StatefulWidget {
+  const ClientPage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _ClientPageState createState() => _ClientPageState();
+}
+
+class _ClientPageState extends State<ClientPage> {
   List<String> clientes = [
     'Carlos Ward',
     'Johnny Kelly',
@@ -46,16 +55,6 @@ class _ViewClientScreenState extends State<ViewClientScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clientes'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            //Todo: Logica para volver a la vista principal
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => const LoginApp()),
-            // );
-          },
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -76,7 +75,7 @@ class _ViewClientScreenState extends State<ViewClientScreen> {
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 227, 227, 227),
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: const Color(0xFFCFCFCF)), // Contorno de color #cfcfcf
+                border: Border.all(color: const Color(0xFFCFCFCF)),
               ),
               child: TextField(
                 onChanged: _filterClientes,
