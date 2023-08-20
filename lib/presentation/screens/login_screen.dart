@@ -35,9 +35,9 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'assets/images/MIXCOSECHAS.png',
-                  width: 230,
-                  height: 180,
+                  'assets/images/MIXCOSECHAS3.png',
+                  width: 290,
+                  height: 170,
                 ),
                 const SizedBox(height: 20),
                 Container(
