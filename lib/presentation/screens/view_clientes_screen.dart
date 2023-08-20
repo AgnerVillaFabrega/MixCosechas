@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'registration_clients_scren.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
 
 class ViewClientScreen extends StatelessWidget {
   const ViewClientScreen({super.key});
@@ -55,16 +55,10 @@ class _ClientPageState extends State<ClientPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clientes'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
-              );
-            },
-          ),
+        actions:const [
+          // Todo: despues de crear a los usuarios hay que condicionar el menu para que cambia dependendo del tipo
+          //* Ejemplo: "if (user.userType == UserType.Cliente) IconAddClientes(),"
+          IconAddClientes(),
         ],
       ),
       body: Padding(
@@ -107,3 +101,5 @@ class _ClientPageState extends State<ClientPage> {
     );
   }
 }
+
+
