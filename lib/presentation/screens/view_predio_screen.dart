@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/registration_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_add_predio.dart';
 
 class ViewPredioScreen extends StatelessWidget {
   const ViewPredioScreen({super.key});
@@ -54,17 +54,10 @@ class _PredioPageState extends State<PredioPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Predios'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              //Todo: Logica para registrar predios
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RegistrationPredioScreen()),
-              );
-            },
-          ),
+        actions:const [
+          // Todo: despues de crear a los usuarios hay que condicionar el menu para que cambia dependendo del tipo
+          //* Ejemplo: "if (user.userType == UserType.Cliente) IconAddPredio(),"
+          IconAddPredio(),
         ],
       ),
       body: Padding(

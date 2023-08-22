@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/login_screen.dart';
-import 'package:mixcosechas_app/presentation/screens/view_clientes_screen.dart';
-import 'package:mixcosechas_app/presentation/screens/view_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_clientes_menu.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_logout_menu.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,13 +13,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Inicio'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
+          children: const <Widget>[
+            DrawerHeader(
               decoration: BoxDecoration(
                 color: Color(0XFF19aa89),
               ),
@@ -52,40 +52,17 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.groups),
-              title: const Text('Clientes'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ViewClientScreen()),
-                  );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.domain),
-              title: const Text('Predios'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ViewPredioScreen()),
-                  );
-              },
-            ),
-            
-            const Divider(),
-            ListTile(
-                title: const Text('Cerrar Sesión'),
-                leading: const Icon(Icons.exit_to_app), // Icono de salida
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) =>const LoginScreen()),
-                    (route) => false, // Elimina todas las rutas anteriores
-                  );
-                },
-              ),
+            Column(
+              children: [
+                // Todo: despues de crear a los usuarios hay que condicionar el menu para que cambia dependendo del tipo
+                //* Ejemplo: "if (user.userType == UserType.Cliente) IconClientesMenu(),"
+                IconClientesMenu(),
+                IconPredioMenu(),
+                Divider(),  
+                IconLogout(),
+              ],
             // Agrega más ítems del menú aquí
+            ),
           ],
         ),
       ),
@@ -95,7 +72,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-//*Ejemplo de la clase user y de como usarla
+
+
+
+
+//!Ejemplo de la clase user y de como usarla
 // class User {
 //   final String name;
 //   final String email;
