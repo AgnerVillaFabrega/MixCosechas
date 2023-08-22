@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667116282708",
+    "project_id": "mixcosechas",
+    "storage_bucket": "mixcosechas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667116282708:android:ac1860fcea5f18f88e5ec1",
+        "android_client_info": {
+          "package_name": "com.example.mixcosechas_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667116282708-35ae3ni4hg8squs9fljglugh6ocp980o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSnx3NhBvV1vT3AUw-z-8dcgzZlKMDt9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667116282708-35ae3ni4hg8squs9fljglugh6ocp980o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/services/firebase_service.dart';
+import '../../model/clientes.dart';
 import 'registration_clients_scren.dart';
 
 class ViewClientScreen extends StatelessWidget {
@@ -14,39 +16,41 @@ class ClientPage extends StatefulWidget {
   const ClientPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
+  
   _ClientPageState createState() => _ClientPageState();
 }
 
 class _ClientPageState extends State<ClientPage> {
-  List<String> clientes = [
-    'Carlos Ward',
-    'Johnny Kelly',
-    'Martha Long',
-    'Rachel Williamson',
-    'Earl Turner',
-    'Theresa Peterson',
-    'Laureano Aviles',
-    'Angelica Sala',
-    'Orlando Baez',
-    'Irina Borras',
-    // ... Agrega más clientes aquí
-  ];
 
-  List<String> filteredClientes = [];
+
+ ServiceFirebase _serviceFirebase = ServiceFirebase();
+
+  List<Cliente> _users = [];
+  List<Cliente> _filteredClientes = [];
 
   @override
   void initState() {
     super.initState();
-    filteredClientes = clientes;
+    _getUsers();
   }
 
-  void _filterClientes(String searchText) {
+  void _getUsers() async {
+    List<Cliente> users = await _serviceFirebase.getPeople();
     setState(() {
-      filteredClientes = clientes
-          .where(
-              (cliente) => cliente.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
+      _users = users;
+      _filteredClientes = users;
+    });
+  }
+
+
+  void _filterClientes(String query) {
+    List<Cliente> filteredList = _users.where((cliente) {
+      return cliente.nombre.toLowerCase().contains(query.toLowerCase()) ||
+             cliente.id.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    setState(() {
+      _filteredClientes = filteredList;
     });
   }
 
@@ -89,11 +93,12 @@ class _ClientPageState extends State<ClientPage> {
             const SizedBox(height: 16.0),
             Expanded(
               child: ListView.separated(
-                itemCount: filteredClientes.length,
+                itemCount: _filteredClientes.length,
                 separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(filteredClientes[index]),
+                    title: Text(_filteredClientes[index].nombre),
+                    subtitle: Text(_filteredClientes[index].telefono),
                     onTap: () {
                       // Lógica para seleccionar un cliente
                     },
