@@ -22,5 +22,24 @@ class ServiceFirebase {
 
   }
 
+  Future<void> addPeople (Cliente cliente) async {
+    try {
+      await db.collection('Usuarios').add({
+        "Id":cliente.id,
+        "Nombre":cliente.nombre,
+        "Telefono":cliente.telefono,
+        "Correo":cliente.correo,
+        "Rol":cliente.rol,
+        "Password":cliente.password
+        }
+      );
+    } catch (e){
+       print("Error al agregar el cliente: $e");
+    }
+
+
+  }
+
+
 }
 
