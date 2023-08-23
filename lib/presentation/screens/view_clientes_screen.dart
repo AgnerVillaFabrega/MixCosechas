@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import '../../model/clientes.dart';
-import 'registration_clients_scren.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
 
 class ViewClientScreen extends StatelessWidget {

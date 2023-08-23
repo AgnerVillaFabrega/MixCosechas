@@ -22,6 +22,10 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isObscureConfirmPassword = true;
   String _selectedRole = '';
   //! SI EN ALGUN MOMENTO SE ENCUENTRAN ERRORES AL VALIDAR LAS CONTRASEÑAS PUEDE SER POR EL FINAL
+  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _identificacionController = TextEditingController();
+  final TextEditingController _telefonoController = TextEditingController();
+  final TextEditingController _correoController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
@@ -62,9 +66,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 20),
 
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: TextField(
+                    controller: _nombreController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       labelText: 'Nombre',
@@ -72,9 +77,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                
+                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _identificacionController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Identificación',
@@ -82,9 +89,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _telefonoController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       labelText: 'Teléfono',
@@ -92,9 +100,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _correoController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Correo electrónico',
@@ -125,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }).toList(),
                     ],
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value != 'Analista' || value != 'Agricultor') {
                         return 'Por favor, selecciona un rol';
                       }
                       return null;
@@ -174,8 +183,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
+               
                 const SizedBox(height: 20),
-                RegistrarseButtom(passwordController: _passwordController, confirmPasswordController: _confirmPasswordController),
+                RegistrarseButtom(
+                  idController: _identificacionController,
+                  nombreController: _nombreController,
+                  telefonoController: _telefonoController,
+                  correoController: _correoController,
+                  passwordController: _passwordController, 
+                  confirmPasswordController: _confirmPasswordController
+                ),
               ],
             ),
           ),
@@ -188,10 +205,23 @@ class _RegisterPageState extends State<RegisterPage> {
 class RegistrarseButtom extends StatelessWidget {
   const RegistrarseButtom({
     super.key,
+    required TextEditingController idController,
+    required TextEditingController nombreController,
+    required TextEditingController telefonoController,
+    required TextEditingController correoController,
     required TextEditingController passwordController,
     required TextEditingController confirmPasswordController,
-  }) : _passwordController = passwordController, _confirmPasswordController = confirmPasswordController;
+  }) : _identificacionController =idController,
+  _nombreController = nombreController,
+  _telefonoController =telefonoController,
+  _correoController =correoController,
+  _passwordController = passwordController, 
+  _confirmPasswordController = confirmPasswordController;
 
+  final TextEditingController _identificacionController;
+  final TextEditingController _nombreController ;
+  final TextEditingController _telefonoController ;
+  final TextEditingController _correoController ;
   final TextEditingController _passwordController;
   final TextEditingController _confirmPasswordController;
 
@@ -202,8 +232,38 @@ class RegistrarseButtom extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
         onPressed: () {
-          if (_passwordController.text == _confirmPasswordController.text) {
+          if(_identificacionController.text.toString().isNotEmpty &&
+          _nombreController.text.isNotEmpty &&
+          _telefonoController.text.isNotEmpty &&
+          _correoController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty &&
+          _confirmPasswordController.text.isNotEmpty){
+            if (_passwordController.text == _confirmPasswordController.text) {
             // Los campos de contraseña coinciden, puedes continuar con el registro
+
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Error'),
+                  content: const Text('Se registró correctamente'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+
+
+
+
+
           } else {
             // Los campos de contraseña no coinciden, muestra un mensaje de error
             showDialog(
@@ -212,6 +272,26 @@ class RegistrarseButtom extends StatelessWidget {
                 return AlertDialog(
                   title: const Text('Error'),
                   content: const Text('Las contraseñas no coinciden. Por favor, verifica.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+          }else{
+          
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Error'),
+                  content: const Text('No se permiten campos vacios.'),
                   actions: [
                     TextButton(
                       onPressed: () {
