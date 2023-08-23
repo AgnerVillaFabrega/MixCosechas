@@ -5,10 +5,7 @@ import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  //final User user; // Asegúrate de tener un objeto User disponible
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +52,7 @@ class HomeScreen extends StatelessWidget {
             Column(
               children: [
                 // Todo: despues de crear a los usuarios hay que condicionar el menu para que cambia dependendo del tipo
-                //* Ejemplo: "if (user.userType == UserType.Cliente) IconClientesMenu(),"
+                //* Ejemplo: "if (user.userType == RolType.Cliente) IconClientesMenu(),"
                 IconClientesMenu(),
                 IconPredioMenu(),
                 Divider(),  
@@ -72,14 +69,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-//!Ejemplo de la clase user y de como usarla
-// class User {
-//   final String name;
-//   final String email;
-
-//   User(this.name, this.email);
-// }

@@ -23,7 +23,7 @@ class ClientPage extends StatefulWidget {
 class _ClientPageState extends State<ClientPage> {
 
 
- ServiceFirebase _serviceFirebase = ServiceFirebase();
+final ServiceFirebase _serviceFirebase = ServiceFirebase();
 
   List<Cliente> _users = [];
   List<Cliente> _filteredClientes = [];
@@ -42,11 +42,10 @@ class _ClientPageState extends State<ClientPage> {
     });
   }
 
-
   void _filterClientes(String query) {
     List<Cliente> filteredList = _users.where((cliente) {
       return cliente.nombre.toLowerCase().contains(query.toLowerCase()) ||
-             cliente.id.toLowerCase().contains(query.toLowerCase());
+            cliente.id.toLowerCase().contains(query.toLowerCase());
     }).toList();
 
     setState(() {
@@ -92,7 +91,7 @@ class _ClientPageState extends State<ClientPage> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(_filteredClientes[index].nombre),
-                    subtitle: Text(_filteredClientes[index].telefono),
+                    subtitle: Text(_filteredClientes[index].id),
                     onTap: () {
                       // Lógica para seleccionar un cliente
                     },
