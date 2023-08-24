@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
-import 'package:mixcosechas_app/presentation/screens/login_screen.dart';
+import 'package:mixcosechas_app/theme/limpiarCampos.dart';
+import 'package:mixcosechas_app/presentation/widgets/mensaje_showdialog.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
-
-import 'home_sceen.dart';
-
 
 class RegistrationClientScreen extends StatelessWidget {
   const RegistrationClientScreen({super.key});
@@ -26,8 +24,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _isObscurePassword = true;
   bool _isObscureConfirmPassword = true;
-  //String _selectedRole = '';
-  //! SI EN ALGUN MOMENTO SE ENCUENTRAN ERRORES AL VALIDAR LAS CONTRASEÑAS PUEDE SER POR EL FINAL
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _identificacionController = TextEditingController();
   final TextEditingController _telefonoController = TextEditingController();
@@ -73,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 20),
 
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: TextField(
                     controller: _nombreController,
@@ -85,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
                     controller: _identificacionController,
@@ -96,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
                     controller: _telefonoController,
@@ -107,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
                     controller: _correoController,
@@ -190,7 +186,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-               
                 const SizedBox(height: 20),
                 RegistrarseButtom(
                   idController: _identificacionController,
@@ -212,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 class RegistrarseButtom extends StatelessWidget {
   
-  const RegistrarseButtom({
+  RegistrarseButtom({
     super.key,
     required TextEditingController idController,
     required TextEditingController nombreController,
@@ -236,14 +231,14 @@ class RegistrarseButtom extends StatelessWidget {
   final TextEditingController _rolController ;
   final TextEditingController _passwordController;
   final TextEditingController _confirmPasswordController;
-   
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-         
         onPressed: () {
           
           if(_identificacionController.text.isNotEmpty &&
@@ -254,7 +249,6 @@ class RegistrarseButtom extends StatelessWidget {
           _passwordController.text.isNotEmpty &&
           _confirmPasswordController.text.isNotEmpty){
             if (_passwordController.text == _confirmPasswordController.text) {
-            
               Cliente cliente = Cliente(id: _identificacionController.text, 
                 nombre: _nombreController.text, 
                 telefono: _telefonoController.text, 
@@ -262,49 +256,21 @@ class RegistrarseButtom extends StatelessWidget {
                 rol: _rolController.text, 
                 password: _passwordController.text
               );
-
-              ServiceFirebase _serviceFirebase = ServiceFirebase();
               _serviceFirebase.addPeople(cliente);
-              
               showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Cliente'),
-                    content: const Text('Se registró correctamente'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LoginScreen()),
-                            (route) => false,
-                          );
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
+                  return const MensajeShowDialog(title: "Tilte",message: "content");
                 },
               );
-
+              FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
+              FocusScope.of(context).unfocus();
             } else {
               // Los campos de contraseña no coinciden, muestra un mensaje de error
               showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Las contraseñas no coinciden. Por favor, verifica.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
+                  return const MensajeShowDialog(title: "Cuidado",message: "Las contraseñas no coinciden. Por favor, verificalo");
                 },
               );
             }
@@ -313,18 +279,7 @@ class RegistrarseButtom extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  title: const Text('Error'),
-                  content: const Text('No se permiten campos vacios.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                );
+                return const MensajeShowDialog(title: "OJO",message: "No puedes dejar campos vacios");
               },
             );
           }

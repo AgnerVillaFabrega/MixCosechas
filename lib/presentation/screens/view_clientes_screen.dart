@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import '../../model/clientes.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
@@ -16,17 +17,16 @@ class ClientPage extends StatefulWidget {
   const ClientPage({super.key});
 
   @override
-  
   _ClientPageState createState() => _ClientPageState();
 }
 
 class _ClientPageState extends State<ClientPage> {
 
-
-final ServiceFirebase _serviceFirebase = ServiceFirebase();
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
 
   List<Cliente> _users = [];
   List<Cliente> _filteredClientes = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -39,6 +39,7 @@ final ServiceFirebase _serviceFirebase = ServiceFirebase();
     setState(() {
       _users = users;
       _filteredClientes = users;
+      _isLoading = false;
     });
   }
 
@@ -84,7 +85,8 @@ final ServiceFirebase _serviceFirebase = ServiceFirebase();
               ),
             ),
             const SizedBox(height: 16.0),
-            Expanded(
+            _isLoading?const IndicadorCircularProgress()
+              :Expanded(
               child: ListView.separated(
                 itemCount: _filteredClientes.length,
                 separatorBuilder: (context, index) => const Divider(),
