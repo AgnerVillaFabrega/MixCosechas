@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
-import 'package:mixcosechas_app/presentation/widgets/mensaje_showdialog.dart';
+import 'package:mixcosechas_app/presentation/widgets/mensaje_show_dialog.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 
 class RegistrationClientScreen extends StatelessWidget {
