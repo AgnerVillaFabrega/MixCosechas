@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 
+import '../model/predios.dart';
+
 class ServiceFirebase {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -35,6 +37,27 @@ class ServiceFirebase {
       );
     } catch (e){
        print("Error al agregar el cliente: $e");
+    }
+
+
+  }
+
+  Future<void> addPredio (Predio predio) async {
+    try {
+      await db.collection('Predios').add({
+        "Id":predio.id,
+        "IdUsuario":predio.idUsuario,
+        "Nombre":predio.nombre,
+        "CorregimientoVereda":predio.corregimientoVereda,
+        "Departamento":predio.departamento,
+        "Municipio":predio.municipio,
+        "Cultivo":predio.cultivo,
+        "variedad":predio.variedad,
+        "edad":predio.edad
+        }
+      );
+    } catch (e){
+       print("Error al agregar el cultivo: $e");
     }
 
 

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import '../../model/predios.dart';
+import '../../services/firebase_service.dart';
+import '../widgets/mensaje_show_dialog.dart';
 
 class RegistrationPredioScreen extends StatelessWidget {
   const RegistrationPredioScreen({super.key});
@@ -18,9 +22,15 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String _selectedDeparmento = '';
-  String _selectedMunicipio = '';
-  String _selectedEdad = '';
+  
+
+  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _corregimientoVeredaController = TextEditingController();
+  final TextEditingController _departamentoController = TextEditingController();
+  final TextEditingController _municipioController = TextEditingController();
+  final TextEditingController _cultivoController = TextEditingController();
+  final TextEditingController _variedadController = TextEditingController();
+   final TextEditingController _edadController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +56,23 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: TextField(
+                    controller: _nombreController,
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration:const InputDecoration(
                       labelText: 'Nombre del predio',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _corregimientoVeredaController,
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration:const  InputDecoration(
                       labelText: 'Corregimiento/Vereda',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                     ),
@@ -71,10 +83,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: DropdownButtonFormField<String>(
-                    value: _selectedDeparmento,
+                    value: _departamentoController.text,
                     onChanged: (String? newValue) {
                       setState(() {
-                        _selectedDeparmento = newValue!;
+                        _departamentoController.text = newValue!;
                       });
                     },
                     decoration: const InputDecoration(
@@ -103,10 +115,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: DropdownButtonFormField<String>(
-                    value: _selectedMunicipio,
+                    value: _municipioController.text,
                     onChanged: (String? newValue) {
                       setState(() {
-                        _selectedMunicipio = newValue!;
+                        _municipioController.text = newValue!;
                       });
                     },
                     decoration: const InputDecoration(
@@ -130,21 +142,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _cultivoController,
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Cultivo',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: TextField(
+                    controller: _variedadController,
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration:const InputDecoration(
                       labelText: 'Variedad',
                       labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                     ),
@@ -153,10 +167,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
                   child: DropdownButtonFormField<String>(
-                    value: _selectedEdad,
+                    value: _edadController.text,
                     onChanged: (String? newValue) {
                       setState(() {
-                        _selectedEdad = newValue!;
+                        _edadController.text = newValue!;
                       });
                     },
                     decoration: const InputDecoration(
@@ -182,7 +196,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 
                 const SizedBox(height: 20),
-                const RegistrarseButtom(),
+                RegistrarseButtom(
+                  nombreController:_nombreController,
+                  corregimientoVeredaController: _corregimientoVeredaController,
+                  departamentoController: _departamentoController, 
+                  municipioController: _municipioController,
+                  cultivoController:_cultivoController, 
+                  variedadController:_variedadController, 
+                  edadController: _edadController
+                ),
               ],
             ),
           ),
@@ -193,7 +215,33 @@ class _RegisterPageState extends State<RegisterPage> {
 }
 
 class RegistrarseButtom extends StatelessWidget {
-  const RegistrarseButtom({super.key});
+ RegistrarseButtom({
+    super.key,
+    required TextEditingController nombreController,
+    required TextEditingController corregimientoVeredaController,
+    required TextEditingController departamentoController,
+    required TextEditingController municipioController,
+    required TextEditingController cultivoController,
+    required TextEditingController variedadController,
+    required TextEditingController edadController,
+  
+  }):_nombreController = nombreController,
+  _corregimientoVeredaController = corregimientoVeredaController,
+  _departamentoController = departamentoController,
+  _municipioController =municipioController,
+  _cultivoController =cultivoController,
+  _variedadController = variedadController,
+  _edadController = edadController;
+
+
+  final TextEditingController _nombreController;
+  final TextEditingController _corregimientoVeredaController;
+  final TextEditingController _departamentoController;
+  final TextEditingController _municipioController;
+  final TextEditingController _cultivoController;
+  final TextEditingController _variedadController;
+  final TextEditingController _edadController;
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
 
   @override
   Widget build(BuildContext context) {
@@ -203,6 +251,47 @@ class RegistrarseButtom extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           
+          if (_nombreController.text.isNotEmpty &&
+            _corregimientoVeredaController.text.isNotEmpty &&
+            _departamentoController.text.isNotEmpty &&
+            _municipioController.text.isNotEmpty && 
+            _cultivoController.text.isNotEmpty &&
+            _variedadController.text.isNotEmpty && 
+            _edadController.text.isNotEmpty){
+
+            var idPredio = Random().nextInt(1000000);
+            var iduser = Random().nextInt(1000000);
+
+            Predio predio = Predio(id:idPredio.toString(),
+             idUsuario: iduser.toString(),
+             nombre: _nombreController.text,
+             corregimientoVereda: _corregimientoVeredaController.text,
+             departamento: _departamentoController.text,
+             municipio: _municipioController.text,
+             cultivo: _cultivoController.text,
+             variedad: _variedadController.text,
+             edad: _edadController.text
+            );
+
+            _serviceFirebase.addPredio(predio);
+
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const MensajeShowDialog(title: "Title",message: "Se registró correctamente el predio");
+                },
+              );
+
+          }else{
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "OJO",message: "No puedes dejar campos vacios");
+              },
+            );
+
+          }
+
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),

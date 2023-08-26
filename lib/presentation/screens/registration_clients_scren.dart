@@ -264,7 +264,7 @@ class RegistrarseButtom extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return const MensajeShowDialog(title: "Tilte",message: "content");
+                  return const MensajeShowDialog(title: "Tilte",message: "Se registró el usuario correctamente");
                 },
               );
               FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
