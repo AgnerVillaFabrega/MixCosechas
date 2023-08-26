@@ -37,6 +37,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         //title: const Text('Registrarte'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: Padding(
@@ -44,8 +50,6 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-
-                //* Texto ilustrativo Opcional
                 Container(
                   alignment: const Alignment(-0.8, 0),
                   child: const Text(
@@ -68,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
+                
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: TextField(

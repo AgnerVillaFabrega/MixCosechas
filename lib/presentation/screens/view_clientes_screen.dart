@@ -1,56 +1,38 @@
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
-import 'package:mixcosechas_app/services/firebase_service.dart';
 import '../../model/clientes.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
 
-class ViewClientScreen extends StatelessWidget {
-  const ViewClientScreen({super.key});
+
+class ViewClientScreen extends StatefulWidget {
+  List<Cliente> cliente = [];
+  ViewClientScreen({super.key,required this.cliente});
 
   @override
-  Widget build(BuildContext context) {
-    return const ClientPage();
-  }
+  _ViewClientScreenState createState() => _ViewClientScreenState();
 }
 
-class ClientPage extends StatefulWidget {
-  const ClientPage({super.key});
+class _ViewClientScreenState extends State<ViewClientScreen> {
 
-  @override
-  _ClientPageState createState() => _ClientPageState();
-}
-
-class _ClientPageState extends State<ClientPage> {
-
-  final ServiceFirebase _serviceFirebase = ServiceFirebase();
-
-  List<Cliente> _users = [];
   List<Cliente> _filteredClientes = [];
-  bool _isLoading = true;
+  final bool _isLoading = false;
+  String filtro="";
 
   @override
   void initState() {
     super.initState();
-    _getUsers();
   }
 
-  void _getUsers() async {
-    List<Cliente> users = await _serviceFirebase.getPeople();
-    setState(() {
-      _users = users;
-      _filteredClientes = users;
-      _isLoading = false;
-    });
-  }
 
   void _filterClientes(String query) {
-    List<Cliente> filteredList = _users.where((cliente) {
+    List<Cliente> filteredList = widget.cliente.where((cliente) {
       return cliente.nombre.toLowerCase().contains(query.toLowerCase()) ||
             cliente.id.toLowerCase().contains(query.toLowerCase());
     }).toList();
-
+    _filteredClientes = filteredList;
     setState(() {
-      _filteredClientes = filteredList;
     });
   }
 
@@ -88,10 +70,17 @@ class _ClientPageState extends State<ClientPage> {
             _isLoading?const IndicadorCircularProgress()
               :Expanded(
               child: ListView.separated(
-                itemCount: _filteredClientes.length,
+                itemCount: _filteredClientes.isEmpty ? widget.cliente.length: _filteredClientes.length,
                 separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return _filteredClientes.isEmpty ?ListTile(
+                    title: Text(widget.cliente[index].nombre),
+                    subtitle: Text(widget.cliente[index].id),
+                    onTap: () {
+                      // Lógica para seleccionar un cliente
+                    },
+                  ):
+                  ListTile(
                     title: Text(_filteredClientes[index].nombre),
                     subtitle: Text(_filteredClientes[index].id),
                     onTap: () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/view_clientes_screen.dart';
+import '../../services/cargardatos_usuarios.dart';
 
 // ignore: camel_case_types
 class IconClientesMenu extends StatelessWidget {
@@ -15,7 +15,7 @@ class IconClientesMenu extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ViewClientScreen()),
+            MaterialPageRoute(builder: (context) => cargarDatos()),
           );
       },
     );
