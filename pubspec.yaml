@@ -41,7 +41,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/images/3135768.png
+    - assets/images/admin.png
 
   
   fonts:

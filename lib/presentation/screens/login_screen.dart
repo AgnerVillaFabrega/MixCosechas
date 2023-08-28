@@ -1,8 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import '../../model/clientes.dart';
+import '../../theme/limpiarCampos.dart';
 import '../widgets/mensaje_show_dialog.dart';
 import 'registration_clients_scren.dart';
 
@@ -138,7 +141,7 @@ class _IniciarSesionButtom extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 45),
       child: ElevatedButton(
         onPressed: () async{
-
+          
           if (!_correoController.text.contains('@')) {
             showDialog(
               context: context,
@@ -153,20 +156,31 @@ class _IniciarSesionButtom extends StatelessWidget {
                 return const MensajeShowDialog(title: "Login",message: "La contrseña debe contener al menos 6 caracteres");
               },
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
           } else {
             try {
               UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                 email: _correoController.text,
                 password: _passwordController.text,
               );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
+              if (userCredential.user != null) {
+                String uid = userCredential.user!.uid;
+                DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Usuarios').doc(uid).get();
+
+                Cliente cliente = Cliente(
+                  id: userDoc['Id'],
+                  nombre: userDoc ['Nombre'],
+                  telefono: userDoc['Telefono'],
+                  correo:userDoc['Correo'],
+                  rol:  userDoc['Rol'],
+                  password:userDoc['Password']
+                );
+                FormUtils.clearTextControllers([_correoController,_passwordController]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen(cliente:cliente)),
+                );
+              }
+              
             } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
                 // El usuario no está registrado

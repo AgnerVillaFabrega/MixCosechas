@@ -271,27 +271,30 @@ class RegistrarseButtom extends StatelessWidget {
                   },
                 );
             } else if (_passwordController.text == _confirmPasswordController.text) {
-              Cliente cliente = Cliente(id: _identificacionController.text, 
-                nombre: _nombreController.text, 
-                telefono: _telefonoController.text, 
-                correo: _correoController.text, 
-                rol: _rolController.text, 
-                password: _passwordController.text
-              );
+              
               try {
                 UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: _correoController.text,
                   password: _passwordController.text,
                 );
-                _serviceFirebase.addPeople(cliente);
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
-                  },
-                );
-                FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
-                FocusScope.of(context).unfocus();
+                if (userCredential.user != null) {
+                  Cliente cliente = Cliente(id: _identificacionController.text, 
+                    nombre: _nombreController.text, 
+                    telefono: _telefonoController.text, 
+                    correo: _correoController.text, 
+                    rol: _rolController.text, 
+                    password: _passwordController.text
+                  );
+                  _serviceFirebase.addPeople(cliente,userCredential);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
+                    },
+                  );
+                  FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
+                  FocusScope.of(context).unfocus();
+                }
               } on FirebaseException catch (e) {
                 if (e.code == 'weak-password') {
                   // Contraseña débil
