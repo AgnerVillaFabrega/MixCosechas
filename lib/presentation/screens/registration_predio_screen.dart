@@ -3,6 +3,8 @@ import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
 import '../widgets/mensaje_show_dialog.dart';
+import 'package:csv/csv.dart' as csv;
+
 
 class RegistrationPredioScreen extends StatelessWidget {
   const RegistrationPredioScreen({super.key});
@@ -15,7 +17,7 @@ class RegistrationPredioScreen extends StatelessWidget {
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
-
+  
   @override
   // ignore: library_private_types_in_public_api
   _RegisterPageState createState() => _RegisterPageState();
@@ -23,17 +25,39 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   
-
+  
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _corregimientoVeredaController = TextEditingController();
   final TextEditingController _departamentoController = TextEditingController();
   final TextEditingController _municipioController = TextEditingController();
   final TextEditingController _cultivoController = TextEditingController();
   final TextEditingController _variedadController = TextEditingController();
-   final TextEditingController _edadController = TextEditingController();
+  final TextEditingController _edadController = TextEditingController();
+
+  List<String> departamentos = [];
+
+  void cargarOpciones() async {
+
+    String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
+    List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
+    
+    Set<String> departamentosSet = Set<String>(); // Usamos un Set para evitar repeticiones
+    
+    for (var row in parsedCsv) {
+      if (row.isNotEmpty) {
+        departamentosSet.add(row[0].toString()); // Agregamos el primer elemento de la fila al Set
+      }
+    }
+    
+    setState(() {
+      departamentos = departamentosSet.toList(); // Convertimos el Set en una lista
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    cargarOpciones();
     return Scaffold(
       appBar: AppBar(
         //title: const Text('Registrar predio'),
@@ -98,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         value: '',
                         child: Text('Seleccione'),
                       ),
-                      ...['Antioquia','Cesar', 'Bolivar'].map((role) {
+                      ...departamentos.map((role) {
                         return DropdownMenuItem<String>(value: role, child: Text(role));
                       }).toList(),
                     ],
