@@ -1,0 +1,29 @@
+Usuario: Juan Pérez
+Número de identificación: 123456789
+Teléfono: 321-555-1234
+Correo electrónico: juan.perez@example.com
+Contraseña: Contraseña123
+
+Usuario: María Rodríguez
+Número de identificación: 987654321
+Teléfono: 320-555-5678
+Correo electrónico: maria.rodriguez@example.com
+Contraseña: Password456
+
+Usuario: Carlos Gómez
+Número de identificación: 456789012
+Teléfono: 3005557890
+Correo electrónico: carlos.gomez@example.com
+Contraseña: SecurePass789
+
+Usuario: Ana Martínez
+Número de identificación: 890123456
+Teléfono: 310-555-2345
+Correo electrónico: ana.martinez@example.com
+Contraseña: Secret123!
+
+Usuario: Luisa Sánchez
+Número de identificación: 567890123
+Teléfono: 350-555-6789
+Correo electrónico: luisa.sanchez@example.com
+Contraseña: Pass1234$

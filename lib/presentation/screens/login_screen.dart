@@ -1,5 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import '../../model/clientes.dart';
+import '../../theme/limpiarCampos.dart';
+import '../widgets/mensaje_show_dialog.dart';
 import 'registration_clients_scren.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -23,6 +30,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
+  final TextEditingController _correoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +72,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45),
                   child: TextField(
+                    controller: _correoController,
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0XFF35424A)
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Correo electronico',
                       contentPadding: EdgeInsets.all(12),
                       labelStyle:TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
@@ -81,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 45),
                   child: TextField(
+                    controller: _passwordController,
                     obscureText: _isObscure,
                     decoration: InputDecoration(
                       labelText: 'Contraseña',
@@ -99,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
       
                 const SizedBox(height: 20),
-                const _IniciarSesionButtom(),
+                _IniciarSesionButtom(correoController: _correoController, passwordController: _passwordController),
       
                 const SizedBox(height: 10),
                 const _RegistrarseTextButtom(),
@@ -113,7 +124,15 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _IniciarSesionButtom extends StatelessWidget {
-  const _IniciarSesionButtom();
+  const _IniciarSesionButtom({
+    required TextEditingController correoController,
+    required TextEditingController passwordController,
+  }) :
+  _correoController =correoController,
+  _passwordController = passwordController;
+
+  final TextEditingController _correoController ;
+  final TextEditingController _passwordController;
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +140,75 @@ class _IniciarSesionButtom extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 45),
       child: ElevatedButton(
-        onPressed: () {
-          //ToDo Acción cuando se presiona el botón de inicio de sesión
-          Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
+        onPressed: () async{
+          
+          if (!_correoController.text.contains('@')) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "Login",message: "Correo electronico no valido");
+              },
+            );
+          } else if (_passwordController.text.length < 6) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "Login",message: "La contrseña debe contener al menos 6 caracteres");
+              },
+            );
+          } else {
+            try {
+              UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                email: _correoController.text,
+                password: _passwordController.text,
+              );
+              if (userCredential.user != null) {
+                String uid = userCredential.user!.uid;
+                DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Usuarios').doc(uid).get();
+
+                Cliente cliente = Cliente(
+                  id: userDoc['Id'],
+                  nombre: userDoc ['Nombre'],
+                  telefono: userDoc['Telefono'],
+                  correo:userDoc['Correo'],
+                  rol:  userDoc['Rol'],
+                  password:userDoc['Password']
+                );
+                FormUtils.clearTextControllers([_correoController,_passwordController]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen(cliente:cliente)),
+                );
+              }
+              
+            } on FirebaseAuthException catch (e) {
+              if (e.code == 'user-not-found') {
+                // El usuario no está registrado
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const MensajeShowDialog(title: "Error al iniciar sesion ",message: "El usuario no esta registrado");
+                  },
+                );
+              } else if (e.code == 'wrong-password') {
+                // Contraseña incorrecta
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const MensajeShowDialog(title: "Error al iniciar sesion ",message: "Contraseña incorrecta");
+                  },
+                );
+              } else {
+                // Otro tipo de error
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const MensajeShowDialog(title: "Upss!",message: "Parece que estamos teniendo problemas, intentalo mas tarde");
+                  },
+                );
+              }
+            }
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),

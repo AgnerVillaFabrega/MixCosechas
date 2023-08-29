@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 
 import '../model/predios.dart';
@@ -17,16 +18,16 @@ class ServiceFirebase {
         clientes.add(Cliente.fromMap(data));
       });
     } catch (e){
-       print("Error al obtener la lista de clientes: $e");
+      print("Error al obtener la lista de clientes: $e");
     }
 
     return clientes;
 
   }
 
-  Future<void> addPeople (Cliente cliente) async {
+  Future<void> addPeople (Cliente cliente,UserCredential userCredential) async {
     try {
-      await db.collection('Usuarios').add({
+      await db.collection('Usuarios').doc(userCredential.user!.uid).set({
         "Id":cliente.id,
         "Nombre":cliente.nombre,
         "Telefono":cliente.telefono,
@@ -36,7 +37,7 @@ class ServiceFirebase {
         }
       );
     } catch (e){
-       print("Error al agregar el cliente: $e");
+      print("Error al agregar el cliente: $e");
     }
 
 
@@ -57,7 +58,7 @@ class ServiceFirebase {
         }
       );
     } catch (e){
-       print("Error al agregar el cultivo: $e");
+      print("Error al agregar el cultivo: $e");
     }
 
 

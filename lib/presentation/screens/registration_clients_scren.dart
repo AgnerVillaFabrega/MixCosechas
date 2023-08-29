@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
@@ -243,7 +247,7 @@ class RegistrarseButtom extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           
           if(_identificacionController.text.isNotEmpty &&
           _nombreController.text.isNotEmpty &&
@@ -252,23 +256,72 @@ class RegistrarseButtom extends StatelessWidget {
           _rolController.text.isNotEmpty &&
           _passwordController.text.isNotEmpty &&
           _confirmPasswordController.text.isNotEmpty){
-            if (_passwordController.text == _confirmPasswordController.text) {
-              Cliente cliente = Cliente(id: _identificacionController.text, 
-                nombre: _nombreController.text, 
-                telefono: _telefonoController.text, 
-                correo: _correoController.text, 
-                rol: _rolController.text, 
-                password: _passwordController.text
-              );
-              _serviceFirebase.addPeople(cliente);
+            if (!_correoController.text.contains('@')) {
               showDialog(
-                context: context,
-                builder: (context) {
-                  return const MensajeShowDialog(title: "Tilte",message: "Se registró el usuario correctamente");
-                },
-              );
-              FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
-              FocusScope.of(context).unfocus();
+                  context: context,
+                  builder: (context) {
+                    return const MensajeShowDialog(title: "Login",message: "Correo electronico no valido");
+                  },
+                );
+            } else if (_passwordController.text.length < 6) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const MensajeShowDialog(title: "Login",message: "La contrseña debe contener al menos 6 caracteres");
+                  },
+                );
+            } else if (_passwordController.text == _confirmPasswordController.text) {
+              
+              try {
+                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: _correoController.text,
+                  password: _passwordController.text,
+                );
+                if (userCredential.user != null) {
+                  Cliente cliente = Cliente(id: _identificacionController.text, 
+                    nombre: _nombreController.text, 
+                    telefono: _telefonoController.text, 
+                    correo: _correoController.text, 
+                    rol: _rolController.text, 
+                    password: _passwordController.text
+                  );
+                  _serviceFirebase.addPeople(cliente,userCredential);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
+                    },
+                  );
+                  FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
+                  FocusScope.of(context).unfocus();
+                }
+              } on FirebaseException catch (e) {
+                if (e.code == 'weak-password') {
+                  // Contraseña débil
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const MensajeShowDialog(title: "!",message: "Contraseña debil");
+                    },
+                  );
+                } else if (e.code == 'email-already-in-use') {
+                  // El correo ya está en uso por otro usuario
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const MensajeShowDialog(title: "Cuidado!",message: "Parece que ese correo ya es usado por otro usuaio");
+                    },
+                  );
+                } else {
+                  // Otro tipo de error
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const MensajeShowDialog(title: "Upsss!",message: "Parece que estamos teniendo problemas, intenta registrar luego");
+                    },
+                  );
+                }
+              }
             } else {
               // Los campos de contraseña no coinciden, muestra un mensaje de error
               showDialog(
@@ -279,7 +332,6 @@ class RegistrarseButtom extends StatelessWidget {
               );
             }
           }else{
-          
             showDialog(
               context: context,
               builder: (context) {
@@ -306,5 +358,3 @@ class RegistrarseButtom extends StatelessWidget {
     );
   }
 }
-
-

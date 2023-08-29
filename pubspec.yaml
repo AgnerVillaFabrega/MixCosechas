@@ -22,6 +22,8 @@ dependencies:
   firebase_core: 
   cloud_firestore:
   firebase_database:
+  firebase_auth:
+  get:
   csv: ^5.0.2
 
 dev_dependencies:
@@ -41,7 +43,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/images/3135768.png
+    - assets/images/admin.png
     - assets/departamentos_Municipios.csv
 
   
