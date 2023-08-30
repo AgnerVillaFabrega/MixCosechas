@@ -35,8 +35,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _edadController = TextEditingController();
 
   List<String> departamentos = [];
+  List<String> municipios = [];
 
-  void cargarOpciones() async {
+  void cargarDepartamentos() async {
 
     String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
     List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
@@ -54,10 +55,28 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
   }
+  void cargarMunicipios(String departamento) async {
+
+    String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
+    List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
+    
+    Set<String> muicipiosSet = Set<String>(); // Usamos un Set para evitar repeticiones
+    
+    for (var row in parsedCsv) {
+      if (row.isNotEmpty && row[0].toString() == departamento ) {
+        muicipiosSet.add(row[1].toString()); // Agregamos el primer elemento de la fila al Set
+      }
+    }
+    
+    setState(() {
+      municipios = muicipiosSet.toList(); // Convertimos el Set en una lista
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    cargarOpciones();
+    cargarDepartamentos();
     return Scaffold(
       appBar: AppBar(
         //title: const Text('Registrar predio'),
@@ -111,6 +130,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     onChanged: (String? newValue) {
                       setState(() {
                         _departamentoController.text = newValue!;
+                        _municipioController.text = '';
+                        cargarMunicipios(_departamentoController.text);
                       });
                     },
                     decoration: const InputDecoration(
@@ -154,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         value: '',
                         child: Text('Seleccione'), // O cualquier otro texto que desees
                       ),
-                      ...['Andes', 'Medellin','Alejandria'].map((role) {
+                      ...municipios.map((role) {
                         return DropdownMenuItem<String>(value: role, child: Text(role));
                       }).toList(),
                     ],
@@ -310,7 +331,7 @@ class RegistrarseButtom extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return const MensajeShowDialog(title: "OJO",message: "No puedes dejar campos vacios");
+                return const MensajeShowDialog(title: "Advertencia",message: "No puedes dejar campos vacios");
               },
             );
 

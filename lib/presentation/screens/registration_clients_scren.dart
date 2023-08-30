@@ -335,7 +335,7 @@ class RegistrarseButtom extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return const MensajeShowDialog(title: "OJO",message: "No puedes dejar campos vacios");
+                return const MensajeShowDialog(title: "Advertencia",message: "No puedes dejar campos vacios");
               },
             );
           }

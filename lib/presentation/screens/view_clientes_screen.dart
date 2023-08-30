@@ -10,7 +10,6 @@ Widget cargarDatos(){
   return StreamBuilder(
     stream: FirebaseFirestore.instance.collection('Usuarios').snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-      //print(snapshot.connectionState);
       switch(snapshot.connectionState){
         case ConnectionState.waiting: 
           return const Center(
