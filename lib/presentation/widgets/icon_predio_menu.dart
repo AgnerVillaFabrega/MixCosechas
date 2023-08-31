@@ -14,7 +14,7 @@ class IconPredioMenu extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ViewPredioScreen()),
+            MaterialPageRoute(builder: (context) => cargarDatosPredios()),
           );
       },
     );

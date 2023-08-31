@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
+import '../../theme/limpiarCampos.dart';
 import '../widgets/mensaje_show_dialog.dart';
 import 'package:csv/csv.dart' as csv;
 
@@ -79,7 +80,12 @@ class _RegisterPageState extends State<RegisterPage> {
     cargarDepartamentos();
     return Scaffold(
       appBar: AppBar(
-        //title: const Text('Registrar predio'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: Padding(
@@ -326,6 +332,10 @@ class RegistrarseButtom extends StatelessWidget {
                   return const MensajeShowDialog(title: "Title",message: "Se registró correctamente el predio");
                 },
               );
+              FormUtils.clearTextControllers([_nombreController,_corregimientoVeredaController,
+                _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
+              ]);
+              FocusScope.of(context).unfocus();
 
           }else{
             showDialog(

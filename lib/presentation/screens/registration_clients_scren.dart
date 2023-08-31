@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
@@ -41,12 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         //title: const Text('Registrarte'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: Center(
         child: Padding(
@@ -267,7 +260,7 @@ class RegistrarseButtom extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return const MensajeShowDialog(title: "Login",message: "La contrseña debe contener al menos 6 caracteres");
+                    return const MensajeShowDialog(title: "Login",message: "La contraseña debe contener al menos 6 caracteres");
                   },
                 );
             } else if (_passwordController.text == _confirmPasswordController.text) {
