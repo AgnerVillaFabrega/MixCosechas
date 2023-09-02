@@ -24,7 +24,6 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -32,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
   final TextEditingController _correoController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 26,
-                      //color: Color(0XFF35424A)
                     ),
                   ),
                 ),
@@ -67,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Hola, qué gusto volver a verte!',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color(0XFF989EB1)
+                      color: Color(0XFF989EB1),
                     ),
                   ),
                 ),
@@ -78,12 +77,12 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _correoController,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(
-                      color: Color(0XFF35424A)
+                      color: Color(0XFF35424A),
                     ),
                     decoration: const InputDecoration(
-                      labelText: 'Correo electronico',
+                      labelText: 'Correo electrónico',
                       contentPadding: EdgeInsets.all(12),
-                      labelStyle:TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                      labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -96,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Contraseña',
                       contentPadding: const EdgeInsets.all(12),
-                      labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                      labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -108,10 +107,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-      
                 const SizedBox(height: 20),
-                _IniciarSesionButtom(correoController: _correoController, passwordController: _passwordController),
-      
+                _IniciarSesionButtom(isLoading: _isLoading, onTap: _handleLogin),
                 const SizedBox(height: 10),
                 const _RegistrarseTextButtom(),
               ],
@@ -121,18 +118,91 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void _handleLogin() async {
+    if (!_correoController.text.contains('@')) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const MensajeShowDialog(title: "Login", message: "Correo electrónico no válido");
+        },
+      );
+    } else if (_passwordController.text.length < 6) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const MensajeShowDialog(title: "Login", message: "La contraseña debe contener al menos 6 caracteres");
+        },
+      );
+    } else {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _correoController.text,
+          password: _passwordController.text,
+        );
+        if (userCredential.user != null) {
+          String uid = userCredential.user!.uid;
+          DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Usuarios').doc(uid).get();
+
+          Cliente cliente = Cliente(
+            id: userDoc['Id'],
+            nombre: userDoc['Nombre'],
+            telefono: userDoc['Telefono'],
+            correo: userDoc['Correo'],
+            rol: userDoc['Rol'],
+            password: userDoc['Password'],
+          );
+          FormUtils.clearTextControllers([_correoController, _passwordController]);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen(cliente: cliente)),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const MensajeShowDialog(title: "Error al iniciar sesión", message: "El usuario no está registrado");
+            },
+          );
+        } else if (e.code == 'wrong-password') {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const MensajeShowDialog(title: "Error al iniciar sesión", message: "Contraseña incorrecta");
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const MensajeShowDialog(title: "Upss!", message: "Parece que estamos teniendo problemas, inténtalo más tarde");
+            },
+          );
+        }
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 }
 
 class _IniciarSesionButtom extends StatelessWidget {
   const _IniciarSesionButtom({
-    required TextEditingController correoController,
-    required TextEditingController passwordController,
-  }) :
-  _correoController =correoController,
-  _passwordController = passwordController;
+    required bool isLoading,
+    required VoidCallback onTap,
+  })  : _isLoading = isLoading,
+        _onTap = onTap;
 
-  final TextEditingController _correoController ;
-  final TextEditingController _passwordController;
+  final bool _isLoading;
+  final VoidCallback _onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -140,76 +210,7 @@ class _IniciarSesionButtom extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 45),
       child: ElevatedButton(
-        onPressed: () async{
-          
-          if (!_correoController.text.contains('@')) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Login",message: "Correo electronico no valido");
-              },
-            );
-          } else if (_passwordController.text.length < 6) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Login",message: "La contrseña debe contener al menos 6 caracteres");
-              },
-            );
-          } else {
-            try {
-              UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: _correoController.text,
-                password: _passwordController.text,
-              );
-              if (userCredential.user != null) {
-                String uid = userCredential.user!.uid;
-                DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Usuarios').doc(uid).get();
-
-                Cliente cliente = Cliente(
-                  id: userDoc['Id'],
-                  nombre: userDoc ['Nombre'],
-                  telefono: userDoc['Telefono'],
-                  correo:userDoc['Correo'],
-                  rol:  userDoc['Rol'],
-                  password:userDoc['Password']
-                );
-                FormUtils.clearTextControllers([_correoController,_passwordController]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen(cliente:cliente)),
-                );
-              }
-              
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'user-not-found') {
-                // El usuario no está registrado
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Error al iniciar sesion ",message: "El usuario no esta registrado");
-                  },
-                );
-              } else if (e.code == 'wrong-password') {
-                // Contraseña incorrecta
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Error al iniciar sesion ",message: "Contraseña incorrecta");
-                  },
-                );
-              } else {
-                // Otro tipo de error
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Upss!",message: "Parece que estamos teniendo problemas, intentalo mas tarde");
-                  },
-                );
-              }
-            }
-          }
-        },
+        onPressed: _isLoading ? null : _onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),
           padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -220,13 +221,17 @@ class _IniciarSesionButtom extends StatelessWidget {
         child: Container(
           height: 50,
           alignment: Alignment.center,
-          child: const Text(
-            'Iniciar Sesión',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Color(0XFFeeeeee),
-            ),
-          ),
+          child: _isLoading
+              ? const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF19AA89)),
+                )
+              : const Text(
+                  'Iniciar Sesión',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0XFFeeeeee),
+                  ),
+                ),
         ),
       ),
     );
@@ -240,13 +245,12 @@ class _RegistrarseTextButtom extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        // Navegar a la pantalla de registro
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
         );
       },
-      child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600),),
+      child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600)),
     );
   }
 }

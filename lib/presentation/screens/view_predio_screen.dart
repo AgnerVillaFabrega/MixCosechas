@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../model/predios.dart';
@@ -41,8 +43,6 @@ List<Predio> conversiondelista(List registro){
   return resultado;
 }
 
-
-
 class ViewPredioScreen extends StatefulWidget {
   
   List<Predio> predios = [];
@@ -51,12 +51,7 @@ class ViewPredioScreen extends StatefulWidget {
   _PredioPageState createState() => _PredioPageState();
 }
 
-
-
-
 class _PredioPageState extends State<ViewPredioScreen> {
- 
-
   List<Predio> filteredPredios = [];
   final bool _isLoading = false;
   String filtro="";
