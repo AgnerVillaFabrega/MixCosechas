@@ -44,6 +44,8 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/admin.png
+    - assets/images/logo_MIXCOSECHAS.png
+    - assets/images/simple_logo_MIXCOSECHAS.png
     - assets/departamentos_Municipios.csv
 
   

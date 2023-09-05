@@ -36,83 +36,77 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: const Color(0XFFFFFFFF),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/MIXCOSECHAS3.png',
-                  width: 290,
-                  height: 170,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'assets/images/logo_MIXCOSECHAS.png',
+                width: 310,
+                height: 170,
+              ),
+              const SizedBox(height: 40),
+              Container(
+                alignment: const Alignment(-0.6, 0),
+                child: const Text(
+                  'Iniciar Sesión',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: const Alignment(-0.6, 0),
-                  child: const Text(
-                    'Iniciar Sesión',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                alignment: const Alignment(-0.48, 0),
+                child: const Text(
+                  'Hola, qué gusto volver a verte!',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0XFF989EB1),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 45),
+                child: TextField(
+                  controller: _correoController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    labelText: 'Correo electrónico',
+                    contentPadding: EdgeInsets.all(12),
+                    labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 45),
+                child: TextField(
+                  controller: _passwordController,
+                  obscureText: _isObscure,
+                  decoration: InputDecoration(
+                    labelText: 'Contraseña',
+                    contentPadding: const EdgeInsets.all(12),
+                    labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                      icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Container(
-                  alignment: const Alignment(-0.48, 0),
-                  child: const Text(
-                    'Hola, qué gusto volver a verte!',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0XFF989EB1),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45),
-                  child: TextField(
-                    controller: _correoController,
-                    keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(
-                      color: Color(0XFF35424A),
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Correo electrónico',
-                      contentPadding: EdgeInsets.all(12),
-                      labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45),
-                  child: TextField(
-                    controller: _passwordController,
-                    obscureText: _isObscure,
-                    decoration: InputDecoration(
-                      labelText: 'Contraseña',
-                      contentPadding: const EdgeInsets.all(12),
-                      labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isObscure = !_isObscure;
-                          });
-                        },
-                        icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _IniciarSesionButtom(isLoading: _isLoading, onTap: _handleLogin),
-                const SizedBox(height: 10),
-                const _RegistrarseTextButtom(),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              _IniciarSesionButtom(isLoading: _isLoading, onTap: _handleLogin),
+              const SizedBox(height: 10),
+              const _RegistrarseTextButtom(),
+            ],
           ),
         ),
       ),

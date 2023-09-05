@@ -4,6 +4,7 @@ import 'package:mixcosechas_app/presentation/widgets/icon_logout_menu.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
 
 import '../../model/clientes.dart';
+import '../widgets/icon_muestras.dart';
 
 class HomeScreen extends StatefulWidget {
   final Cliente cliente;
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inicio'),
+        //title: const Text('Inicio'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -72,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // if(_cliente.rol == 'Analista') const IconPredioMenu(),
                 IconClientesMenu(),
                 IconPredioMenu(),
+                IconMuestasMenu(),
                 Divider(),  
                 IconLogout(),
               ],
