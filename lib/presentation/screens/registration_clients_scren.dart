@@ -34,6 +34,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _rolController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,132 +73,163 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 20),
                 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
-                  child: TextField(
-                    controller: _nombreController,
-                    keyboardType: TextInputType.name,
-                    decoration:const InputDecoration(
-                      labelText: 'Nombre',
-                      labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: TextField(
-                    controller: _identificacionController,
-                    keyboardType: TextInputType.number,
-                    decoration:const InputDecoration(
-                      labelText: 'Identificación',
-                      labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: TextField(
-                    controller: _telefonoController,
-                    keyboardType: TextInputType.phone,
-                    decoration:const InputDecoration(
-                      labelText: 'Teléfono',
-                      labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: TextField(
-                    controller: _correoController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: 'Correo electrónico',
-                      labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: DropdownButtonFormField<String>(
-                    value: _rolController.text,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _rolController.text = newValue!;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Rol',
-                      labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                    ),
-                    items: [
-                      const DropdownMenuItem<String>(
-                        value: '',
-                        child: Text('Seleccione'), // O cualquier otro texto que desees
-                      ),
-                      ...['Analista', 'Agricultor'].map((role) {
-                        return DropdownMenuItem<String>(value: role, child: Text(role));
-                      }).toList(),
-                    ],
-                    validator: (value) {
-                      if (value == 'Seleccione') {
-                        return 'Por favor, selecciona un rol';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: TextField(
-                    obscureText: _isObscurePassword,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Contraseña',
-                      labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isObscurePassword ? Icons.visibility_off : Icons.visibility,
+                  padding:const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _nombreController,
+                          keyboardType: TextInputType.name,
+                          decoration:const InputDecoration(
+                            labelText: 'Nombre',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _isObscurePassword = !_isObscurePassword;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
-                  child: TextField(
-                    obscureText: _isObscureConfirmPassword,
-                    controller: _confirmPasswordController,
-                    decoration: InputDecoration(
-                      labelText: 'Confirmar contraseña',
-                      labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isObscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: _identificacionController,
+                          keyboardType: TextInputType.number,
+                          decoration:const InputDecoration(
+                            labelText: 'Identificación',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _isObscureConfirmPassword = !_isObscureConfirmPassword;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: _telefonoController,
+                          keyboardType: TextInputType.phone,
+                          decoration:const InputDecoration(
+                            labelText: 'Teléfono',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+                        const SizedBox(height: 10), 
+                        TextFormField(
+                          controller: _correoController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: 'Correo electrónico',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            if (!value.contains('@')) {
+                              return "Ingresa un correo valido";
+                            }
+                            return null;
+                          }
+                        ),
+                        const SizedBox(height: 10),
+                        DropdownButtonFormField<String>(
+                          value: _rolController.text,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _rolController.text = newValue!;
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Rol',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: '',
+                              child: Text('Seleccione'), // O cualquier otro texto que desees
+                            ),
+                            ...['Analista', 'Agricultor'].map((role) {
+                              return DropdownMenuItem<String>(value: role, child: Text(role));
+                            }).toList(),
+                          ],
+                          validator: (value) {
+                            if (value == 'Seleccione') {
+                              return 'Por favor, selecciona un rol';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          obscureText: _isObscurePassword,
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Contraseña',
+                            labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscurePassword ? Icons.visibility_off : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscurePassword = !_isObscurePassword;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            if (value.length < 6) {
+                              return "La contraseña debe contener al menos 6 caracteres";
+                            }
+                            return null;
+                          }
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          obscureText: _isObscureConfirmPassword,
+                          controller: _confirmPasswordController,
+                          decoration: InputDecoration(
+                            labelText: 'Confirmar contraseña',
+                            labelStyle: const TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscureConfirmPassword = !_isObscureConfirmPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            if (value.length < 6) {
+                              return "La contraseña debe contener al menos 6 caracteres";
+                            }
+                            return null;
+                          }
+                        ),
+                      ],
+                    )
+                  )
                 ),
                 const SizedBox(height: 20),
-                RegistrarseButtom(
-                  idController: _identificacionController,
-                  nombreController: _nombreController,
-                  telefonoController: _telefonoController,
-                  correoController: _correoController,
-                  rolController: _rolController,
-                  passwordController: _passwordController, 
-                  confirmPasswordController: _confirmPasswordController
-                ),
+                RegistrarseButtom(onTap: _handleRegistroCliente,),
               ],
             ),
           ),
@@ -204,135 +237,87 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+  void _handleRegistroCliente () async {
+    if (formKey.currentState!.validate()){
+      if (_passwordController.text == _confirmPasswordController.text) {
+        try {
+          UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: _correoController.text,
+            password: _passwordController.text,
+          );
+          if (userCredential.user != null) {
+            Cliente cliente = Cliente(id: _identificacionController.text, 
+              nombre: _nombreController.text, 
+              telefono: _telefonoController.text, 
+              correo: _correoController.text, 
+              rol: _rolController.text, 
+              password: _passwordController.text
+            );
+            _serviceFirebase.addPeople(cliente,userCredential);
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
+              },
+            );
+            FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
+            FocusScope.of(context).unfocus();
+          }
+        }on FirebaseException catch (e) {
+          if (e.code == 'weak-password') {
+            // Contraseña débil
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "!",message: "Contraseña debil");
+              },
+            );
+          } else if (e.code == 'email-already-in-use') {
+            // El correo ya está en uso por otro usuario
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "Cuidado!",message: "Parece que ese correo ya es usado por otro usuaio");
+              },
+            );
+          } else {
+            // Otro tipo de error
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const MensajeShowDialog(title: "Upsss!",message: "Parece que estamos teniendo problemas, intenta registrar luego");
+              },
+            );
+          }
+        }
+      } else {
+        // Los campos de contraseña no coinciden, muestra un mensaje de error
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const MensajeShowDialog(title: "Cuidado",message: "Las contraseñas no coinciden. Por favor, verificalo");
+          },
+        );
+      }
+    }
+  }
 }
 
 class RegistrarseButtom extends StatelessWidget {
-  
-  RegistrarseButtom({
+  const RegistrarseButtom({
     super.key,
-    required TextEditingController idController,
-    required TextEditingController nombreController,
-    required TextEditingController telefonoController,
-    required TextEditingController correoController,
-    required TextEditingController rolController,
-    required TextEditingController passwordController,
-    required TextEditingController confirmPasswordController,
-  }) : _identificacionController =idController,
-  _nombreController = nombreController,
-  _telefonoController =telefonoController,
-  _correoController =correoController,
-  _rolController =rolController,
-  _passwordController = passwordController, 
-  _confirmPasswordController = confirmPasswordController;
+    required VoidCallback onTap
+  }):_onTap = onTap;
 
-  final TextEditingController _identificacionController;
-  final TextEditingController _nombreController ;
-  final TextEditingController _telefonoController ;
-  final TextEditingController _correoController ;
-  final TextEditingController _rolController ;
-  final TextEditingController _passwordController;
-  final TextEditingController _confirmPasswordController;
-  final ServiceFirebase _serviceFirebase = ServiceFirebase();
 
+  final VoidCallback _onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-        onPressed: () async {
-          
-          if(_identificacionController.text.isNotEmpty &&
-          _nombreController.text.isNotEmpty &&
-          _telefonoController.text.isNotEmpty &&
-          _correoController.text.isNotEmpty &&
-          _rolController.text.isNotEmpty &&
-          _passwordController.text.isNotEmpty &&
-          _confirmPasswordController.text.isNotEmpty){
-            if (!_correoController.text.contains('@')) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Login",message: "Correo electronico no valido");
-                  },
-                );
-            } else if (_passwordController.text.length < 6) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const MensajeShowDialog(title: "Login",message: "La contraseña debe contener al menos 6 caracteres");
-                  },
-                );
-            } else if (_passwordController.text == _confirmPasswordController.text) {
-              
-              try {
-                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: _correoController.text,
-                  password: _passwordController.text,
-                );
-                if (userCredential.user != null) {
-                  Cliente cliente = Cliente(id: _identificacionController.text, 
-                    nombre: _nombreController.text, 
-                    telefono: _telefonoController.text, 
-                    correo: _correoController.text, 
-                    rol: _rolController.text, 
-                    password: _passwordController.text
-                  );
-                  _serviceFirebase.addPeople(cliente,userCredential);
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
-                    },
-                  );
-                  FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
-                  FocusScope.of(context).unfocus();
-                }
-              } on FirebaseException catch (e) {
-                if (e.code == 'weak-password') {
-                  // Contraseña débil
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const MensajeShowDialog(title: "!",message: "Contraseña debil");
-                    },
-                  );
-                } else if (e.code == 'email-already-in-use') {
-                  // El correo ya está en uso por otro usuario
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const MensajeShowDialog(title: "Cuidado!",message: "Parece que ese correo ya es usado por otro usuaio");
-                    },
-                  );
-                } else {
-                  // Otro tipo de error
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const MensajeShowDialog(title: "Upsss!",message: "Parece que estamos teniendo problemas, intenta registrar luego");
-                    },
-                  );
-                }
-              }
-            } else {
-              // Los campos de contraseña no coinciden, muestra un mensaje de error
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const MensajeShowDialog(title: "Cuidado",message: "Las contraseñas no coinciden. Por favor, verificalo");
-                },
-              );
-            }
-          }else{
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Advertencia",message: "No puedes dejar campos vacios");
-              },
-            );
-          }
-        },
+        onPressed:_onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),
           padding: const EdgeInsets.symmetric(horizontal: 0),

@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
   final TextEditingController _correoController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   @override
@@ -69,38 +70,61 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20),
+              
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45),
-                child: TextField(
-                  controller: _correoController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Correo electrónico',
-                    contentPadding: EdgeInsets.all(12),
-                    labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: _isObscure,
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    contentPadding: const EdgeInsets.all(12),
-                    labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
-                      icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-                    ),
-                  ),
-                ),
+                child: Form(
+                  key: formKey,
+                  child:Column(
+                    children: [
+                      TextFormField(
+                        controller: _correoController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: 'Correo electrónico',
+                          contentPadding: EdgeInsets.all(12),
+                          labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                        ),
+                        validator: (String? value){
+                          if (value ==null || value.isEmpty) {
+                            return "Campo requerido";
+                          }
+                          if (!value.contains('@')) {
+                            return "Ingresa un correo valido";
+                          }
+                          return null;
+                        }
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: _isObscure,
+                        decoration: InputDecoration(
+                          labelText: 'Contraseña',
+                          contentPadding: const EdgeInsets.all(12),
+                          labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                            icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                          ),
+                        ),
+                        validator: (String? value){
+                          if (value ==null || value.isEmpty) {
+                            return "Campo requerido";
+                          }
+                          if (value.length < 6) {
+                            return "La contraseña debe contener al menos 6 caracteres";
+                          }
+                          return null;
+                        }
+                      ),
+                    ],
+                  )
+                )
               ),
               const SizedBox(height: 20),
               _IniciarSesionButtom(isLoading: _isLoading, onTap: _handleLogin),
@@ -114,25 +138,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() async {
-    if (!_correoController.text.contains('@')) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(title: "Login", message: "Correo electrónico no válido");
-        },
-      );
-    } else if (_passwordController.text.length < 6) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(title: "Login", message: "La contraseña debe contener al menos 6 caracteres");
-        },
-      );
-    } else {
+    if (formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
-
       try {
         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _correoController.text,
@@ -175,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
           showDialog(
             context: context,
             builder: (context) {
-              return const MensajeShowDialog(title: "Upss!", message: "Parece que estamos teniendo problemas, inténtalo más tarde");
+              return const MensajeShowDialog(title: "Upss!", message: "inténtalo de nuevo");
             },
           );
         }
