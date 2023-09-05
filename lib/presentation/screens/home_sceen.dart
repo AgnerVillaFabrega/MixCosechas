@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: const Text('Inicio'),
+        title: const Text('MixCosechas'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -40,13 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  //Todo: encontrar la forma de cargar la imagen o dejar un icono(Opcion mas viable)
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('assets/images/admin.png'), // Ruta de la imagen
-                  ),
+                  if (_cliente.rol == 'Admin')  const ImgAdmin(),
+                  if(_cliente.rol == 'Agricultor') const ImgAgricultor(),
+                  if(_cliente.rol == 'Analista') const ImgAnalista(),   
                   const SizedBox(height: 10),
-                  //Todo: El nombre y el correo se deben cargar con la informacion del usuario
                   Text(
                     _cliente.nombre,  //user.name,
                     style: const TextStyle(
@@ -68,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Column(
               children: [
-                //* Ejemplo: "if (_cliente.rol == 'RolType') IconClientesMenu(),"
+                //Todo: que el menu cambie dependiendo del rol
                 // if(_cliente.rol == 'Agricultor') const IconClientesMenu(),
                 // if(_cliente.rol == 'Analista') const IconPredioMenu(),
                 IconClientesMenu(),
@@ -85,6 +82,47 @@ class _HomeScreenState extends State<HomeScreen> {
       body: const Center(
         child: Text('Contenido de la página principal'),
       ),
+    );
+  }
+}
+
+class ImgAdmin extends StatelessWidget {
+  const ImgAdmin({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(
+      radius: 30,
+      backgroundImage: AssetImage('assets/images/admin.png'), // Ruta de la imagen
+    );
+  }
+}
+
+class ImgAnalista extends StatelessWidget {
+  const ImgAnalista({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(
+      radius: 30,
+      backgroundImage: AssetImage('assets/images/analista.png'), // Ruta de la imagen
+    );
+  }
+}
+class ImgAgricultor extends StatelessWidget {
+  const ImgAgricultor({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(
+      radius: 30,
+      backgroundImage: AssetImage('assets/images/agricultor.png'), // Ruta de la imagen
     );
   }
 }

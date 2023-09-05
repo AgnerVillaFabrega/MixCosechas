@@ -27,7 +27,7 @@ class AppTheme {
           iconTheme: IconThemeData(color: _customColor), // Cambia el color de los íconos
         ),
       //* ACTIVAR MODO OSCURO
-      brightness: Brightness.dark
+      //brightness: Brightness.dark
     );
   }
 }
