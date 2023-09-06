@@ -4,16 +4,16 @@ class ImputVariable extends StatelessWidget {
   const ImputVariable({
     super.key,
     required String nombreVariable,
-    required TextEditingController phcontroller
-  }) :_nombreVariable = nombreVariable, _phcontroller = phcontroller;
+    required TextEditingController controller
+  }) :_nombreVariable = nombreVariable, _controller = controller;
 
-  final TextEditingController _phcontroller;
+  final TextEditingController _controller;
   final String _nombreVariable;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: _phcontroller,
+      controller: _controller,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: _nombreVariable,

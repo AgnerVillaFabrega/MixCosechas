@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'input_variables.dart';
 
 class SueloWidget extends StatefulWidget {
@@ -14,8 +13,30 @@ class SueloWidget extends StatefulWidget {
 class _SueloWidgetState extends State<SueloWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController _phcontroller = TextEditingController();
-  
+  final TextEditingController _nController = TextEditingController();
+  final TextEditingController _nh4Controller = TextEditingController();
+  final TextEditingController _no2Controller = TextEditingController();
+  final TextEditingController _no3Controller = TextEditingController();
+  final TextEditingController _pController = TextEditingController();
+  final TextEditingController _kController = TextEditingController();
+  final TextEditingController _caController = TextEditingController();
+  final TextEditingController _mgController = TextEditingController();
+  final TextEditingController _so4Controller = TextEditingController();
+  final TextEditingController _feController = TextEditingController();
+  final TextEditingController _mnController = TextEditingController();
+  final TextEditingController _cuController = TextEditingController();
+  final TextEditingController _alController = TextEditingController();
+  final TextEditingController _clController = TextEditingController();
+  final TextEditingController _salesdisueltasController = TextEditingController();
+  final TextEditingController _phController = TextEditingController();
+  final TextEditingController _ceController = TextEditingController();
+  final TextEditingController _ciceController = TextEditingController();
+  final TextEditingController _arcillaController = TextEditingController();
+  final TextEditingController _limoController = TextEditingController();
+  final TextEditingController _arenaController = TextEditingController();
+  final TextEditingController _humusController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +73,15 @@ class _SueloWidgetState extends State<SueloWidget> {
               title: const Text('Macronutrientes'), 
               content: Column(
                 children: [
-                  ImputVariable(nombreVariable: 'Nitrato de Nitrógeno - N',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Nitrógeno amoniacal - NH4+',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Nitritos - NO2',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Nitratos - NO3',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Fósforo - P',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Potasio - K',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Calcio - Ca',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Magnesio - Mg',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Sulfato - SO4',phcontroller: _phcontroller),
+                  ImputVariable(nombreVariable: 'Nitrato de Nitrógeno - N',controller: _nController),
+                  ImputVariable(nombreVariable: 'Nitrógeno amoniacal - NH4+',controller:  _nh4Controller),
+                  ImputVariable(nombreVariable: 'Nitritos - NO2',controller: _no2Controller),
+                  ImputVariable(nombreVariable: 'Nitratos - NO3',controller: _no3Controller),
+                  ImputVariable(nombreVariable: 'Fósforo - P',controller: _pController),
+                  ImputVariable(nombreVariable: 'Potasio - K',controller: _kController),
+                  ImputVariable(nombreVariable: 'Calcio - Ca',controller: _caController),
+                  ImputVariable(nombreVariable: 'Magnesio - Mg',controller: _mgController),
+                  ImputVariable(nombreVariable: 'Sulfato - SO4',controller: _so4Controller),
                 ],
               ),
             ),
@@ -69,12 +90,12 @@ class _SueloWidgetState extends State<SueloWidget> {
               title: const Text('Micronutrientes'), 
               content: Column(
                 children: [
-                  ImputVariable(nombreVariable: 'Hierro Férrico - Fe',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Manganeso - Mn',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Cobre - Cu',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Aluminio - Al',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Cloruro - Cl',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Sales Disueltas',phcontroller: _phcontroller),
+                  ImputVariable(nombreVariable: 'Hierro Férrico - Fe',controller: _feController),
+                  ImputVariable(nombreVariable: 'Manganeso - Mn',controller: _mnController),
+                  ImputVariable(nombreVariable: 'Cobre - Cu',controller: _cuController),
+                  ImputVariable(nombreVariable: 'Aluminio - Al',controller: _alController),
+                  ImputVariable(nombreVariable: 'Cloruro - Cl',controller: _clController),
+                  ImputVariable(nombreVariable: 'Sales Disueltas',controller: _salesdisueltasController),
                 ],
               )
             ),
@@ -83,18 +104,18 @@ class _SueloWidgetState extends State<SueloWidget> {
               title: const Text('Extra'), 
               content: Column(
                 children: [
-                  ImputVariable(nombreVariable: 'Ph',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'C.E',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'C.I.C.E',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Arcilla %',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Limo %',phcontroller: _phcontroller),
-                  ImputVariable(nombreVariable: 'Arena %',phcontroller: _phcontroller),
+                  ImputVariable(nombreVariable: 'Ph',controller: _phController),
+                  ImputVariable(nombreVariable: 'C.E',controller: _ceController),
+                  ImputVariable(nombreVariable: 'C.I.C.E',controller: _ciceController),
+                  ImputVariable(nombreVariable: 'Arcilla %',controller: _arcillaController),
+                  ImputVariable(nombreVariable: 'Limo %',controller: _limoController),
+                  ImputVariable(nombreVariable: 'Arena %',controller: _arenaController),
                   
                   DropdownButtonFormField<String>(
-                    //value: _rolController.text,
+                    value: _humusController.text,
                     onChanged: (String? newValue) {
                       setState(() {
-                        //_rolController.text = newValue!;
+                        _humusController.text = newValue!;
                       });
                     },
                     decoration: const InputDecoration(
@@ -118,7 +139,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  const RegistrarPruebasButtom(),
+                  RegistrarPruebasButtom(onTap:_handleRegistroSuelo),
                 ],
               )
             ),
@@ -127,19 +148,31 @@ class _SueloWidgetState extends State<SueloWidget> {
       )
     );
   }
+  void _handleRegistroSuelo(){
+    if (formKey.currentState!.validate()) {
+      //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(_humusController.text),
+            content: Text(_limoController.text),
+          );
+        },
+      );
+    }
+  }
 }
 
 class RegistrarPruebasButtom extends StatelessWidget {
-  const RegistrarPruebasButtom({super.key});
-
+  const RegistrarPruebasButtom({super.key, required  VoidCallback onTap}):_onTap = onTap;
+  final VoidCallback _onTap;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-
-        },
+        onPressed: _onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF19AA89),
           shape: RoundedRectangleBorder(

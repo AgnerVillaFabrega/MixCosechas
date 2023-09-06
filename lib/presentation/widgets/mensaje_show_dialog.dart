@@ -15,10 +15,6 @@ class MensajeShowDialog extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => route),
-            // );
           },
           child: const Text('OK'),
         ),
