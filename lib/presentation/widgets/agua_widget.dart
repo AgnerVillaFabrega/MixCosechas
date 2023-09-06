@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/widgets/suelo_widget.dart';
 
 class AguaWidget extends StatelessWidget {
   const AguaWidget({
@@ -9,19 +8,7 @@ class AguaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
-      children: [
-        InputVariable(nombreVariable: 'Nitrato de Nitrógeno - N'),
-        InputVariable(nombreVariable: 'Nitrógeno amoniacal - NH4+'),
-        InputVariable(nombreVariable: 'Nitritos - NO2-'),
-        InputVariable(nombreVariable: 'Nitratos - NO3-'),
-        InputVariable(nombreVariable: 'Sulfato - SO4'),
-        InputVariable(nombreVariable: 'Hierro Férrico - Fe '),
-        InputVariable(nombreVariable: 'Manganeso - Mn'),
-        InputVariable(nombreVariable: 'Cobre - Cu'),
-        // InputVariable(nombreVariable: 'Aluminio - Al'),
-        // InputVariable(nombreVariable: 'Cloruro - Cl'),
-        RegistrarPruebasButtom(),
-      ],
+      children: [],
     );
   }
 }

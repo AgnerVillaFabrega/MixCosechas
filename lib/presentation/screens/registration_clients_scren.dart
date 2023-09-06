@@ -71,7 +71,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                
                 Padding(
                   padding:const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
                   child: Form(
@@ -162,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }).toList(),
                           ],
                           validator: (value) {
-                            if (value == 'Seleccione') {
+                            if (value == null||value.isEmpty ||value == 'Seleccione') {
                               return 'Por favor, selecciona un rol';
                             }
                             return null;
@@ -304,13 +303,14 @@ class _RegisterPageState extends State<RegisterPage> {
 }
 
 class RegistrarseButtom extends StatelessWidget {
+  
+  final VoidCallback _onTap;
+
   const RegistrarseButtom({
     super.key,
     required VoidCallback onTap
   }):_onTap = onTap;
 
-
-  final VoidCallback _onTap;
   @override
   Widget build(BuildContext context) {
     return Container(

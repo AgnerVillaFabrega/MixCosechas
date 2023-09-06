@@ -29,128 +29,139 @@ class RegisterAnalisisPage extends StatefulWidget {
 
 class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
   //controllers de los otros componentes
+  Color activo = const Color(0xFF19AA89);
+  Color inactivo = const Color(0xFFc3c6c9);
+  
+  Color cambiarColor(int index) { 
+    Color colorActual;
+    if (index == _index) {
+      colorActual = activo;
+    } else {
+      colorActual = inactivo;
+    }
+    return colorActual;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registrar prueba'),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+      body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: <Widget>[
                         SizedBox(
                           height: 50,
-                          width: 150,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 2, 51, 4)),
-                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF19AA89)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 50,
+                                width: 176,
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(0)),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _index = 0;
+                                    });
+                                  },
+                                  child: const Text(
+                                    "Suelo",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _index = 0;
-                              });
-                            },
-                            child: const Text(
-                              "Suelo",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.w700,
+                              SizedBox(
+                                height: 50,
+                                width: 176,
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(1)),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _index = 1;
+                                    });
+                                  },
+                                  child: const Text(
+                                    "Agua",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+        
+                              //* OPT SISTEMA FOLIAR
+                              // SizedBox(
+                              //   height: 50,
+                              //   width: 170,
+                              //   child: TextButton(
+                              //     style: ButtonStyle(
+                              //       backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(2)),
+                              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              //         RoundedRectangleBorder(
+                              //           borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         //_index = 2;
+                              //       });
+                              //     },
+                              //     child: const Text(
+                              //       "Sistema foliar",
+                              //       style: TextStyle(
+                              //         fontSize: 18,
+                              //         color: Color.fromARGB(255, 255, 255, 255),
+                              //         fontWeight: FontWeight.w700,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // )
+                              
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 50,
-                          width: 150,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 2, 51, 4)),
-                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF19AA89)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _index = 1;
-                              });
-                            },
-                            child: const Text(
-                              "Agua",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                          width: 150,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 2, 51, 4)),
-                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF19AA89)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                //Contrase_index = 2;
-                              });
-                            },
-                            child: const Text(
-                              "Sistema foliar",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        )
+                      
+                        //!cambiar la vista
+                        _opciones[_index],
+                        
+                        //! los botones los trabajos desde las vistas
+                        // const SizedBox(height: 20),
+                        // const RegistrarPruebasButtom(),
                       ],
                     ),
-                  ),
-                  
-                    //!cambiar la vista
-                    _opciones[_index],
-                    //! los botones los trabajos desde las vistas
-                    // const SizedBox(height: 20),
-                    // const RegistrarPruebasButtom(),
-                  ],
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
     );
   }
 }
