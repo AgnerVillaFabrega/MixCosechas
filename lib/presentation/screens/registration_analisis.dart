@@ -63,13 +63,13 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                             children: <Widget>[
                               SizedBox(
                                 height: 50,
-                                width: 176,
+                                width: 165,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(0)),
                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                                        borderRadius: BorderRadius.circular(6.0),
                                       ),
                                     ),
                                   ),
@@ -90,13 +90,13 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                               ),
                               SizedBox(
                                 height: 50,
-                                width: 176,
+                                width: 165,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(1)),
                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                                        borderRadius: BorderRadius.circular(6.0),
                                       ),
                                     ),
                                   ),
@@ -119,13 +119,13 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                               //* OPT SISTEMA FOLIAR
                               // SizedBox(
                               //   height: 50,
-                              //   width: 170,
+                              //   width: 150,
                               //   child: TextButton(
                               //     style: ButtonStyle(
                               //       backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(2)),
                               //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               //         RoundedRectangleBorder(
-                              //           borderRadius: BorderRadius.circular(6.0), // Establece el radio de borde deseado
+                              //           borderRadius: BorderRadius.circular(6.0),
                               //         ),
                               //       ),
                               //     ),
@@ -144,17 +144,11 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                               //     ),
                               //   ),
                               // )
-                              
                             ],
                           ),
                         ),
-                      
                         //!cambiar la vista
                         _opciones[_index],
-                        
-                        //! los botones los trabajos desde las vistas
-                        // const SizedBox(height: 20),
-                        // const RegistrarPruebasButtom(),
                       ],
                     ),
                 ),

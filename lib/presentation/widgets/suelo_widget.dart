@@ -155,8 +155,18 @@ class _SueloWidgetState extends State<SueloWidget> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(_humusController.text),
-            content: Text(_limoController.text),
+            title: Text(_nController.text),
+            content: Text(_nh4Controller.text),
+          );
+        },
+      );
+    }else{
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("Upss!"),
+            content: Text("Debes llenar todos los campos"),
           );
         },
       );

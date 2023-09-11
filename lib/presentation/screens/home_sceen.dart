@@ -28,55 +28,58 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('MixCosechas'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children:  <Widget>[
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0XFF19aa89),
+      drawer: SafeArea(
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children:  <Widget>[
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Color(0XFF19aa89),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (_cliente.rol == 'Admin')  const ImgAdmin(),
+                    if(_cliente.rol == 'Agricultor') const ImgAgricultor(),
+                    if(_cliente.rol == 'Analista') const ImgAnalista(),   
+                    const SizedBox(height: 10),
+                    Text(
+                      _cliente.nombre,  //user.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _cliente.correo,//user.email,
+                      // ignore: prefer_const_constructors
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              const Column(
                 children: [
-                  if (_cliente.rol == 'Admin')  const ImgAdmin(),
-                  if(_cliente.rol == 'Agricultor') const ImgAgricultor(),
-                  if(_cliente.rol == 'Analista') const ImgAnalista(),   
-                  const SizedBox(height: 10),
-                  Text(
-                    _cliente.nombre,  //user.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    _cliente.correo,//user.email,
-                    // ignore: prefer_const_constructors
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
+                  //Todo: que el menu cambie dependiendo del rol
+                  // if(_cliente.rol == 'Agricultor') const IconClientesMenu(),
+                  // if(_cliente.rol == 'Analista') const IconPredioMenu(),
+                  
+                  IconClientesMenu(),
+                  IconPredioMenu(),
+                  IconMuestasMenu(),
+                  Divider(),  
+                  IconLogout(),
                 ],
+              // Agrega más ítems del menú aquí
               ),
-            ),
-            const Column(
-              children: [
-                //Todo: que el menu cambie dependiendo del rol
-                // if(_cliente.rol == 'Agricultor') const IconClientesMenu(),
-                // if(_cliente.rol == 'Analista') const IconPredioMenu(),
-                IconClientesMenu(),
-                IconPredioMenu(),
-                IconMuestasMenu(),
-                Divider(),  
-                IconLogout(),
-              ],
-            // Agrega más ítems del menú aquí
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: const Center(
