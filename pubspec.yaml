@@ -48,6 +48,12 @@ flutter:
     - assets/images/analista.png
     - assets/images/logo_MIXCOSECHAS.png
     - assets/images/simple_logo_MIXCOSECHAS.png
+    - assets/images/hover.png
+    - assets/images/hoverTry.png
+    - assets/images/rendimiento.png
+    - assets/images/ahorro.png
+    - assets/images/cronometro.png
+    - assets/images/organico.png
     - assets/departamentos_Municipios.csv
 
   

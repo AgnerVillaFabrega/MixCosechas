@@ -49,7 +49,7 @@ class _AguaWidgetState extends State<AguaWidget> {
             setState(() => currentState = index);
           },
           onStepContinue: () {
-            if (currentState != 2) {
+            if (currentState != 1) {
               setState(() => currentState++);
             }
           },
@@ -61,6 +61,15 @@ class _AguaWidgetState extends State<AguaWidget> {
           },
 
           steps: [
+            // Step(
+            //   isActive: currentState >= 0,
+            //   title: const Text('Extra'), 
+            //   content: const Column(
+            //     children: [
+            //       Text("Informacion predio")
+            //     ],
+            //   )
+            // ),
             Step(
               isActive: currentState >= 0,
               title: const Text('Macronutrientes'), 
@@ -89,14 +98,6 @@ class _AguaWidgetState extends State<AguaWidget> {
                   ImputVariable(nombreVariable: 'Aluminio - Al',controller: _alController),
                   ImputVariable(nombreVariable: 'Cloruro - Cl',controller: _clController),
                   ImputVariable(nombreVariable: 'Sales Disueltas',controller: _salesdisueltasController),
-                ],
-              )
-            ),
-            Step(
-              isActive: currentState >= 2,
-              title: const Text('Extra'), 
-              content: Column(
-                children: [
                   ImputVariable(nombreVariable: 'Ph',controller: _phController),
                   ImputVariable(nombreVariable: 'C.E',controller: _ceController),
                   const SizedBox(height: 20),
@@ -104,6 +105,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                 ],
               )
             ),
+            
 
           ],
 
