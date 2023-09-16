@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             Align(
-              alignment:const AlignmentDirectional(0, -.78),
+              alignment:const AlignmentDirectional(0, -.88),
               child: Image.asset(
                 'assets/images/logo_MIXCOSECHAS.png',
                 width: 410,
