@@ -1,6 +1,9 @@
 class Predio{
   final String id;
-  final String idUsuario;
+  final String idPropietario;
+  final String nombrePropietario;
+  final String correoPropietario;
+  final String telefonoPropietario;
   final String nombre;
   final String corregimientoVereda;
   final String departamento;
@@ -12,7 +15,10 @@ class Predio{
   
   Predio({
     required this.id, 
-    required this.idUsuario, 
+    required this.idPropietario, 
+    required this.nombrePropietario, 
+    required this.correoPropietario, 
+    required this.telefonoPropietario, 
     required this.nombre, 
     required this.corregimientoVereda, 
     required this.departamento, 
@@ -25,7 +31,10 @@ class Predio{
   factory Predio.fromMap(Map<String, dynamic> map) {  
     return Predio(
       id: map['Id'],
-      idUsuario: map['IdUsuario'],
+      idPropietario: map['IdPropietario'],
+      nombrePropietario: map['NombrePropietario'],
+      correoPropietario: map['CorreoPropietario'],
+      telefonoPropietario: map['TelefonoPropietario'],
       nombre: map['Nombre'],
       corregimientoVereda: map['CorregimientoVereda'],
       departamento: map['Departamento'],

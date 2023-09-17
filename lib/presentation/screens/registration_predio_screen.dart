@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/clientes.dart';
 import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
@@ -25,9 +26,13 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+ 
+  final TextEditingController _identificacionPropietarioController = TextEditingController();
+  final TextEditingController _nombrePropietarioController = TextEditingController();
+  final TextEditingController _correoPropietarioController = TextEditingController();
+  final TextEditingController _telefonoPropietarioController = TextEditingController();
   
-  
-  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _nombrePredioController = TextEditingController();
   final TextEditingController _corregimientoVeredaController = TextEditingController();
   final TextEditingController _departamentoController = TextEditingController();
   final TextEditingController _municipioController = TextEditingController();
@@ -45,16 +50,16 @@ class _RegisterPageState extends State<RegisterPage> {
     String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
     List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
     
-    Set<String> departamentosSet = Set<String>(); // Usamos un Set para evitar repeticiones
+    Set<String> departamentosSet = Set<String>(); 
     
     for (var row in parsedCsv) {
       if (row.isNotEmpty) {
-        departamentosSet.add(row[0].toString()); // Agregamos el primer elemento de la fila al Set
+        departamentosSet.add(row[0].toString()); 
       }
     }
     
     setState(() {
-      departamentos = departamentosSet.toList(); // Convertimos el Set en una lista
+      departamentos = departamentosSet.toList(); 
     });
 
   }
@@ -63,16 +68,16 @@ class _RegisterPageState extends State<RegisterPage> {
     String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
     List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
     
-    Set<String> muicipiosSet = Set<String>(); // Usamos un Set para evitar repeticiones
+    Set<String> muicipiosSet = Set<String>(); 
     
     for (var row in parsedCsv) {
       if (row.isNotEmpty && row[0].toString() == departamento ) {
-        muicipiosSet.add(row[1].toString()); // Agregamos el primer elemento de la fila al Set
+        muicipiosSet.add(row[1].toString()); 
       }
     }
     
     setState(() {
-      municipios = muicipiosSet.toList(); // Convertimos el Set en una lista
+      municipios = muicipiosSet.toList(); 
     });
 
   }
@@ -113,8 +118,83 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: formKey,
                     child:Column(
                       children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child:TextFormField(
+                                controller: _identificacionPropietarioController,
+                                keyboardType: TextInputType.number,
+                                decoration:const InputDecoration(
+                                  labelText: 'Identificacion Propietario',
+                                  labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                                ),
+                                validator: (String? value){
+                                  if (value ==null || value.isEmpty) {
+                                      return "Se requiere propietario";
+                                    }
+                                    return null;
+                                }
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: ElevatedButton(
+                                onPressed:() async{
+                                  
+                                  Cliente? cliente = await _serviceFirebase.consultarClientePorId(_identificacionPropietarioController.text);
+                                  if(cliente != null) {
+                                    _nombrePropietarioController.text = cliente.nombre;
+                                    _telefonoPropietarioController.text = cliente.telefono;
+                                    _correoPropietarioController.text = cliente.correo;
+                                  }else{
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const MensajeShowDialog(title: "Error!!",message: "No se encontró el propietario");
+                                      },
+                                    );
+                                    FormUtils.clearTextControllers([_nombrePropietarioController,_telefonoPropietarioController,_correoPropietarioController]);
+                                  }
+                                } ,
+                                child:const Icon(Icons.search),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10),
                         TextFormField(
-                          controller: _nombreController,
+                          enabled: false, 
+                          controller: _nombrePropietarioController,
+                          keyboardType: TextInputType.name,
+                          decoration:const InputDecoration(
+                            labelText: 'Nombre propietario',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          enabled: false, 
+                          controller: _correoPropietarioController,
+                          keyboardType: TextInputType.name,
+                          decoration:const InputDecoration(
+                            labelText: 'Correo',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          enabled: false, 
+                          controller: _telefonoPropietarioController,
+                          keyboardType: TextInputType.name,
+                          decoration:const InputDecoration(
+                            labelText: 'Telefono',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: _nombrePredioController,
                           keyboardType: TextInputType.name,
                           decoration:const InputDecoration(
                             labelText: 'Nombre del predio',
@@ -272,14 +352,29 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  int generateUniqueID() {
+    return Random().nextInt(1000000);
+  }
+
+// Función para verificar si el ID ya existe en la base de datos
+  
+
   void _handleRegistroPredio() async {
     if (formKey.currentState!.validate()) {
-      var idPredio = Random().nextInt(1000000);
-      var iduser = Random().nextInt(1000000);
+      
+      int idPredio = generateUniqueID(); // Genera un ID único
+      bool isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
+      while (!isUnique) {
+        idPredio = generateUniqueID();
+        isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
+      }
 
       Predio predio = Predio(id:idPredio.toString(),
-        idUsuario: iduser.toString(),
-        nombre: _nombreController.text,
+        idPropietario: _identificacionPropietarioController.text,
+        nombrePropietario: _nombrePropietarioController.text,
+        correoPropietario: _correoPropietarioController.text,
+        telefonoPropietario: _telefonoPropietarioController.text,
+        nombre: _nombrePredioController.text,
         corregimientoVereda: _corregimientoVeredaController.text,
         departamento: _departamentoController.text,
         municipio: _municipioController.text,
@@ -293,10 +388,10 @@ class _RegisterPageState extends State<RegisterPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return const MensajeShowDialog(title: "Title",message: "Se registró correctamente el predio");
+          return const MensajeShowDialog(title: "Registro Exitoso",message: "Se registró correctamente el predio");
         },
       );
-      FormUtils.clearTextControllers([_nombreController,_corregimientoVeredaController,
+      FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,_telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
         _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
       ]);
       FocusScope.of(context).unfocus();

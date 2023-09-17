@@ -29,14 +29,17 @@ List<Predio> conversiondelista(List registro){
   for (var i = 0; i < registro.length; i++) {
     resultado.add(
       Predio(id: registro[i]['Id'],
-        idUsuario:registro[i]['IdUsuario'] , 
+        idPropietario:registro[i]['IdPropietario'] , 
+        nombrePropietario: registro[i]['NombrePropietario'],
+        correoPropietario: registro[i]['CorreoPropietario'],
+        telefonoPropietario: registro[i]['TelefonoPropietario'],
         nombre: registro[i]['Nombre'], 
         corregimientoVereda: registro[i]['CorregimientoVereda'], 
         departamento: registro[i]['Departamento'], 
         municipio: registro[i]['Municipio'], 
         cultivo: registro[i]['Cultivo'],
-        variedad: registro[i]['variedad'],
-        edad: registro[i]['edad'],
+        variedad: registro[i]['Variedad'],
+        edad: registro[i]['Edad'],
       )
     );
   }

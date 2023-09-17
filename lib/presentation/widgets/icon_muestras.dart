@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/registration_analisis.dart';
+import '../screens/registration_analisis_screen.dart';
 
 class IconMuestasMenu extends StatelessWidget {
   const IconMuestasMenu({
