@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'input_variables.dart';
+import 'mensaje_show_dialog.dart';
 
 class SueloWidget extends StatefulWidget {
   const SueloWidget({
@@ -36,7 +39,20 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _arenaController = TextEditingController();
   final TextEditingController _humusController = TextEditingController();
 
+  //*INFORMACION DEL PREDIO */
+  TextEditingController nombrePredioController = TextEditingController();
+  CollectionReference prediosCollection =
+      FirebaseFirestore.instance.collection('Predios');
 
+  final TextEditingController _corregimientoPredioController = TextEditingController();
+  final TextEditingController _cultivoPredioController = TextEditingController();
+  final TextEditingController _municipioPredioController = TextEditingController();
+  final TextEditingController _variedadPredioController = TextEditingController();
+  final TextEditingController _dptoPredioController = TextEditingController();
+  final TextEditingController _edadPredioController = TextEditingController();
+  final TextEditingController _nombrepropietarioPredioController = TextEditingController();
+  final TextEditingController _telefonopropietarioPredioController = TextEditingController();
+  final TextEditingController _correopropietarioPredioController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +65,13 @@ class _SueloWidgetState extends State<SueloWidget> {
           ),
         ), 
         child: Stepper(
-          
           physics: const ScrollPhysics(),
           currentStep: currentState,
           onStepTapped:(index) {
             setState(() => currentState = index);
           },
           onStepContinue: () {
-            if (currentState != 2) {
+            if (currentState != 3) {
               setState(() => currentState++);
             }
           },
@@ -70,6 +85,11 @@ class _SueloWidgetState extends State<SueloWidget> {
           steps:[
             Step(
               isActive: currentState >= 0,
+              title: const Text('Informacion del predio'), 
+              content: SearchPredio(predioFilterController: nombrePredioController, prediosCollection: prediosCollection, corregimientoPredioController: _corregimientoPredioController, cultivoPredioController: _cultivoPredioController, municipioPredioController: _municipioPredioController, variedadPredioController: _variedadPredioController, dptoPredioController: _dptoPredioController, edadPredioController: _edadPredioController, nombrepropietarioPredioController: _nombrepropietarioPredioController, telefonopropietarioPredioController: _telefonopropietarioPredioController, correopropietarioPredioController: _correopropietarioPredioController),
+            ),
+            Step(
+              isActive: currentState >= 1,
               title: const Text('Macronutrientes'), 
               content: Column(
                 children: [
@@ -86,7 +106,7 @@ class _SueloWidgetState extends State<SueloWidget> {
               ),
             ),
             Step(
-              isActive: currentState >= 1,
+              isActive: currentState >= 2,
               title: const Text('Micronutrientes'), 
               content: Column(
                 children: [
@@ -100,7 +120,7 @@ class _SueloWidgetState extends State<SueloWidget> {
               )
             ),
             Step(
-              isActive: currentState >= 2,
+              isActive: currentState >= 3,
               title: const Text('Extra'), 
               content: Column(
                 children: [
@@ -149,25 +169,38 @@ class _SueloWidgetState extends State<SueloWidget> {
     );
   }
   void _handleRegistroSuelo(){
-    if (formKey.currentState!.validate()) {
-      //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(_nController.text),
-            content: Text(_nh4Controller.text),
-          );
-        },
-      );
+    if (nombrePredioController.text.isNotEmpty && _corregimientoPredioController.text.isNotEmpty && _cultivoPredioController.text.isNotEmpty &&
+        _municipioPredioController.text.isNotEmpty && _variedadPredioController.text.isNotEmpty && _dptoPredioController.text.isNotEmpty && 
+        _edadPredioController.text.isNotEmpty && _nombrepropietarioPredioController.text.isNotEmpty && _telefonopropietarioPredioController.text.isNotEmpty 
+        && _correopropietarioPredioController.text.isNotEmpty) {
+      
+      if (formKey.currentState!.validate()) {
+        //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(_nController.text),
+              content: Text(_nh4Controller.text),
+            );
+          },
+        );
+      } else{
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              title: Text("Upss!"),
+              content: Text("Debes llenar todos los campos"),
+            );
+          },
+        );
+      }
     }else{
       showDialog(
         context: context,
         builder: (context) {
-          return const AlertDialog(
-            title: Text("Upss!"),
-            content: Text("Debes llenar todos los campos"),
-          );
+          return const MensajeShowDialog(title: "Ups!",message: "Debes elegir un propietario");
         },
       );
     }

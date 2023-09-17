@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if(_cliente.rol == 'Analista') const ImgAnalista(),   
                   const SizedBox(height: 10),
                   Text(
-                     _cliente.nombre,  //user.name,
+                    _cliente.nombre,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -60,9 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Text(
-                    _cliente.correo,//user.email,
+                    _cliente.correo,
                     style: const TextStyle(
                       color: Colors.white,
+                      //color: Color(0XFFb3b3ba),
                       fontSize: 14,
                     ),
                   ),
@@ -83,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        
       ),
       body:Container(
         width: MediaQuery.of(context).size.width,

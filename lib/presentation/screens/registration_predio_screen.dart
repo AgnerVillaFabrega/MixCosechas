@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/presentation/widgets/search_propietario.dart';
 import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
@@ -26,7 +27,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
- 
+
   final TextEditingController _identificacionPropietarioController = TextEditingController();
   final TextEditingController _nombrePropietarioController = TextEditingController();
   final TextEditingController _correoPropietarioController = TextEditingController();
@@ -41,7 +42,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _edadController = TextEditingController();
   final ServiceFirebase _serviceFirebase = ServiceFirebase();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  
+  //*INFORMACION DEL PREDIO */
+  TextEditingController predioFilterController = TextEditingController();
+  CollectionReference propietariosCollection =
+      FirebaseFirestore.instance.collection('Usuarios');
+  
+  int currentState = 0;
   List<String> departamentos = [];
   List<String> municipios = [];
 
@@ -49,25 +56,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
     String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
     List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
-    
     Set<String> departamentosSet = Set<String>(); 
-    
+
     for (var row in parsedCsv) {
       if (row.isNotEmpty) {
         departamentosSet.add(row[0].toString()); 
       }
     }
-    
     setState(() {
       departamentos = departamentosSet.toList(); 
     });
-
   }
+  
   void cargarMunicipios(String departamento) async {
-
     String data = await DefaultAssetBundle.of(context).loadString('assets/departamentos_Municipios.csv');
     List<List<dynamic>> parsedCsv = const csv.CsvToListConverter(fieldDelimiter: ';').convert(data);
-    
     Set<String> muicipiosSet = Set<String>(); 
     
     for (var row in parsedCsv) {
@@ -75,11 +78,10 @@ class _RegisterPageState extends State<RegisterPage> {
         muicipiosSet.add(row[1].toString()); 
       }
     }
-    
+
     setState(() {
       municipios = muicipiosSet.toList(); 
     });
-
   }
 
   @override
@@ -87,265 +89,214 @@ class _RegisterPageState extends State<RegisterPage> {
     cargarDepartamentos();
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  alignment: const Alignment(-0.8, 0),
-                  child: const Text(
-                    'Registrar predio',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26,
-                      //color: Color(0XFF35424A)
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                alignment: const Alignment(-0.75, 0),
+                child: const Text(
+                  'Registrar predio',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26
                   ),
                 ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical:8.0),
-                  child: Form(
-                    key: formKey,
-                    child:Column(
-                      children: [
-                        Row(
+              ),
+              const SizedBox(height: 10),
+              Form(
+                key: formKey,
+                child:Theme(
+                  data:Theme.of(context).copyWith(
+                    colorScheme: const ColorScheme.light(
+                      primary: Color(0xFF19AA89)
+                    ),
+                  ), 
+                  child: Stepper(
+                    physics: const ScrollPhysics(),
+                    currentStep: currentState,
+                    onStepTapped:(index) {
+                      setState(() => currentState = index);
+                    },
+                    onStepContinue: () {
+                      if (currentState != 1) {
+                        setState(() => currentState++);
+                      }
+                    },
+                    onStepCancel: () {
+                      if (currentState != 0) {
+                        setState(() => currentState--);
+                      }
+                    },
+                    steps: [
+                      Step(
+                        isActive: currentState >= 0,
+                        title: const Text('Informacion del predio'), 
+                        content:SearchPropietario(propietarioFilterController: _identificacionPropietarioController, propietarioCollection:propietariosCollection , nombrepropietarioPredioController: _nombrePropietarioController, telefonopropietarioPredioController: _telefonoPropietarioController, correopropietarioPredioController: _correoPropietarioController),
+                      ),
+                      Step(
+                        isActive: currentState >= 1,
+                        title: const Text('Informacion del predio'), 
+                        content:Column(
                           children: [
-                            Expanded(
-                              flex: 4,
-                              child:TextFormField(
-                                controller: _identificacionPropietarioController,
-                                keyboardType: TextInputType.number,
-                                decoration:const InputDecoration(
-                                  labelText: 'Identificacion Propietario',
-                                  labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                                ),
-                                validator: (String? value){
-                                  if (value ==null || value.isEmpty) {
-                                      return "Se requiere propietario";
-                                    }
-                                    return null;
+                            TextFormField(
+                              controller: _nombrePredioController,
+                              keyboardType: TextInputType.name,
+                              decoration:const InputDecoration(
+                                labelText: 'Nombre del predio',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
                                 }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _corregimientoVeredaController,
+                              keyboardType: TextInputType.name,
+                              decoration:const  InputDecoration(
+                                labelText: 'Corregimiento/Vereda',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                               ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: ElevatedButton(
-                                onPressed:() async{
-                                  
-                                  Cliente? cliente = await _serviceFirebase.consultarClientePorId(_identificacionPropietarioController.text);
-                                  if(cliente != null) {
-                                    _nombrePropietarioController.text = cliente.nombre;
-                                    _telefonoPropietarioController.text = cliente.telefono;
-                                    _correoPropietarioController.text = cliente.correo;
-                                  }else{
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return const MensajeShowDialog(title: "Error!!",message: "No se encontró el propietario");
-                                      },
-                                    );
-                                    FormUtils.clearTextControllers([_nombrePropietarioController,_telefonoPropietarioController,_correoPropietarioController]);
-                                  }
-                                } ,
-                                child:const Icon(Icons.search),
+                            const SizedBox(height: 10),
+                            DropdownButtonFormField<String>(
+                              value: _departamentoController.text,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _departamentoController.text = newValue!;
+                                  _municipioController.text = '';
+                                  cargarMunicipios(_departamentoController.text);
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Departamento',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          enabled: false, 
-                          controller: _nombrePropietarioController,
-                          keyboardType: TextInputType.name,
-                          decoration:const InputDecoration(
-                            labelText: 'Nombre propietario',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          enabled: false, 
-                          controller: _correoPropietarioController,
-                          keyboardType: TextInputType.name,
-                          decoration:const InputDecoration(
-                            labelText: 'Correo',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          enabled: false, 
-                          controller: _telefonoPropietarioController,
-                          keyboardType: TextInputType.name,
-                          decoration:const InputDecoration(
-                            labelText: 'Telefono',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _nombrePredioController,
-                          keyboardType: TextInputType.name,
-                          decoration:const InputDecoration(
-                            labelText: 'Nombre del predio',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
-                            }
-                            return null;
-                          }
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _corregimientoVeredaController,
-                          keyboardType: TextInputType.name,
-                          decoration:const  InputDecoration(
-                            labelText: 'Corregimiento/Vereda',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
-                            }
-                            return null;
-                          }
-                        ),
-                        const SizedBox(height: 10),
-                        DropdownButtonFormField<String>(
-                          value: _departamentoController.text,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _departamentoController.text = newValue!;
-                              _municipioController.text = '';
-                              cargarMunicipios(_departamentoController.text);
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Departamento',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          items: [
-                            const DropdownMenuItem<String>(
-                              value: '',
-                              child: Text('Seleccione'),
+                              items: [
+                                const DropdownMenuItem<String>(
+                                  value: '',
+                                  child: Text('Seleccione'),
+                                ),
+                                ...departamentos.map((role) {
+                                  return DropdownMenuItem<String>(value: role, child: Text(role));
+                                }).toList(),
+                              ],
+                              validator: (value) {
+                                if (value == null||value.isEmpty ||value == 'Seleccione') {
+                                  return 'Por favor, selecciona un departamento';
+                                }
+                                return null;
+                              },
                             ),
-                            ...departamentos.map((role) {
-                              return DropdownMenuItem<String>(value: role, child: Text(role));
-                            }).toList(),
-                          ],
-                          validator: (value) {
-                            if (value == null||value.isEmpty ||value == 'Seleccione') {
-                              return 'Por favor, selecciona un departamento';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        DropdownButtonFormField<String>(
-                          value: _municipioController.text,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _municipioController.text = newValue!;
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Municipio',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          items: [
-                            const DropdownMenuItem<String>(
-                              value: '',
-                              child: Text('Seleccione'), // O cualquier otro texto que desees
+                            const SizedBox(height: 10),
+                            DropdownButtonFormField<String>(
+                              value: _municipioController.text,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _municipioController.text = newValue!;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Municipio',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              items: [
+                                const DropdownMenuItem<String>(
+                                  value: '',
+                                  child: Text('Seleccione'), // O cualquier otro texto que desees
+                                ),
+                                ...municipios.map((role) {
+                                  return DropdownMenuItem<String>(value: role, child: Text(role));
+                                }).toList(),
+                              ],
+                              validator: (value) {
+                                if (value == null||value.isEmpty ||value == 'Seleccione' ) {
+                                  return 'Por favor, selecciona un municipio';
+                                }
+                                return null;
+                              },
                             ),
-                            ...municipios.map((role) {
-                              return DropdownMenuItem<String>(value: role, child: Text(role));
-                            }).toList(),
-                          ],
-                          validator: (value) {
-                            if (value == null||value.isEmpty ||value == 'Seleccione' ) {
-                              return 'Por favor, selecciona un municipio';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _cultivoController,
-                          keyboardType: TextInputType.name,
-                          decoration: const InputDecoration(
-                            labelText: 'Cultivo',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
-                            }
-                            return null;
-                          }
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _variedadController,
-                          keyboardType: TextInputType.name,
-                          decoration:const InputDecoration(
-                            labelText: 'Variedad',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
-                            }
-                            return null;
-                          }
-                        ),
-                        const SizedBox(height: 10),
-                        DropdownButtonFormField<String>(
-                          value: _edadController.text,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _edadController.text = newValue!;
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Edad',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
-                          ),
-                          items: [
-                            const DropdownMenuItem<String>(
-                              value: '',
-                              child: Text('Seleccione'),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _cultivoController,
+                              keyboardType: TextInputType.name,
+                              decoration: const InputDecoration(
+                                labelText: 'Cultivo',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
                             ),
-                            ...['Presiembra', 'Siembra'].map((role) {
-                              return DropdownMenuItem<String>(value: role, child: Text(role));
-                            }).toList(),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _variedadController,
+                              keyboardType: TextInputType.name,
+                              decoration:const InputDecoration(
+                                labelText: 'Variedad',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            DropdownButtonFormField<String>(
+                              value: _edadController.text,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _edadController.text = newValue!;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Edad',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              items: [
+                                const DropdownMenuItem<String>(
+                                  value: '',
+                                  child: Text('Seleccione'),
+                                ),
+                                ...['Presiembra', 'Siembra'].map((role) {
+                                  return DropdownMenuItem<String>(value: role, child: Text(role));
+                                }).toList(),
+                              ],
+                              validator: (value) {
+                                if (value == null||value.isEmpty ||value == 'Seleccione') {
+                                  return 'Por favor, selecciona una edad';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            RegistrarseButtom(onTap: _handleRegistroPredio),
                           ],
-                          validator: (value) {
-                            if (value == null||value.isEmpty ||value == 'Seleccione') {
-                              return 'Por favor, selecciona una edad';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    )
-                  )
-                ),
-                const SizedBox(height: 20),
-                RegistrarseButtom(onTap: _handleRegistroPredio),
-              ],
-            ),
+                        )
+                      ),
+                    ]
+                  ),
+                )
+              ),
+              
+            ],
           ),
         ),
       ),
@@ -356,45 +307,48 @@ class _RegisterPageState extends State<RegisterPage> {
     return Random().nextInt(1000000);
   }
 
-// Función para verificar si el ID ya existe en la base de datos
-  
-
   void _handleRegistroPredio() async {
-    if (formKey.currentState!.validate()) {
-      
-      int idPredio = generateUniqueID(); // Genera un ID único
-      bool isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
-      while (!isUnique) {
-        idPredio = generateUniqueID();
-        isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
+    //Todo: agregar los valores de correo, telefono y nombre
+    if (_identificacionPropietarioController.text.isNotEmpty && _nombrePropietarioController.text.isNotEmpty && _telefonoPropietarioController.text.isNotEmpty && _correoPropietarioController.text.isNotEmpty) {
+      if (formKey.currentState!.validate()) {
+        int idPredio = generateUniqueID(); // Genera un ID único
+        bool isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
+        while (!isUnique) {
+          idPredio = generateUniqueID();
+          isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
+        }
+        Predio predio = Predio(id:idPredio.toString(),
+          idPropietario: _identificacionPropietarioController.text,
+          nombrePropietario: _nombrePropietarioController.text,
+          correoPropietario: _correoPropietarioController.text,
+          telefonoPropietario: _telefonoPropietarioController.text,
+          nombre: _nombrePredioController.text,
+          corregimientoVereda: _corregimientoVeredaController.text,
+          departamento: _departamentoController.text,
+          municipio: _municipioController.text,
+          cultivo: _cultivoController.text,
+          variedad: _variedadController.text,
+          edad: _edadController.text
+        );
+        _serviceFirebase.addPredio(predio);
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const MensajeShowDialog(title: "Registro Exitoso",message: "Se registró correctamente el predio");
+          },
+        );
+        FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,_telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
+          _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
+        ]);
+        FocusScope.of(context).unfocus();
       }
-
-      Predio predio = Predio(id:idPredio.toString(),
-        idPropietario: _identificacionPropietarioController.text,
-        nombrePropietario: _nombrePropietarioController.text,
-        correoPropietario: _correoPropietarioController.text,
-        telefonoPropietario: _telefonoPropietarioController.text,
-        nombre: _nombrePredioController.text,
-        corregimientoVereda: _corregimientoVeredaController.text,
-        departamento: _departamentoController.text,
-        municipio: _municipioController.text,
-        cultivo: _cultivoController.text,
-        variedad: _variedadController.text,
-        edad: _edadController.text
-      );
-
-      _serviceFirebase.addPredio(predio);
-
+    }else{
       showDialog(
         context: context,
         builder: (context) {
-          return const MensajeShowDialog(title: "Registro Exitoso",message: "Se registró correctamente el predio");
+          return const MensajeShowDialog(title: "Ups!",message: "Debes elegir un propietario");
         },
       );
-      FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,_telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
-        _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
-      ]);
-      FocusScope.of(context).unfocus();
     }
   }
 }
@@ -411,9 +365,9 @@ class RegistrarseButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      
       child: ElevatedButton(
         onPressed: _onTap,
         style: ElevatedButton.styleFrom(

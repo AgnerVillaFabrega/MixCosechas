@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: 'Correo electrónico',
-                          contentPadding: EdgeInsets.only(bottom: 1),
+                          //contentPadding: EdgeInsets.only(bottom: 1),
                           labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                         ),
                         validator: (String? value){
@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: _isObscure,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
-                          contentPadding: const EdgeInsets.only(bottom:1),
+                          //contentPadding: const EdgeInsets.only(bottom:1),
                           labelStyle: const TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                           suffixIcon: IconButton(
                             onPressed: () {
