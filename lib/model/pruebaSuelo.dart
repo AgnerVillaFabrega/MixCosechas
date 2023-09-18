@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class PruebaSuelo{
   final double N;
   final double NH4;
@@ -7,7 +9,6 @@ class PruebaSuelo{
   final double K;
   final double Ca;
   final double Mg;
-  final double S;
   final double SO4;
   final double Fe;
   final double Mn;
@@ -32,6 +33,102 @@ class PruebaSuelo{
   late double humus;
   late String textura;
 
+
+
+
+  final List<String> nombreCompuestos = [
+    'Nitrato de Nitrógeno - N',
+    'Nitrógeno amoniacal - NH4+',
+    'Nitritos - NO2-',
+    'Nitratos - NO3-',
+    'Fósforo - P',
+    'Potasio - K',
+    'Calcio - Ca',
+    'Magnesio - Mg',
+    'Sulfato - SO4',
+    'Hierro Férrico - Fe ',
+    'Manganeso - Mn',
+    'Cobre - Cu',
+    'Aluminio - Al',
+    'Cloruro - Cl',
+    'Zinc - Zn',
+    'Ph',
+    'C.E',
+    'Sales Disueltas',
+    'C.I.C.E',
+    'Ca/Mg',
+    'Ca+Mg/K',
+    'Ca/K',
+    'Mg/K',
+    'Arcilla',
+    'Limo',
+    'Arena',
+    'Humus',
+    'Textura',
+  ];
+
+  late List<double> valorCompuestos = [
+    N,
+    NH4,
+    NO2,
+    NO3,
+    P,
+    K,
+    Ca,
+    Mg,
+    SO4,
+    Fe,
+    Mn,
+    Cu,
+    Al,
+    Cl,
+    Zn,
+    Ph,
+    C_E,
+    salesDisueltas,
+    CICE,
+    CaMg,
+    CaMgK,
+    CaK,
+    MgK,
+    arcilla,
+    limo,
+    arena,
+    humus,
+    0,
+  ];
+
+  late List<String> interpretacionCompuestos = [
+    N_Interpretacion,
+    NH4_Interpretacion,
+    NO2_Interpretacion,
+    NO3_Interpretacion,
+    P_Interpretacion,
+    K_Interpretacion,
+    Ca_Interpretacion,
+    Mg_Interpretacion,
+    SO4_Interpretacion,
+    Fe_Interpretacion,
+    Mn_Interpretacion,
+    Cu_Interpretacion,
+    Al_Interpretacion,
+    Cl_Interpretacion,
+    Zn_Interpretacion,
+    Ph_Interpretacion,
+    'Por Definir',
+    salesDisueltas_Interpretacion,
+    'Por Definir',
+    CaMg_Interpretacion,
+    CaMgK_Interpretacion,
+    CaK_Interpretacion,
+    MgK_Interpretacion,
+    'NA',
+    'NA',
+    'NA',
+    humus_Interpretacion,
+    textura_interpretacion
+  ];
+
   late String N_Interpretacion;
   late String NH4_Interpretacion;
   late String NO2_Interpretacion;
@@ -40,7 +137,6 @@ class PruebaSuelo{
   late String K_Interpretacion;
   late String Ca_Interpretacion;
   late String Mg_Interpretacion;
-  late String S_Interpretacion;
   late String SO4_Interpretacion;
   late String Fe_Interpretacion;
   late String Mn_Interpretacion;
@@ -63,6 +159,7 @@ class PruebaSuelo{
   late String limo_Interpretacion;
   late String arena_Interpretacion;
   late String humus_Interpretacion;
+  late String textura_interpretacion;
 
   PruebaSuelo({
     required this.N, 
@@ -73,7 +170,6 @@ class PruebaSuelo{
     required this.K,
     required this.Ca,
     required this.Mg,
-    required this.S,
     required this.SO4,
     required this.Fe,
     required this.Mn,
@@ -129,6 +225,7 @@ class PruebaSuelo{
     // limo_Interpretacion = interpretar_limo(limo);
     // arena_Interpretacion = interpretar_arena(arena);
     humus_Interpretacion = interpretar_humus(humus);
+    textura_interpretacion = interpretar_textura(arcilla, limo, arena);
      
   }
 
@@ -438,7 +535,6 @@ class PruebaSuelo{
       K: map['K'],
       Ca: map['Ca'],
       Mg: map['Mg'],
-      S: map['S'],
       SO4: map['SO4'],
       Fe: map['Fe'],
       Mn: map['Mn'],
