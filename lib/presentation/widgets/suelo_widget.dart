@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'input_variables.dart';
 import 'mensaje_show_dialog.dart';
@@ -24,12 +25,14 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _kController = TextEditingController();
   final TextEditingController _caController = TextEditingController();
   final TextEditingController _mgController = TextEditingController();
+  final TextEditingController _sController = TextEditingController();
   final TextEditingController _so4Controller = TextEditingController();
   final TextEditingController _feController = TextEditingController();
   final TextEditingController _mnController = TextEditingController();
   final TextEditingController _cuController = TextEditingController();
   final TextEditingController _alController = TextEditingController();
   final TextEditingController _clController = TextEditingController();
+  final TextEditingController _znController = TextEditingController();
   final TextEditingController _salesdisueltasController = TextEditingController();
   final TextEditingController _phController = TextEditingController();
   final TextEditingController _ceController = TextEditingController();
@@ -41,8 +44,7 @@ class _SueloWidgetState extends State<SueloWidget> {
 
   //*INFORMACION DEL PREDIO */
   TextEditingController nombrePredioController = TextEditingController();
-  CollectionReference prediosCollection =
-      FirebaseFirestore.instance.collection('Predios');
+  CollectionReference prediosCollection = FirebaseFirestore.instance.collection('Predios');
 
   final TextEditingController _corregimientoPredioController = TextEditingController();
   final TextEditingController _cultivoPredioController = TextEditingController();
@@ -101,6 +103,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                   ImputVariable(nombreVariable: 'Potasio - K',controller: _kController),
                   ImputVariable(nombreVariable: 'Calcio - Ca',controller: _caController),
                   ImputVariable(nombreVariable: 'Magnesio - Mg',controller: _mgController),
+                  ImputVariable(nombreVariable: 'Azufre - S',controller: _sController),
                   ImputVariable(nombreVariable: 'Sulfato - SO4',controller: _so4Controller),
                 ],
               ),
@@ -115,6 +118,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                   ImputVariable(nombreVariable: 'Cobre - Cu',controller: _cuController),
                   ImputVariable(nombreVariable: 'Aluminio - Al',controller: _alController),
                   ImputVariable(nombreVariable: 'Cloruro - Cl',controller: _clController),
+                  ImputVariable(nombreVariable: 'Zinc - Zn',controller: _znController),
                   ImputVariable(nombreVariable: 'Sales Disueltas',controller: _salesdisueltasController),
                 ],
               )
@@ -176,6 +180,31 @@ class _SueloWidgetState extends State<SueloWidget> {
       
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
+        PruebaSuelo pruebaSuelo = PruebaSuelo(N: double.parse(_nController.text), 
+        NH4: double.parse(_nh4Controller.text), 
+        NO2: double.parse(_no2Controller.text), 
+        NO3: double.parse(_no3Controller.text), 
+        P: double.parse(_pController.text), 
+        K: double.parse(_kController.text), 
+        Ca: double.parse(_caController.text), 
+        Mg: double.parse(_mgController.text), 
+        S: double.parse(_sController.text), 
+        SO4: double.parse(_so4Controller.text),
+        Fe: double.parse(_feController.text), 
+        Mn: double.parse(_mnController.text), 
+        Cu: double.parse(_cuController.text), 
+        Al: double.parse(_alController.text), 
+        Cl: double.parse(_clController.text), 
+        Zn: double.parse(_znController.text), 
+        Ph: double.parse(_phController.text), 
+        C_E: double.parse(_ceController.text), 
+        salesDisueltas: double.parse(_salesdisueltasController.text), 
+        CICE: double.parse(_ciceController.text),
+        arcilla: double.parse(_arcillaController.text),
+        limo: double.parse(_limoController.text),
+        arena: double.parse(_arenaController.text),
+        humus: double.parse(_humusController.text));
+
         showDialog(
           context: context,
           builder: (context) {
@@ -206,6 +235,7 @@ class _SueloWidgetState extends State<SueloWidget> {
     }
   }
 }
+
 
 class RegistrarPruebasButtom extends StatelessWidget {
   const RegistrarPruebasButtom({super.key, required  VoidCallback onTap}):_onTap = onTap;

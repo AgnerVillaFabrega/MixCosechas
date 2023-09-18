@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
 import '../model/predios.dart';
 
@@ -89,6 +90,39 @@ class ServiceFirebase {
       print("Error al agregar el cultivo: $e");
     }
   }
+
+  // Future<void> addPruebaSuelo (PruebaSuelo pruebaSuelo) async {
+  //   try {
+  //     await db.collection('Predios').add({
+  //       "Id":predio.id,
+  //       "IdPropietario":predio.idPropietario,
+  //       "NombrePropietario":predio.nombrePropietario,
+  //       "CorreoPropietario":predio.correoPropietario,
+  //       "TelefonoPropietario":predio.telefonoPropietario,
+  //       "Nombre":predio.nombre,
+  //       "CorregimientoVereda":predio.corregimientoVereda,
+  //       "Departamento":predio.departamento,
+  //       "Municipio":predio.municipio,
+  //       "Cultivo":predio.cultivo,
+  //       "Variedad":predio.variedad,
+  //       "Edad":predio.edad
+  //       }
+  //     );
+
+  //     await sueloCollection.add({
+  //       'Nitrogeno': [
+  //         {
+  //           'valor': valor,
+  //           'categoria': categoria,
+  //         }
+  //       ]
+  //     });
+  //   } catch (e){
+  //     print("Error al agregar el cultivo: $e");
+  //   }
+  // }
+
+  
 
   
 

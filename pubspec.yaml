@@ -18,6 +18,7 @@ dependencies:
   firebase_database: null
   flutter:
     sdk: flutter
+  
   flutter_typeahead: ^4.7.0
   get: null
 
