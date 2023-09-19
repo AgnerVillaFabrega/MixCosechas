@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 class PruebaSuelo{
   final double N;
   final double NH4;
@@ -189,8 +187,11 @@ class PruebaSuelo{
     required this.humus,
   }){
       
-    CaMg =  (Ca / Mg);
-    CaMgK = Ca + Mg /K;
+    double d = (Ca / Mg);
+    String inString = d.toStringAsFixed(3); // '2.35'
+    CaMg = double.parse(inString);
+    //CaMg =  (Ca / Mg);
+    CaMgK = ((Ca + Mg)/K);
     CaK = Ca/K;
     MgK = Mg / K;
     textura = interpretar_textura(arcilla, limo, arena);

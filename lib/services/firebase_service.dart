@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
-import 'package:mixcosechas_app/model/pruebaSuelo.dart';
+//import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
 import '../model/predios.dart';
 

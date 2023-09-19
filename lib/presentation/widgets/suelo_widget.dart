@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
+import 'package:mixcosechas_app/presentation/widgets/show_result.dart';
 import '../../services/firebase_service.dart';
 import 'input_variables.dart';
 import 'mensaje_show_dialog.dart';
@@ -27,7 +28,7 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _kController = TextEditingController();
   final TextEditingController _caController = TextEditingController();
   final TextEditingController _mgController = TextEditingController();
-  final TextEditingController _sController = TextEditingController();
+  //final TextEditingController _sController = TextEditingController();
   final TextEditingController _so4Controller = TextEditingController();
   final TextEditingController _feController = TextEditingController();
   final TextEditingController _mnController = TextEditingController();
@@ -105,7 +106,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                   ImputVariable(nombreVariable: 'Potasio - K',controller: _kController),
                   ImputVariable(nombreVariable: 'Calcio - Ca',controller: _caController),
                   ImputVariable(nombreVariable: 'Magnesio - Mg',controller: _mgController),
-                  ImputVariable(nombreVariable: 'Azufre - S',controller: _sController),
+                  //ImputVariable(nombreVariable: 'Azufre - S',controller: _sController),
                   ImputVariable(nombreVariable: 'Sulfato - SO4',controller: _so4Controller),
                 ],
               ),
@@ -209,14 +210,15 @@ class _SueloWidgetState extends State<SueloWidget> {
 
         _serviceFirebase.addPruebaSuelo(pruebaSuelo);
         
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(_nController.text),
-              content: Text(_nh4Controller.text),
-            );
-          },
+        final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
+
+        final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
+
+        final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ShowResult(nombreCompuestos: nombreCompuestos,valorCompuestos:valorCompuestos, interpretacionCompuestos: interpretacionCompuestos )),
         );
       } else{
         showDialog(
