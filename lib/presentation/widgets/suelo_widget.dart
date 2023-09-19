@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
+import '../../services/firebase_service.dart';
 import 'input_variables.dart';
 import 'mensaje_show_dialog.dart';
 
@@ -17,6 +18,7 @@ class SueloWidget extends StatefulWidget {
 class _SueloWidgetState extends State<SueloWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
   final TextEditingController _nController = TextEditingController();
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();
@@ -188,7 +190,7 @@ class _SueloWidgetState extends State<SueloWidget> {
         K: double.parse(_kController.text), 
         Ca: double.parse(_caController.text), 
         Mg: double.parse(_mgController.text), 
-        S: double.parse(_sController.text), 
+        //S: double.parse(_sController.text), 
         SO4: double.parse(_so4Controller.text),
         Fe: double.parse(_feController.text), 
         Mn: double.parse(_mnController.text), 
@@ -205,6 +207,8 @@ class _SueloWidgetState extends State<SueloWidget> {
         arena: double.parse(_arenaController.text),
         humus: double.parse(_humusController.text));
 
+        _serviceFirebase.addPruebaSuelo(pruebaSuelo);
+        
         showDialog(
           context: context,
           builder: (context) {

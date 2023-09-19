@@ -190,7 +190,7 @@ class PruebaSuelo{
   }){
       
     CaMg =  (Ca / Mg);
-    CaMgK = ((Ca + Mg)/K);
+    CaMgK = Ca + Mg /K;
     CaK = Ca/K;
     MgK = Mg / K;
     textura = interpretar_textura(arcilla, limo, arena);
