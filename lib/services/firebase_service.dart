@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
-//import 'package:mixcosechas_app/model/pruebaSuelo.dart';
+import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
 import '../model/predios.dart';
 
@@ -94,6 +94,19 @@ class ServiceFirebase {
   Future<void> addPruebaSuelo (PruebaSuelo pruebaSuelo) async {
     try {
       await db.collection('PruebaSuelo').add({
+        
+        
+        'NombrePredio': pruebaSuelo.nombrePredio,
+        'Corregimiento': pruebaSuelo.corregimientoPredio,
+        'Cultivo': pruebaSuelo.cultivoPredio,
+        'Municipio': pruebaSuelo.municipioPredio,
+        'Variedad': pruebaSuelo.variedadPredio,
+        'Departamento': pruebaSuelo.dptoPredio,
+        'Edad': pruebaSuelo.edadPredio,
+        'Nombrepropietario': pruebaSuelo.nombrepropietario,
+        'Telefono': pruebaSuelo.telefonopropietario,
+        'Correo': pruebaSuelo.correopropietario,
+
         'Nitrato de Nitrógeno - N': [
           {
             'valor': pruebaSuelo.N,
@@ -192,8 +205,8 @@ class ServiceFirebase {
         ],
         'C.E':[
           {
-            'valor': pruebaSuelo.C_E,
-            'interpretacion': pruebaSuelo.C_E_Interpretacion,
+            'valor': 78, //pruebaSuelo.C_E,
+            'interpretacion':  'Por definir'//pruebaSuelo.C_E_Interpretacion,
           }
         ],
         'Sales Disueltas':[
@@ -204,8 +217,8 @@ class ServiceFirebase {
         ],
         'C.I.C.E':[
           {
-            'valor': pruebaSuelo.CICE,
-            'interpretacion': pruebaSuelo.CICE_Interpretacion,
+            'valor': 65,//pruebaSuelo.CICE,
+            'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
           }
         ],
         'Ca/Mg':[
@@ -235,19 +248,19 @@ class ServiceFirebase {
         'Arcilla':[
           {
             'valor': pruebaSuelo.arcilla,
-            'interpretacion': pruebaSuelo.arcilla_Interpretacion,
+            'interpretacion': 'Por definir' //pruebaSuelo.arcilla_Interpretacion,
           }
         ],
         'Limo':[
           {
             'valor': pruebaSuelo.limo,
-            'interpretacion': pruebaSuelo.limo_Interpretacion,
+            'interpretacion': 'Por definir' //pruebaSuelo.limo_Interpretacion,
           }
         ],
         'Arena':[
           {
             'valor': pruebaSuelo.arena,
-            'interpretacion': pruebaSuelo.arena_Interpretacion,
+            'interpretacion': 'Por definir' //pruebaSuelo.arena_Interpretacion,
           }
         ],
         'Humus':[

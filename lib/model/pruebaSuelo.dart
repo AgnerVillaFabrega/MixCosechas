@@ -1,4 +1,15 @@
 class PruebaSuelo{
+   final String nombrePredio; 
+   final String corregimientoPredio;
+   final String cultivoPredio;
+   final String municipioPredio; 
+   final String variedadPredio;
+   final String dptoPredio;
+   final String edadPredio; 
+   final String nombrepropietario;
+   final String telefonopropietario;
+   final String correopropietario;
+
   final double N;
   final double NH4;
   final double NO2;
@@ -144,22 +155,33 @@ class PruebaSuelo{
   late String Zn_Interpretacion;
 
   late String Ph_Interpretacion;
-  late String C_E_Interpretacion;
+  //late String C_E_Interpretacion;
   late String salesDisueltas_Interpretacion;
-  late String CICE_Interpretacion;
+  //late String CICE_Interpretacion;
 
   late String CaMg_Interpretacion;
   late String CaMgK_Interpretacion;
   late String CaK_Interpretacion;
   late String MgK_Interpretacion;
 
-  late String arcilla_Interpretacion;
-  late String limo_Interpretacion;
-  late String arena_Interpretacion;
+  //late String arcilla_Interpretacion;
+  //late String limo_Interpretacion;
+  //late String arena_Interpretacion;
   late String humus_Interpretacion;
   late String textura_interpretacion;
 
   PruebaSuelo({
+   required this.nombrePredio, 
+   required this.corregimientoPredio,
+   required this.cultivoPredio,
+   required this.municipioPredio, 
+   required this.variedadPredio,
+   required this.dptoPredio,
+   required this.edadPredio, 
+   required this.nombrepropietario,
+   required this.telefonopropietario,
+   required this.correopropietario,
+    
     required this.N, 
     required this.NH4, 
     required this.NO2,
@@ -191,7 +213,7 @@ class PruebaSuelo{
     String inString = d.toStringAsFixed(3); // '2.35'
     CaMg = double.parse(inString);
     //CaMg =  (Ca / Mg);
-    CaMgK = ((Ca + Mg)/K);
+    CaMgK = (Ca + Mg/K);
     CaK = Ca/K;
     MgK = Mg / K;
     textura = interpretar_textura(arcilla, limo, arena);
@@ -526,33 +548,33 @@ class PruebaSuelo{
     }
   }
 
-  factory PruebaSuelo.fromMap(Map<String, dynamic> map) {  
-    return PruebaSuelo(
-      N: map['N'],
-      NH4: map['NH4'],
-      NO2: map['NO2'],
-      NO3: map['NO3'],
-      P: map['P'],
-      K: map['K'],
-      Ca: map['Ca'],
-      Mg: map['Mg'],
-      SO4: map['SO4'],
-      Fe: map['Fe'],
-      Mn: map['Mn'],
-      Cu: map['Cu'],
-      Al: map['Al'],
-      Cl: map['Cl'],
-      Zn: map['Zn'],
+  // factory PruebaSuelo.fromMap(Map<String, dynamic> map) {  
+  //   return PruebaSuelo(
+  //     N: map['N'],
+  //     NH4: map['NH4'],
+  //     NO2: map['NO2'],
+  //     NO3: map['NO3'],
+  //     P: map['P'],
+  //     K: map['K'],
+  //     Ca: map['Ca'],
+  //     Mg: map['Mg'],
+  //     SO4: map['SO4'],
+  //     Fe: map['Fe'],
+  //     Mn: map['Mn'],
+  //     Cu: map['Cu'],
+  //     Al: map['Al'],
+  //     Cl: map['Cl'],
+  //     Zn: map['Zn'],
 
-      Ph: map['Ph'],
-      C_E: map['C_E'],
-      salesDisueltas: map['salesDisueltas'],
-      CICE: map['CICE'],
+  //     Ph: map['Ph'],
+  //     C_E: map['C_E'],
+  //     salesDisueltas: map['salesDisueltas'],
+  //     CICE: map['CICE'],
 
-      arcilla: map['Ph'],
-      limo: map['C_E'],
-      arena: map['salesDisueltas'],
-      humus: map['CICE']
-    );
-  }
+  //     arcilla: map['Ph'],
+  //     limo: map['C_E'],
+  //     arena: map['salesDisueltas'],
+  //     humus: map['CICE']
+  //   );
+  // }
 }

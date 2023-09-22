@@ -46,7 +46,7 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _humusController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
-  TextEditingController nombrePredioController = TextEditingController();
+  TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection = FirebaseFirestore.instance.collection('Predios');
 
   final TextEditingController _corregimientoPredioController = TextEditingController();
@@ -91,7 +91,7 @@ class _SueloWidgetState extends State<SueloWidget> {
             Step(
               isActive: currentState >= 0,
               title: const Text('Informacion del predio'), 
-              content: SearchPredio(predioFilterController: nombrePredioController, prediosCollection: prediosCollection, corregimientoPredioController: _corregimientoPredioController, cultivoPredioController: _cultivoPredioController, municipioPredioController: _municipioPredioController, variedadPredioController: _variedadPredioController, dptoPredioController: _dptoPredioController, edadPredioController: _edadPredioController, nombrepropietarioPredioController: _nombrepropietarioPredioController, telefonopropietarioPredioController: _telefonopropietarioPredioController, correopropietarioPredioController: _correopropietarioPredioController),
+              content: SearchPredio(predioFilterController: _nombrePredioController, prediosCollection: prediosCollection, corregimientoPredioController: _corregimientoPredioController, cultivoPredioController: _cultivoPredioController, municipioPredioController: _municipioPredioController, variedadPredioController: _variedadPredioController, dptoPredioController: _dptoPredioController, edadPredioController: _edadPredioController, nombrepropietarioPredioController: _nombrepropietarioPredioController, telefonopropietarioPredioController: _telefonopropietarioPredioController, correopropietarioPredioController: _correopropietarioPredioController),
             ),
             Step(
               isActive: currentState >= 1,
@@ -176,14 +176,25 @@ class _SueloWidgetState extends State<SueloWidget> {
     );
   }
   void _handleRegistroSuelo(){
-    if (nombrePredioController.text.isNotEmpty && _corregimientoPredioController.text.isNotEmpty && _cultivoPredioController.text.isNotEmpty &&
+    if (_nombrePredioController.text.isNotEmpty && _corregimientoPredioController.text.isNotEmpty && _cultivoPredioController.text.isNotEmpty &&
         _municipioPredioController.text.isNotEmpty && _variedadPredioController.text.isNotEmpty && _dptoPredioController.text.isNotEmpty && 
         _edadPredioController.text.isNotEmpty && _nombrepropietarioPredioController.text.isNotEmpty && _telefonopropietarioPredioController.text.isNotEmpty 
         && _correopropietarioPredioController.text.isNotEmpty) {
       
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
-        PruebaSuelo pruebaSuelo = PruebaSuelo(N: double.parse(_nController.text), 
+        PruebaSuelo pruebaSuelo = PruebaSuelo(
+        nombrePredio: _nombrePredioController.text,
+        corregimientoPredio: _corregimientoPredioController.text,
+        cultivoPredio: _cultivoPredioController.text,
+        municipioPredio: _municipioPredioController.text,
+        variedadPredio: _variedadPredioController.text,
+        dptoPredio: _dptoPredioController.text ,
+        edadPredio: _edadPredioController.text,
+        nombrepropietario: _nombrepropietarioPredioController.text,
+        telefonopropietario: _telefonopropietarioPredioController.text ,
+        correopropietario:_correopropietarioPredioController.text,
+        N: double.parse(_nController.text), 
         NH4: double.parse(_nh4Controller.text), 
         NO2: double.parse(_no2Controller.text), 
         NO3: double.parse(_no3Controller.text), 
