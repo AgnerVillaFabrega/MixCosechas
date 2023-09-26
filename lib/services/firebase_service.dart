@@ -4,6 +4,7 @@ import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
 import '../model/predios.dart';
+import '../model/pruebaAgua.dart';
 
 class ServiceFirebase {
   
@@ -284,8 +285,147 @@ class ServiceFirebase {
     }
   }
 
-  
+  Future<void> addPruebaAgua (PruebaAgua pruebaAgua) async {
+    try {
+      await db.collection('PruebaAgua').add({
+        
+        
+        'NombrePredio': pruebaAgua.nombrePredio,
+        'Corregimiento': pruebaAgua.corregimientoPredio,
+        'Cultivo': pruebaAgua.cultivoPredio,
+        'Municipio': pruebaAgua.municipioPredio,
+        'Variedad': pruebaAgua.variedadPredio,
+        'Departamento': pruebaAgua.dptoPredio,
+        'Edad': pruebaAgua.edadPredio,
+        'Nombrepropietario': pruebaAgua.nombrepropietario,
+        'Telefono': pruebaAgua.telefonopropietario,
+        'Correo': pruebaAgua.correopropietario,
 
+        'Nitrato de Nitrógeno - N': [
+          {
+            'valor': pruebaAgua.N,
+            'interpretacion': pruebaAgua.N_Interpretacion,
+          }
+        ],
+        'Nitrógeno amoniacal - NH4+':[
+          {
+            'valor': pruebaAgua.NH4,
+            'interpretacion': pruebaAgua.NH4_Interpretacion,
+          }
+        ],
+        'Nitritos - NO2-':[
+          {
+            'valor': pruebaAgua.NO2,
+            'interpretacion': pruebaAgua.NO2_Interpretacion,
+          }
+        ],
+        'Nitratos - NO3-':[
+          {
+            'valor': pruebaAgua.N,
+            'interpretacion': pruebaAgua.NO3_Interpretacion,
+          }
+        ],
+        'Fósforo - P':[
+          {
+            'valor': pruebaAgua.P,
+            'interpretacion': pruebaAgua.P_Interpretacion,
+          }
+        ],
+        'Potasio - K':[
+          {
+            'valor': pruebaAgua.K,
+            'interpretacion': pruebaAgua.K_Interpretacion,
+          }
+        ],
+        'Calcio - Ca':[
+          {
+            'valor': pruebaAgua.Ca,
+            'interpretacion': pruebaAgua.Ca_Interpretacion,
+          }
+        ],
+        'Magnesio - Mg':[
+          {
+            'valor': pruebaAgua.Mg,
+            'interpretacion': pruebaAgua.Mg_Interpretacion,
+          }
+        ],
+        'Sulfato - SO4':[
+          {
+            'valor': pruebaAgua.SO4,
+            'interpretacion': pruebaAgua.SO4_Interpretacion,
+          }
+        ],
+        'Hierro Férrico - Fe ':[
+          {
+            'valor': pruebaAgua.Fe,
+            'interpretacion': pruebaAgua.Fe_Interpretacion,
+          }
+        ],
+        'Manganeso - Mn':[
+          {
+            'valor': pruebaAgua.Mn,
+            'interpretacion': pruebaAgua.Mn_Interpretacion,
+          }
+        ],
+        'Cobre - Cu':[
+          {
+            'valor': pruebaAgua.Cu,
+            'interpretacion': pruebaAgua.Cu_Interpretacion,
+          }
+        ],
+        'Aluminio - Al':[
+          {
+            'valor': pruebaAgua.Al,
+            'interpretacion': pruebaAgua.Al_Interpretacion,
+          }
+        ],
+        'Cloruro - Cl':[
+          {
+            'valor': pruebaAgua.Cl,
+            'interpretacion': pruebaAgua.Cl_Interpretacion,
+          }
+        ],
+        'Ph':[
+          {
+            'valor': pruebaAgua.Ph,
+            'interpretacion': pruebaAgua.Ph_Interpretacion,
+          }
+        ],
+        'C.E':[
+          {
+            'valor': 78, //pruebaSuelo.C_E,
+            'interpretacion':  'Por definir'//pruebaSuelo.C_E_Interpretacion,
+          }
+        ],
+        'Sales Disueltas':[
+          {
+            'valor': pruebaAgua.salesDisueltas,
+            'interpretacion': pruebaAgua.salesDisueltas_Interpretacion,
+          }
+        ],
+        'C.I.C.E':[
+          {
+            'valor': 65,//pruebaSuelo.CICE,
+            'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
+          }
+        ],
+        'Ca/Mg':[
+          {
+            'valor': pruebaAgua.CaMg,
+            'interpretacion': pruebaAgua.CaMg_Interpretacion,
+          }
+        ],
+        'Tipo de Agua':pruebaAgua.tipoAgua
+
+      }
+    );
+
+    } catch (e){
+      print("Error al agregar la prueba: $e");
+    }
+  }
+  
+  
 }
 
 

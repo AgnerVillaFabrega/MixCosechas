@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
+import 'package:mixcosechas_app/presentation/widgets/show_result.dart';
 
+import '../../services/firebase_service.dart';
 import 'input_variables.dart';
 import 'mensaje_show_dialog.dart';
 
@@ -17,6 +20,7 @@ class AguaWidget extends StatefulWidget {
 class _AguaWidgetState extends State<AguaWidget> {
     int currentState = 0;
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final ServiceFirebase _serviceFirebase = ServiceFirebase();
     final TextEditingController _nController = TextEditingController();
     final TextEditingController _nh4Controller = TextEditingController();
     final TextEditingController _no2Controller = TextEditingController();
@@ -36,7 +40,7 @@ class _AguaWidgetState extends State<AguaWidget> {
     final TextEditingController _ceController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
-  TextEditingController nombrePredioController = TextEditingController();
+  TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection =
       FirebaseFirestore.instance.collection('Predios');
 
@@ -81,7 +85,7 @@ class _AguaWidgetState extends State<AguaWidget> {
             Step(
               isActive: currentState >= 0,
               title: const Text('Informacion del predio'), 
-              content: SearchPredio(predioFilterController: nombrePredioController, prediosCollection: prediosCollection, corregimientoPredioController: _corregimientoPredioController, cultivoPredioController: _cultivoPredioController, municipioPredioController: _municipioPredioController, variedadPredioController: _variedadPredioController, dptoPredioController: _dptoPredioController, edadPredioController: _edadPredioController, nombrepropietarioPredioController: _nombrepropietarioPredioController, telefonopropietarioPredioController: _telefonopropietarioPredioController, correopropietarioPredioController: _correopropietarioPredioController),
+              content: SearchPredio(predioFilterController: _nombrePredioController, prediosCollection: prediosCollection, corregimientoPredioController: _corregimientoPredioController, cultivoPredioController: _cultivoPredioController, municipioPredioController: _municipioPredioController, variedadPredioController: _variedadPredioController, dptoPredioController: _dptoPredioController, edadPredioController: _edadPredioController, nombrepropietarioPredioController: _nombrepropietarioPredioController, telefonopropietarioPredioController: _telefonopropietarioPredioController, correopropietarioPredioController: _correopropietarioPredioController),
             ),
             Step(
               isActive: currentState >= 1,
@@ -124,12 +128,58 @@ class _AguaWidgetState extends State<AguaWidget> {
     );
   }
   void _handleRegistroAgua(){
-    if (nombrePredioController.text.isNotEmpty && _corregimientoPredioController.text.isNotEmpty && _cultivoPredioController.text.isNotEmpty &&
-        _municipioPredioController.text.isNotEmpty && _variedadPredioController.text.isNotEmpty && _dptoPredioController.text.isNotEmpty && 
-        _edadPredioController.text.isNotEmpty && _nombrepropietarioPredioController.text.isNotEmpty && _telefonopropietarioPredioController.text.isNotEmpty 
-        && _correopropietarioPredioController.text.isNotEmpty) {
+    if (_nombrePredioController.text.isNotEmpty && _corregimientoPredioController.text.isNotEmpty && _cultivoPredioController.text.isNotEmpty &&
+      _municipioPredioController.text.isNotEmpty && _variedadPredioController.text.isNotEmpty && _dptoPredioController.text.isNotEmpty && 
+      _edadPredioController.text.isNotEmpty && _nombrepropietarioPredioController.text.isNotEmpty && _telefonopropietarioPredioController.text.isNotEmpty 
+      && _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
+        PruebaAgua pruebaAgua = PruebaAgua(
+        nombrePredio: _nombrePredioController.text,
+        corregimientoPredio: _corregimientoPredioController.text,
+        cultivoPredio: _cultivoPredioController.text,
+        municipioPredio: _municipioPredioController.text,
+        variedadPredio: _variedadPredioController.text,
+        dptoPredio: _dptoPredioController.text ,
+        edadPredio: _edadPredioController.text,
+        nombrepropietario: _nombrepropietarioPredioController.text,
+        telefonopropietario: _telefonopropietarioPredioController.text ,
+        correopropietario:_correopropietarioPredioController.text,
+        N: double.parse(_nController.text), 
+        NH4: double.parse(_nh4Controller.text), 
+        NO2: double.parse(_no2Controller.text), 
+        NO3: double.parse(_no3Controller.text), 
+        P: double.parse(_pController.text), 
+        K: double.parse(_kController.text), 
+        Ca: double.parse(_caController.text), 
+        Mg: double.parse(_mgController.text), 
+        SO4: double.parse(_so4Controller.text),
+        Fe: double.parse(_feController.text), 
+        Mn: double.parse(_mnController.text), 
+        Cu: double.parse(_cuController.text), 
+        Al: double.parse(_alController.text), 
+        Cl: double.parse(_clController.text), 
+        Ph: double.parse(_phController.text), 
+        C_E: double.parse(_ceController.text), 
+        salesDisueltas: double.parse(_salesdisueltasController.text)
+      );
+
+        _serviceFirebase.addPruebaAgua(pruebaAgua);
+        
+        final List<String> nombreCompuestos = pruebaAgua.nombreCompuestos;
+
+        final List<double> valorCompuestos = pruebaAgua.valorCompuestos;
+
+        final List<String> interpretacionCompuestos = pruebaAgua.interpretacionCompuestos;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ShowResult(nombreCompuestos: nombreCompuestos,valorCompuestos:valorCompuestos, interpretacionCompuestos: interpretacionCompuestos )),
+        );
+
+
+
+
         showDialog(
           context: context,
           builder: (context) {
