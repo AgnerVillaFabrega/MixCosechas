@@ -164,9 +164,6 @@ class PruebaSuelo{
   late String CaK_Interpretacion;
   late String MgK_Interpretacion;
 
-  //late String arcilla_Interpretacion;
-  //late String limo_Interpretacion;
-  //late String arena_Interpretacion;
   late String humus_Interpretacion;
   late String textura_interpretacion;
 
@@ -244,9 +241,6 @@ class PruebaSuelo{
     CaK_Interpretacion = interpretar_CaK(CaK);
     MgK_Interpretacion = interpretar_MgK(MgK);
 
-    // arcilla_Interpretacion = interpretar_arcilla(arcilla);
-    // limo_Interpretacion = interpretar_limo(limo);
-    // arena_Interpretacion = interpretar_arena(arena);
     humus_Interpretacion = interpretar_humus(humus);
     textura_interpretacion = interpretar_textura(arcilla, limo, arena);
      
@@ -505,9 +499,7 @@ class PruebaSuelo{
       return "Optimo";
     }
   }
-  //String interpretar_arcilla(double valor) {}
-  //String interpretar_limo(double valor) {}
-  //String interpretar_arena(double valor) {}
+  
   String interpretar_humus(double valor) {
     
     if (valor < 2) {
@@ -548,33 +540,43 @@ class PruebaSuelo{
     }
   }
 
-  // factory PruebaSuelo.fromMap(Map<String, dynamic> map) {  
-  //   return PruebaSuelo(
-  //     N: map['N'],
-  //     NH4: map['NH4'],
-  //     NO2: map['NO2'],
-  //     NO3: map['NO3'],
-  //     P: map['P'],
-  //     K: map['K'],
-  //     Ca: map['Ca'],
-  //     Mg: map['Mg'],
-  //     SO4: map['SO4'],
-  //     Fe: map['Fe'],
-  //     Mn: map['Mn'],
-  //     Cu: map['Cu'],
-  //     Al: map['Al'],
-  //     Cl: map['Cl'],
-  //     Zn: map['Zn'],
+  factory PruebaSuelo.fromMap(Map<String, dynamic> map) {  
+    return PruebaSuelo(
+      nombrePredio:map['NombrePredio'], 
+      corregimientoPredio:map['Corregimiento'],
+      cultivoPredio:map['Cultivo'],
+      municipioPredio:map['Municipio'], 
+      variedadPredio:map['Variedad'],
+      dptoPredio:map['Departamento'],
+      edadPredio:map['Edad'], 
+      nombrepropietario:map['NombrePropietario'],
+      telefonopropietario:map['Telefono'],
+      correopropietario:map['Correo'],
+      N: map['N'],
+      NH4: map['NH4'],
+      NO2: map['NO2'],
+      NO3: map['NO3'],
+      P: map['P'],
+      K: map['K'],
+      Ca: map['Ca'],
+      Mg: map['Mg'],
+      SO4: map['SO4'],
+      Fe: map['Fe'],
+      Mn: map['Mn'],
+      Cu: map['Cu'],
+      Al: map['Al'],
+      Cl: map['Cl'],
+      Zn: map['Zn'],
 
-  //     Ph: map['Ph'],
-  //     C_E: map['C_E'],
-  //     salesDisueltas: map['salesDisueltas'],
-  //     CICE: map['CICE'],
+      Ph: map['Ph'],
+      C_E: map['C_E'],
+      salesDisueltas: map['salesDisueltas'],
+      CICE: map['CICE'],
 
-  //     arcilla: map['Ph'],
-  //     limo: map['C_E'],
-  //     arena: map['salesDisueltas'],
-  //     humus: map['CICE']
-  //   );
-  // }
+      arcilla: map['Ph'],
+      limo: map['C_E'],
+      arena: map['salesDisueltas'],
+      humus: map['CICE']
+    );
+  }
 }
