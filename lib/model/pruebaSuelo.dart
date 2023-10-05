@@ -262,11 +262,9 @@ class PruebaSuelo{
     
     if (valor < 12) {
       return "Bajo";
-    } else if (valor >= 12 && valor <= 20) {
+    } else if (valor >= 12 && valor <= 34) {
       return "Medio";
-    } else if (valor >= 21 && valor <= 34) {
-      return "Óptimo";
-    } else {
+    }  else {
       return "Alto";
     }
   }
@@ -274,34 +272,28 @@ class PruebaSuelo{
     
     if (valor < 1) {
       return "Bajo";
-    } else if (valor >= 1 && valor <= 2) {
+    } else if (valor >= 1 && valor <= 5) {
       return "Medio";
-    } else if (valor >= 3 && valor <= 5) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
   }
   String interpretar_no3(double valor) {
     
-    if (valor < 4.5) {
+    if (valor < 5.5) {
       return "Bajo";
-    } else if (valor >= 5 && valor <= 25) {
+    } else if (valor >= 5.5 && valor <= 25.5) {
       return "Medio";
-    } else if (valor >= 26 && valor <= 50) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
   }
   String interpretar_p(double valor) {
     
-    if (valor < 7) {
+    if (valor < 17) {
       return "Bajo";
-    } else if (valor >= 7 && valor <= 17) {
+    } else if (valor >= 17 && valor <= 33.5) {
       return "Medio";
-    } else if (valor >= 18 && valor <= 33) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
@@ -310,10 +302,8 @@ class PruebaSuelo{
     
     if (valor < 38) {
       return "Bajo";
-    } else if (valor >= 38 && valor <= 71) {
+    } else if (valor >= 38 && valor <= 71.5) {
       return "Medio";
-    } else if (valor >= 72 && valor <= 140) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
@@ -324,7 +314,7 @@ class PruebaSuelo{
       return "Bajo";
     } else if (valor >= 200 && valor <= 400) {
       return "Medio";
-    } else if (valor >= 500 && valor <= 1000) {
+    } else if (valor >= 401 && valor <= 1000) {
       return "Óptimo";
     } else {
       return "Alto";
@@ -332,25 +322,30 @@ class PruebaSuelo{
   }
   String interpretar_mg(double valor) {
     
-    if (valor < 50) {
+    if (valor < 10) {
       return "Bajo";
-    } else if (valor >= 50 && valor <= 150) {
+    } else if (valor >= 10 && valor <= 50) {
       return "Medio";
-    } else if (valor >= 151 && valor <= 800) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
   }
-  //String interpretar_s(double valor) {}
+  String interpretar_s(double valor) {
+    if (valor < 16) {
+      return "Bajo";
+    } else if (valor >= 16 && valor <= 50) {
+      return "Medio";
+    } else {
+      return "Alto";
+    }
+
+  }
   String interpretar_so4(double valor) {
     
     if (valor < 16) {
       return "Bajo";
-    } else if (valor >= 16 && valor <= 30) {
+    } else if (valor >= 16 && valor <= 50) {
       return "Medio";
-    } else if (valor >= 31 && valor <= 50) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
@@ -359,10 +354,8 @@ class PruebaSuelo{
     
     if (valor < 3) {
       return "Bajo";
-    } else if (valor >= 3 && valor <= 5) {
+    } else if (valor >= 3 && valor <= 10) {
       return "Medio";
-    } else if (valor >= 6 && valor <= 10) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
@@ -373,8 +366,6 @@ class PruebaSuelo{
       return "Bajo";
     } else if (valor >= 5 && valor <= 24) {
       return "Medio";
-    } else if (valor >= 25 && valor <= 40) {
-      return "Óptimo";
     } else {
       return "Alto";
     }
@@ -384,23 +375,17 @@ class PruebaSuelo{
     if (valor < 1) {
       return "Bajo";
     } else if (valor >= 1 && valor <= 3) {
-      return "Medio";
-    } else if (valor == 4 ) {
-      return "Óptimo";
-    } else {
-      return "Alto";
+      return "Medio - Sin relevancia";
+    }  else {
+      return "Alto - Adecuado";
     }
   }
   String interpretar_al(double valor) {
     
-    if (valor < 10) {
-      return "Bajo";
-    } else if (valor >= 10 && valor <= 50) {
-      return "Medio";
-    } else if (valor >= 51 && valor <= 100) {
-      return "Óptimo";
+    if (valor < 2) {
+      return "Bajo - Aceptable";
     } else {
-      return "Alto";
+      return "Alto -Toxicidad";
     }
   }
   String interpretar_cl(double valor) {
@@ -408,7 +393,7 @@ class PruebaSuelo{
     if (valor < 100) {
       return "Bajo";
     } else if (valor >= 100 && valor <= 400) {
-      return "Medio?";
+      return "Medio";
     } else {
       return "Alto";
     }
@@ -418,11 +403,9 @@ class PruebaSuelo{
     if (valor < 0.5) {
       return "Bajo";
     } else if (valor >= 0.5 && valor <= 1) {
-      return "Medio";
-    } else if (valor >= 1.1 && valor <= 2) {
-      return "Óptimo";
+      return "Medio - Sin relevancia";
     } else {
-      return "Alto";
+      return "Alto - Adecuado";
     }
   }
   String interpretar_ph(double valor) {
