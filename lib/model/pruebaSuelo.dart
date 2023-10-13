@@ -52,6 +52,7 @@ class PruebaSuelo {
     'Fósforo - P',
     'Potasio - K',
     'Calcio - Ca',
+    'Azufre - S',
     'Magnesio - Mg',
     'Sulfato - SO4',
     'Hierro Férrico - Fe ',
@@ -60,6 +61,7 @@ class PruebaSuelo {
     'Aluminio - Al',
     'Cloruro - Cl',
     'Zinc - Zn',
+    'Sodio - Na',
     'Ph',
     'C.E',
     'Sales Disueltas',
@@ -83,6 +85,7 @@ class PruebaSuelo {
     P,
     K,
     Ca,
+    S,
     Mg,
     SO4,
     Fe,
@@ -91,6 +94,7 @@ class PruebaSuelo {
     Al,
     Cl,
     Zn,
+    Na,
     Ph,
     C_E,
     salesDisueltas,
@@ -114,6 +118,7 @@ class PruebaSuelo {
     P_Interpretacion,
     K_Interpretacion,
     Ca_Interpretacion,
+    S_Interpretacion,
     Mg_Interpretacion,
     SO4_Interpretacion,
     Fe_Interpretacion,
@@ -122,10 +127,11 @@ class PruebaSuelo {
     Al_Interpretacion,
     Cl_Interpretacion,
     Zn_Interpretacion,
+    Na_Interpretacion,
     Ph_Interpretacion,
-    'Por Definir',
+    C_E_Interpretacion,
     salesDisueltas_Interpretacion,
-    'Por Definir',
+    CICE_Interpretacion,
     CaMg_Interpretacion,
     CaMgK_Interpretacion,
     CaK_Interpretacion,
@@ -153,6 +159,7 @@ class PruebaSuelo {
   late String Al_Interpretacion;
   late String Cl_Interpretacion;
   late String Zn_Interpretacion;
+  late String Na_Interpretacion;
 
   late String Ph_Interpretacion;
   late String C_E_Interpretacion;
@@ -204,10 +211,10 @@ class PruebaSuelo {
     required this.arena,
     required this.humus,
   }) {
-    double d = (Ca / Mg);
-    String inString = d.toStringAsFixed(3); // '2.35'
-    CaMg = double.parse(inString);
-    //CaMg =  (Ca / Mg);
+    // double d = (Ca / Mg);
+    // String inString = d.toStringAsFixed(3); // '2.35'
+    // CaMg = double.parse(inString);
+    CaMg =  (Ca / Mg);
     CaMgK = (Ca + Mg / K);
     CaK = Ca / K;
     MgK = Mg / K;
@@ -228,6 +235,7 @@ class PruebaSuelo {
     Al_Interpretacion = interpretar_al(Al);
     Cl_Interpretacion = interpretar_cl(Cl);
     Zn_Interpretacion = interpretar_zn(Zn);
+    Na_Interpretacion = interpretar_na(Na);
 
     Ph_Interpretacion = interpretar_ph(Ph);
     C_E_Interpretacion = interpretar_ce(C_E);
@@ -396,12 +404,21 @@ class PruebaSuelo {
   }
 
   String interpretar_zn(double valor) {
+
     if (valor < 0.5) {
       return "Bajo";
     } else if (valor >= 0.5 && valor <= 1) {
       return "Medio - Sin relevancia";
     } else {
       return "Alto - Adecuado";
+    }
+  }
+
+  String interpretar_na(double valor) {
+    if (valor < 0.9) {
+      return "Aceptable";
+    } else {
+      return "Alto - Toxico";
     }
   }
 

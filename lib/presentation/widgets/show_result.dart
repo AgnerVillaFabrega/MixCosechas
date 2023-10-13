@@ -31,7 +31,8 @@ class ShowResult extends StatelessWidget {
             (index) => DataRow(
               cells: [
                 DataCell(Text(_nombreCompuestos[index])),
-                DataCell(Text(_valorCompuestos[index].toString())),
+                
+                DataCell(Text(_valorCompuestos[index].toString())), //Cambiar a DataCell(Text(_valorCompuestos[index].toStringAsFixed(3)))?
                 DataCell(Text(_interpretacionCompuestos[index])),
               ],
             ),
