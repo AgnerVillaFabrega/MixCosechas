@@ -603,47 +603,47 @@ class PruebaSuelo {
     'Textura'
     ];
 
-    double N;
-    double NH4;
-    double NO2;
-    double NO3;
-    double P;
-    double K;
-    double Ca;
-    double S;
-    double Mg;
-    double SO4;
-    double Fe;
-    double Mn;
-    double Cu;
-    double Al;
-    double Cl;
-    double Zn;
-    double Na;
+    Map<String, dynamic> N_Data;
+    Map<String, dynamic> NH4_Data;
+    Map<String, dynamic> NO2_Data;
+    Map<String, dynamic> NO3_Data;
+    Map<String, dynamic> P_Data;
+    Map<String, dynamic> K_Data;
+    Map<String, dynamic> Ca_Data;
+    Map<String, dynamic> S_Data;
+    Map<String, dynamic> Mg_Data;
+    Map<String, dynamic> SO4_Data;
+    Map<String, dynamic> Fe_Data;
+    Map<String, dynamic> Mn_Data;
+    Map<String, dynamic> Cu_Data;
+    Map<String, dynamic> Al_Data;
+    Map<String, dynamic> Cl_Data;
+    Map<String, dynamic> Zn_Data;
+    Map<String, dynamic> Na_Data;
 
-    double Ph;
-    double C_E;
-    double salesDisueltas;
-    double CICE;
+    Map<String, dynamic> Ph_Data;
+    Map<String, dynamic> C_E_Data;
+    Map<String, dynamic> salesDisueltas_Data;
+    Map<String, dynamic> CICE_Data;
 
-    double CaMg;
-    double CaMgK;
-    double CaK;
-    double MgK;
+    Map<String, dynamic> CaMg_Data;
+    Map<String, dynamic> CaMgK_Data;
+    Map<String, dynamic> CaK_Data;
+    Map<String, dynamic> MgK_Data;
 
-    double arcilla;
-    double limo;
-    double arena;
-    double humus;
-    String textura;
+    Map<String, dynamic> arcilla_Data;
+    Map<String, dynamic> limo_Data;
+    Map<String, dynamic> arena_Data;
+    Map<String, dynamic> humus_Data;
+    Map<String, dynamic> textura_Data;
 
     
 
-    Map<String, dynamic> data;
-    data = map['Nitrato de Nitrógeno - N'][0];
-    String valor = data['valor'];
-    String interpretacion = data['interpretacion'];
-    print('Valor: $valor, Interpretación: $interpretacion');
+    
+    N_Data = map['Nitrato de Nitrógeno - N'][0];
+    double N_valor = N_Data['valor'];
+    String N_interpretacion = N_Data['interpretacion'];
+    
 
     return PruebaSuelo(
       nombrePredio: map['NombrePredio'],
@@ -656,7 +656,7 @@ class PruebaSuelo {
       nombrepropietario: map['NombrePropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
-      N: map['Nitrato de Nitrógeno - N'],
+      N: N_valor,
       NH4: map['Nitrógeno amoniacal - NH4+'],
       NO2: map['Nitritos - NO2-'],
       NO3: map['Nitratos - NO3-'],
