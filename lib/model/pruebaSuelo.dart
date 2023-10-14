@@ -139,7 +139,8 @@ class PruebaSuelo {
     'NA',
     'NA',
     'NA',
-    humus_Interpretacion
+    humus_Interpretacion,
+    textura
   ];
 
   late String N_Interpretacion;
@@ -573,76 +574,39 @@ class PruebaSuelo {
 
   factory PruebaSuelo.fromMap(Map<String, dynamic> map) {
 
-    List<String> listaCompuestos = [
-    'Nitrato de Nitrógeno - N',
-    'Nitrógeno amoniacal - NH4+',
-    'Nitritos - NO2-',
-    'Nitratos - NO3-',
-    'Fósforo - P',
-    'Potasio - K',
-    'Calcio - Ca',
-    'Azufre - S',
-    'Magnesio - Mg',
-    'Sulfato - SO4',
-    'Hierro Férrico - Fe ',
-    'Manganeso - Mn',
-    'Cobre - Cu',
-    'Aluminio - Al',
-    'Cloruro - Cl',
-    'Zinc - Zn',
-    'Sodio - Na',
-    'Ph',
-    'C.E',
-    'Sales Disueltas',
-    'C.I.C.E',
-    'Ca/Mg',
-    'Ca+Mg/K',
-    'Ca/K',
-    'Mg/K',
-    'Humus',
-    'Textura'
-    ];
+    Map<String, dynamic> N_Data = map['Nitrato de Nitrógeno - N'][0];
+    Map<String, dynamic> NH4_Data = map['Nitrógeno amoniacal - NH4+'][0];
+    Map<String, dynamic> NO2_Data = map['Nitritos - NO2-'][0];
+    Map<String, dynamic> NO3_Data = map['Nitratos - NO3-'][0];
+    Map<String, dynamic> P_Data = map['Fósforo - P'][0];
+    Map<String, dynamic> K_Data = map['Potasio - K'][0];
+    Map<String, dynamic> Ca_Data = map['Calcio - Ca'][0];
+    Map<String, dynamic> S_Data = map['Azufre - S'][0];
+    Map<String, dynamic> Mg_Data = map['Magnesio - Mg'][0];
+    Map<String, dynamic> SO4_Data = map['Sulfato - SO4'][0];
+    Map<String, dynamic> Fe_Data = map['Hierro Férrico - Fe'][0];
+    Map<String, dynamic> Mn_Data = map['Manganeso - Mn'][0];
+    Map<String, dynamic> Cu_Data = map['Cobre - Cu'][0];
+    Map<String, dynamic> Al_Data = map['Aluminio - Al'][0];
+    Map<String, dynamic> Cl_Data = map['Cloruro - Cl'][0];
+    Map<String, dynamic> Zn_Data = map['Zinc - Zn'][0];
+    Map<String, dynamic> Na_Data = map['Sodio - Na'][0];
 
-    Map<String, dynamic> N_Data;
-    Map<String, dynamic> NH4_Data;
-    Map<String, dynamic> NO2_Data;
-    Map<String, dynamic> NO3_Data;
-    Map<String, dynamic> P_Data;
-    Map<String, dynamic> K_Data;
-    Map<String, dynamic> Ca_Data;
-    Map<String, dynamic> S_Data;
-    Map<String, dynamic> Mg_Data;
-    Map<String, dynamic> SO4_Data;
-    Map<String, dynamic> Fe_Data;
-    Map<String, dynamic> Mn_Data;
-    Map<String, dynamic> Cu_Data;
-    Map<String, dynamic> Al_Data;
-    Map<String, dynamic> Cl_Data;
-    Map<String, dynamic> Zn_Data;
-    Map<String, dynamic> Na_Data;
+    Map<String, dynamic> Ph_Data = map['Ph'][0];
+    Map<String, dynamic> C_E_Data = map['C.E'][0];
+    Map<String, dynamic> salesDisueltas_Data = map['Sales Disueltas'][0];
+    Map<String, dynamic> CICE_Data = map['C.I.C.E'][0];
 
-    Map<String, dynamic> Ph_Data;
-    Map<String, dynamic> C_E_Data;
-    Map<String, dynamic> salesDisueltas_Data;
-    Map<String, dynamic> CICE_Data;
+    // Map<String, dynamic> CaMg_Data = map['Nitrato de Nitrógeno - N'][0];
+    // Map<String, dynamic> CaMgK_Data = map['Nitrato de Nitrógeno - N'][0];
+    // Map<String, dynamic> CaK_Data = map['Nitrato de Nitrógeno - N'][0];
+    // Map<String, dynamic> MgK_Data = map['Nitrato de Nitrógeno - N'][0];
 
-    Map<String, dynamic> CaMg_Data;
-    Map<String, dynamic> CaMgK_Data;
-    Map<String, dynamic> CaK_Data;
-    Map<String, dynamic> MgK_Data;
-
-    Map<String, dynamic> arcilla_Data;
-    Map<String, dynamic> limo_Data;
-    Map<String, dynamic> arena_Data;
-    Map<String, dynamic> humus_Data;
-    Map<String, dynamic> textura_Data;
-
-    
-
-    
-    N_Data = map['Nitrato de Nitrógeno - N'][0];
-    double N_valor = N_Data['valor'];
-    String N_interpretacion = N_Data['interpretacion'];
+    Map<String, dynamic> arcilla_Data = map['Arcilla'][0];
+    Map<String, dynamic> limo_Data = map['Limo'][0];
+    Map<String, dynamic> arena_Data = map['Arena'][0];
+    Map<String, dynamic> humus_Data = map['Humus'][0];
+    // Map<String, dynamic> textura_Data = map['Nitrato de Nitrógeno - N'][0];
     
 
     return PruebaSuelo(
@@ -656,30 +620,31 @@ class PruebaSuelo {
       nombrepropietario: map['NombrePropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
-      N: N_valor,
-      NH4: map['Nitrógeno amoniacal - NH4+'],
-      NO2: map['Nitritos - NO2-'],
-      NO3: map['Nitratos - NO3-'],
-      P: map['Fósforo - P'],
-      K: map['Potasio - K'],
-      Ca: map['Calcio - Ca'],
-      S: map['Azufre - S'],
-      Mg: map['Magnesio - Mg'],
-      SO4: map['Sulfato - SO4'],
-      Fe: map['Hierro Férrico - Fe'],
-      Mn: map['Manganeso - Mn'],
-      Cu: map['Cobre - Cu'],
-      Al: map['Aluminio - Al'],
-      Cl: map['Cloruro - Cl'],
-      Zn: map['Zinc - Zn'],
-      Na: map['Sodio - Na'],
-      Ph: map['Ph'],
-      C_E: map['C.E'],
-      salesDisueltas: map['Sales Disueltas'],
-      CICE: map['C.I.C.E'],
-      arcilla: map['Arcilla'],
-      limo: map['Limo'],
-      arena: map['Arena'],
-      humus: map['Humus']);
+      N: N_Data['valor'],
+      NH4: NH4_Data['valor'],
+      NO2: NO2_Data['valor'],
+      NO3: NO3_Data['valor'],
+      P: P_Data['valor'],
+      K: K_Data['valor'],
+      Ca: Ca_Data['valor'],
+      S: S_Data['valor'],
+      Mg: Mg_Data['valor'],
+      SO4: SO4_Data['valor'],
+      Fe: Fe_Data['valor'],
+      Mn: Mn_Data['valor'],
+      Cu: Cu_Data['valor'],
+      Al: Al_Data['valor'],
+      Cl: Cl_Data['valor'],
+      Zn: Zn_Data['valor'],
+      Na: Na_Data['valor'],
+      Ph: Ph_Data['valor'],
+      C_E: C_E_Data['valor'],
+      salesDisueltas: salesDisueltas_Data['valor'],
+      CICE: CICE_Data['valor'],
+      arcilla: arcilla_Data['valor'],
+      limo: limo_Data['valor'],
+      arena: arena_Data['valor'],
+      humus: humus_Data['valor']
+    );
   }
 }

@@ -177,7 +177,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                               controller: _znController),
                           ImputVariable(
                               nombreVariable: 'Sodio - Na',
-                              controller: _znController),
+                              controller: _naController),
                           ImputVariable(
                               nombreVariable: 'Sales Disueltas',
                               controller: _salesdisueltasController),
@@ -239,6 +239,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                           ),
                           const SizedBox(height: 20),
                           RegistrarPruebasButtom(onTap: _handleRegistroSuelo),
+                          
                         ],
                       )),
                 ])));
@@ -300,8 +301,9 @@ class _SueloWidgetState extends State<SueloWidget> {
 
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
 
-        final List<String> interpretacionCompuestos =
-            pruebaSuelo.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
+
+
 
         Navigator.push(
           context,

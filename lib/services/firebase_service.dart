@@ -32,7 +32,7 @@ class ServiceFirebase {
     return clientes;
   }
 
-  Future <List<PruebaSuelo>> getPruebaSuelo() async{
+  Future <List<PruebaSuelo>> getPruebaSuelo() async {
 
     List<PruebaSuelo> pruebaSuelo = [];
 
