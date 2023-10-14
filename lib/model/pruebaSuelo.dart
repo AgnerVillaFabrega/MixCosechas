@@ -38,10 +38,10 @@ class PruebaSuelo {
   late double CaK;
   late double MgK;
 
-  late double arcilla;
-  late double limo;
-  late double arena;
-  late double humus;
+  final double arcilla;
+  final double limo;
+  final double arena;
+  final double humus;
   late String textura;
 
   final List<String> nombreCompuestos = [
@@ -139,8 +139,7 @@ class PruebaSuelo {
     'NA',
     'NA',
     'NA',
-    humus_Interpretacion,
-    textura_interpretacion
+    humus_Interpretacion
   ];
 
   late String N_Interpretacion;
@@ -172,7 +171,6 @@ class PruebaSuelo {
   late String MgK_Interpretacion;
 
   late String humus_Interpretacion;
-  late String textura_interpretacion;
 
   PruebaSuelo({
     required this.nombrePredio,
@@ -214,11 +212,10 @@ class PruebaSuelo {
     // double d = (Ca / Mg);
     // String inString = d.toStringAsFixed(3); // '2.35'
     // CaMg = double.parse(inString);
-    CaMg =  (Ca / Mg);
+    CaMg = (Ca / Mg);
     CaMgK = (Ca + Mg / K);
     CaK = Ca / K;
     MgK = Mg / K;
-    textura = interpretar_textura(arcilla, limo, arena);
     N_Interpretacion = interpretar_n(N);
     NH4_Interpretacion = interpretar_nh4(NH4);
     NO2_Interpretacion = interpretar_no2(NO2);
@@ -248,7 +245,8 @@ class PruebaSuelo {
     MgK_Interpretacion = interpretar_MgK(MgK);
 
     humus_Interpretacion = interpretar_humus(humus);
-    textura_interpretacion = interpretar_textura(arcilla, limo, arena);
+    
+    textura = valor_textura(arcilla, limo, arena);
   }
 
   String interpretar_n(double valor) {
@@ -404,7 +402,6 @@ class PruebaSuelo {
   }
 
   String interpretar_zn(double valor) {
-
     if (valor < 0.5) {
       return "Bajo";
     } else if (valor >= 0.5 && valor <= 1) {
@@ -528,7 +525,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_textura(double arcilla, double limo, double arena) {
+  String valor_textura(double arcilla, double limo, double arena) {
     if (arcilla >= 40 && limo <= 40 && arena <= 45) {
       return "Arcilloso";
     } else if ((arcilla >= 35 && arcilla <= 55) &&
@@ -575,41 +572,114 @@ class PruebaSuelo {
   }
 
   factory PruebaSuelo.fromMap(Map<String, dynamic> map) {
+
+    List<String> listaCompuestos = [
+    'Nitrato de Nitrógeno - N',
+    'Nitrógeno amoniacal - NH4+',
+    'Nitritos - NO2-',
+    'Nitratos - NO3-',
+    'Fósforo - P',
+    'Potasio - K',
+    'Calcio - Ca',
+    'Azufre - S',
+    'Magnesio - Mg',
+    'Sulfato - SO4',
+    'Hierro Férrico - Fe ',
+    'Manganeso - Mn',
+    'Cobre - Cu',
+    'Aluminio - Al',
+    'Cloruro - Cl',
+    'Zinc - Zn',
+    'Sodio - Na',
+    'Ph',
+    'C.E',
+    'Sales Disueltas',
+    'C.I.C.E',
+    'Ca/Mg',
+    'Ca+Mg/K',
+    'Ca/K',
+    'Mg/K',
+    'Humus',
+    'Textura'
+    ];
+
+    double N;
+    double NH4;
+    double NO2;
+    double NO3;
+    double P;
+    double K;
+    double Ca;
+    double S;
+    double Mg;
+    double SO4;
+    double Fe;
+    double Mn;
+    double Cu;
+    double Al;
+    double Cl;
+    double Zn;
+    double Na;
+
+    double Ph;
+    double C_E;
+    double salesDisueltas;
+    double CICE;
+
+    double CaMg;
+    double CaMgK;
+    double CaK;
+    double MgK;
+
+    double arcilla;
+    double limo;
+    double arena;
+    double humus;
+    String textura;
+
+    
+
+    Map<String, dynamic> data;
+    data = map['Nitrato de Nitrógeno - N'][0];
+    String valor = data['valor'];
+    String interpretacion = data['interpretacion'];
+    print('Valor: $valor, Interpretación: $interpretacion');
+
     return PruebaSuelo(
-        nombrePredio: map['NombrePredio'],
-        corregimientoPredio: map['Corregimiento'],
-        cultivoPredio: map['Cultivo'],
-        municipioPredio: map['Municipio'],
-        variedadPredio: map['Variedad'],
-        dptoPredio: map['Departamento'],
-        edadPredio: map['Edad'],
-        nombrepropietario: map['NombrePropietario'],
-        telefonopropietario: map['Telefono'],
-        correopropietario: map['Correo'],
-        N: map['N'],
-        NH4: map['NH4'],
-        NO2: map['NO2'],
-        NO3: map['NO3'],
-        P: map['P'],
-        K: map['K'],
-        Ca: map['Ca'],
-        Mg: map['Mg'],
-        S: map['S'],
-        SO4: map['SO4'],
-        Fe: map['Fe'],
-        Mn: map['Mn'],
-        Cu: map['Cu'],
-        Al: map['Al'],
-        Cl: map['Cl'],
-        Zn: map['Zn'],
-        Na: map['Na'],
-        Ph: map['Ph'],
-        C_E: map['C_E'],
-        salesDisueltas: map['salesDisueltas'],
-        CICE: map['CICE'],
-        arcilla: map['Ph'],
-        limo: map['C_E'],
-        arena: map['salesDisueltas'],
-        humus: map['CICE']);
+      nombrePredio: map['NombrePredio'],
+      corregimientoPredio: map['Corregimiento'],
+      cultivoPredio: map['Cultivo'],
+      municipioPredio: map['Municipio'],
+      variedadPredio: map['Variedad'],
+      dptoPredio: map['Departamento'],
+      edadPredio: map['Edad'],
+      nombrepropietario: map['NombrePropietario'],
+      telefonopropietario: map['Telefono'],
+      correopropietario: map['Correo'],
+      N: map['Nitrato de Nitrógeno - N'],
+      NH4: map['Nitrógeno amoniacal - NH4+'],
+      NO2: map['Nitritos - NO2-'],
+      NO3: map['Nitratos - NO3-'],
+      P: map['Fósforo - P'],
+      K: map['Potasio - K'],
+      Ca: map['Calcio - Ca'],
+      S: map['Azufre - S'],
+      Mg: map['Magnesio - Mg'],
+      SO4: map['Sulfato - SO4'],
+      Fe: map['Hierro Férrico - Fe'],
+      Mn: map['Manganeso - Mn'],
+      Cu: map['Cobre - Cu'],
+      Al: map['Aluminio - Al'],
+      Cl: map['Cloruro - Cl'],
+      Zn: map['Zinc - Zn'],
+      Na: map['Sodio - Na'],
+      Ph: map['Ph'],
+      C_E: map['C.E'],
+      salesDisueltas: map['Sales Disueltas'],
+      CICE: map['C.I.C.E'],
+      arcilla: map['Arcilla'],
+      limo: map['Limo'],
+      arena: map['Arena'],
+      humus: map['Humus']);
   }
 }

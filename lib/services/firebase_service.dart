@@ -32,6 +32,25 @@ class ServiceFirebase {
     return clientes;
   }
 
+  Future <List<PruebaSuelo>> getPruebaSuelo() async{
+
+    List<PruebaSuelo> pruebaSuelo = [];
+
+    try {
+      QuerySnapshot queryPruebaSuelo = await  db.collection('PruebaSuelo').get();
+
+      queryPruebaSuelo.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        pruebaSuelo.add(PruebaSuelo.fromMap(data));
+      });
+    } catch (e){
+      print("Error al obtener la lista de Pruebas de Suelo: $e");
+    }
+    return pruebaSuelo;
+
+    
+  }
+
   Future<Cliente?> consultarClientePorId(String clienteId) async {
   try {
     List<Cliente> tempClientes = await getPeople(); // Supongo que esta función existe y devuelve una lista de Clientes
@@ -150,6 +169,12 @@ class ServiceFirebase {
             'interpretacion': pruebaSuelo.Ca_Interpretacion,
           }
         ],
+        'Azufre - S':[
+          {
+            'valor': pruebaSuelo.S,
+            'interpretacion': pruebaSuelo.S_Interpretacion,
+          }
+        ],
         'Magnesio - Mg':[
           {
             'valor': pruebaSuelo.Mg,
@@ -162,7 +187,7 @@ class ServiceFirebase {
             'interpretacion': pruebaSuelo.SO4_Interpretacion,
           }
         ],
-        'Hierro Férrico - Fe ':[
+        'Hierro Férrico - Fe':[
           {
             'valor': pruebaSuelo.Fe,
             'interpretacion': pruebaSuelo.Fe_Interpretacion,
@@ -198,6 +223,12 @@ class ServiceFirebase {
             'interpretacion': pruebaSuelo.Zn_Interpretacion,
           }
         ],
+        'Sodio - Na':[
+          {
+            'valor': pruebaSuelo.Na,
+            'interpretacion': pruebaSuelo.Na_Interpretacion,
+          }
+        ],
         'Ph':[
           {
             'valor': pruebaSuelo.Ph,
@@ -206,8 +237,8 @@ class ServiceFirebase {
         ],
         'C.E':[
           {
-            'valor': 78, //pruebaSuelo.C_E,
-            'interpretacion':  'Por definir'//pruebaSuelo.C_E_Interpretacion,
+            'valor': pruebaSuelo.C_E,
+            'interpretacion':  pruebaSuelo.C_E_Interpretacion,
           }
         ],
         'Sales Disueltas':[
@@ -218,8 +249,8 @@ class ServiceFirebase {
         ],
         'C.I.C.E':[
           {
-            'valor': 65,//pruebaSuelo.CICE,
-            'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
+            'valor': pruebaSuelo.CICE,
+            'interpretacion': pruebaSuelo.CICE_Interpretacion,
           }
         ],
         'Ca/Mg':[
@@ -246,36 +277,16 @@ class ServiceFirebase {
             'interpretacion': pruebaSuelo.MgK_Interpretacion,
           }
         ],
-        'Arcilla':[
-          {
-            'valor': pruebaSuelo.arcilla,
-            'interpretacion': 'Por definir' //pruebaSuelo.arcilla_Interpretacion,
-          }
-        ],
-        'Limo':[
-          {
-            'valor': pruebaSuelo.limo,
-            'interpretacion': 'Por definir' //pruebaSuelo.limo_Interpretacion,
-          }
-        ],
-        'Arena':[
-          {
-            'valor': pruebaSuelo.arena,
-            'interpretacion': 'Por definir' //pruebaSuelo.arena_Interpretacion,
-          }
-        ],
+        'Arcilla': pruebaSuelo.arcilla,
+        'Limo': pruebaSuelo.limo,
+        'Arena':pruebaSuelo.arena,
         'Humus':[
           {
             'valor': pruebaSuelo.humus,
             'interpretacion': pruebaSuelo.humus_Interpretacion,
           }
         ],
-        'Textura':[
-          {
-            'valor': pruebaSuelo.textura,
-            'interpretacion': pruebaSuelo.textura_interpretacion,
-          }
-        ],
+        'Textura':pruebaSuelo.textura
 
         }
       );
@@ -424,9 +435,9 @@ class ServiceFirebase {
       print("Error al agregar la prueba: $e");
     }
   }
-  
-  
+
 }
+
 
 
 
