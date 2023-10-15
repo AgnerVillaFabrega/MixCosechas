@@ -47,6 +47,7 @@ flutter:
     - assets/images/cronometro.png
     - assets/images/organico.png
     - assets/departamentos_Municipios.csv
+    - assets/images/_MIXCOSECHAS.png
 
   fonts:
     - family: Asap
