@@ -303,7 +303,10 @@ class _SueloWidgetState extends State<SueloWidget> {
 
         final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
 
+        final Future<List<PruebaSuelo>> ListaPruebas = _serviceFirebase.getPruebaSuelo();
 
+        
+        //print(ListaPruebas);
 
         Navigator.push(
           context,

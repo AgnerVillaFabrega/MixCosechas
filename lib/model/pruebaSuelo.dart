@@ -574,6 +574,7 @@ class PruebaSuelo {
 
   factory PruebaSuelo.fromMap(Map<String, dynamic> map) {
 
+
     Map<String, dynamic> N_Data = map['Nitrato de Nitrógeno - N'][0];
     Map<String, dynamic> NH4_Data = map['Nitrógeno amoniacal - NH4+'][0];
     Map<String, dynamic> NO2_Data = map['Nitritos - NO2-'][0];
@@ -602,9 +603,6 @@ class PruebaSuelo {
     // Map<String, dynamic> CaK_Data = map['Nitrato de Nitrógeno - N'][0];
     // Map<String, dynamic> MgK_Data = map['Nitrato de Nitrógeno - N'][0];
 
-    Map<String, dynamic> arcilla_Data = map['Arcilla'][0];
-    Map<String, dynamic> limo_Data = map['Limo'][0];
-    Map<String, dynamic> arena_Data = map['Arena'][0];
     Map<String, dynamic> humus_Data = map['Humus'][0];
     // Map<String, dynamic> textura_Data = map['Nitrato de Nitrógeno - N'][0];
     
@@ -641,9 +639,9 @@ class PruebaSuelo {
       C_E: C_E_Data['valor'],
       salesDisueltas: salesDisueltas_Data['valor'],
       CICE: CICE_Data['valor'],
-      arcilla: arcilla_Data['valor'],
-      limo: limo_Data['valor'],
-      arena: arena_Data['valor'],
+      arcilla: map['Arcilla'],
+      limo: map['Limo'],
+      arena: map['Arena'],
       humus: humus_Data['valor']
     );
   }
