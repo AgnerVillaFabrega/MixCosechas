@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     steps: [
                       Step(
                         isActive: currentState >= 0,
-                        title: const Text('Informacion del predio'), 
+                        title: const Text('Informacion del propietario'), 
                         content:SearchPropietario(propietarioFilterController: _identificacionPropietarioController, propietarioCollection:propietariosCollection , nombrepropietarioPredioController: _nombrePropietarioController, telefonopropietarioPredioController: _telefonoPropietarioController, correopropietarioPredioController: _correoPropietarioController),
                       ),
                       Step(

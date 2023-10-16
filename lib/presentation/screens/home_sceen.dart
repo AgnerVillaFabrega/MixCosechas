@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_clientes_menu.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_logout_menu.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
+import 'package:mixcosechas_app/presentation/widgets/icon_userprofile.dart';
 import 'package:mixcosechas_app/presentation/widgets/info_home.dart';
 
 import '../../model/clientes.dart';
@@ -70,16 +71,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Column(
+            Column(
               children: [
                 //Todo: que el menu cambie dependiendo del rol
                 // if(_cliente.rol == 'Agricultor') const IconClientesMenu(),
                 // if(_cliente.rol == 'Analista') const IconPredioMenu(),
-                IconClientesMenu(),
-                IconPredioMenu(),
-                IconMuestasMenu(),
-                Divider(),  
-                IconLogout(),
+                IconUserProfile(cliente: _cliente),
+                const IconClientesMenu(),
+                const IconPredioMenu(),
+                const IconMuestasMenu(),
+                const Divider(),  
+                const IconLogout(),
               ],
             ),
           ],
@@ -103,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Align(
               alignment:const AlignmentDirectional(0, -.88),
               child: Image.asset(
-                'assets/images/logo_MIXCOSECHAS.png',
-                width: 410,
+                'assets/images/_MIXCOSECHAS.png',
+                width: 380,
                 height: 170,
               ),
             ),
