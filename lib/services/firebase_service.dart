@@ -16,12 +16,9 @@ class ServiceFirebase {
   }
 
   Future<List<Cliente>> getPeople() async {
-    
     List<Cliente> clientes = [];
-
     try {
       QuerySnapshot queryclientes = await  db.collection('Usuarios').get();
-
       queryclientes.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         clientes.add(Cliente.fromMap(data));
@@ -110,6 +107,25 @@ class ServiceFirebase {
       print("Error al agregar el cultivo: $e");
     }
   }
+  
+
+Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
+  List<Predio> predios = [];
+
+  try {
+    QuerySnapshot queryPredios = await db
+        .collection('Predios')
+        .where('IdPropietario', isEqualTo: idPropietario)
+        .get();
+    predios = queryPredios.docs.map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>)).toList();
+  } catch (e) {
+    print("Error al obtener la lista de predios: $e");
+  }
+
+  return predios;
+}
+
+
 
   Future<void> addPruebaSuelo (PruebaSuelo pruebaSuelo) async {
     try {
