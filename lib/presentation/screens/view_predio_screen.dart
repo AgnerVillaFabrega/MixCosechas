@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
 import '../../model/predios.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_predio.dart';
@@ -115,14 +116,24 @@ class _PredioPageState extends State<ViewPredioScreen> {
                     title: Text(widget.predios[index].nombre),
                     subtitle: Text(widget.predios[index].id),
                     onTap: () {
-                      // Lógica para seleccionar un cliente
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PredioProfileView(predio: widget.predios[index]),
+                          ),
+                        );
                     },
                   ):
                   ListTile(
                     title: Text(filteredPredios[index].nombre),
                     subtitle: Text(filteredPredios[index].id),
                     onTap: () {
-                      // Lógica para seleccionar un cliente
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PredioProfileView(predio: filteredPredios[index]),
+                          ),
+                        );
                     },
                   );
                 },

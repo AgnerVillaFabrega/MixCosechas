@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/user_profile_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import '../../model/clientes.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
@@ -103,14 +104,24 @@ class _ViewClientScreenState extends State<ViewClientScreen> {
                     title: Text(widget.cliente[index].nombre),
                     subtitle: Text(widget.cliente[index].id),
                     onTap: () {
-                      // Lógica para seleccionar un cliente
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserProfileView(usuario: widget.cliente[index]),
+                          ),
+                        );
                     },
                   ):
                   ListTile(
                     title: Text(_filteredClientes[index].nombre),
                     subtitle: Text(_filteredClientes[index].id),
                     onTap: () {
-                      // Lógica para seleccionar un cliente
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserProfileView(usuario: _filteredClientes[index]),
+                          ),
+                        );
                     },
                   );
                 },

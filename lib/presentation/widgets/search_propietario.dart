@@ -50,7 +50,7 @@ class SearchPropietario extends StatelessWidget {
           },
           onSuggestionSelected: (suggestion) {
             final predioData = suggestion.data() as Map<String, dynamic>;
-            propietarioFilterController.text = predioData['Nombre'];
+            propietarioFilterController.text = predioData['Id'];
             _nombrepropietarioPredioController.text = predioData['Nombre'];
             _telefonopropietarioPredioController.text =  predioData['Telefono'];
             _correopropietarioPredioController.text = predioData['Correo'];
