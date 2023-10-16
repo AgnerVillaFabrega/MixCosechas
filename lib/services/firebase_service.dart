@@ -139,7 +139,7 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         'Variedad': pruebaSuelo.variedadPredio,
         'Departamento': pruebaSuelo.dptoPredio,
         'Edad': pruebaSuelo.edadPredio,
-        'Nombrepropietario': pruebaSuelo.nombrepropietario,
+        'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonopropietario,
         'Correo': pruebaSuelo.correopropietario,
 
