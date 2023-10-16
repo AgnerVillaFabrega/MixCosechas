@@ -574,7 +574,6 @@ class PruebaSuelo {
 
   factory PruebaSuelo.fromMap(Map<String, dynamic> map) {
 
-
     Map<String, dynamic> N_Data = map['Nitrato de Nitrógeno - N'][0];
     Map<String, dynamic> NH4_Data = map['Nitrógeno amoniacal - NH4+'][0];
     Map<String, dynamic> NO2_Data = map['Nitritos - NO2-'][0];
@@ -598,13 +597,7 @@ class PruebaSuelo {
     Map<String, dynamic> salesDisueltas_Data = map['Sales Disueltas'][0];
     Map<String, dynamic> CICE_Data = map['C.I.C.E'][0];
 
-    // Map<String, dynamic> CaMg_Data = map['Nitrato de Nitrógeno - N'][0];
-    // Map<String, dynamic> CaMgK_Data = map['Nitrato de Nitrógeno - N'][0];
-    // Map<String, dynamic> CaK_Data = map['Nitrato de Nitrógeno - N'][0];
-    // Map<String, dynamic> MgK_Data = map['Nitrato de Nitrógeno - N'][0];
-
     Map<String, dynamic> humus_Data = map['Humus'][0];
-    // Map<String, dynamic> textura_Data = map['Nitrato de Nitrógeno - N'][0];
     
 
     return PruebaSuelo(
