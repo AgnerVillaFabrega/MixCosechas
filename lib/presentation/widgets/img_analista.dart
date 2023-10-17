@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ImgAnalista extends StatelessWidget {
+  final double radio;
   const ImgAnalista({
-    super.key,
+    super.key, required this.radio,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 30,
-      backgroundImage: AssetImage('assets/images/analista.png'), // Ruta de la imagen
+    return CircleAvatar(
+      radius: radio,
+      backgroundImage: const AssetImage('assets/images/analista.png'), // Ruta de la imagen
     );
   }
 }

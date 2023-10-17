@@ -69,15 +69,9 @@ class _AguaWidgetState extends State<AguaWidget> {
           onStepTapped:(index) {
             setState(() => currentState = index);
           },
-          onStepContinue: () {
-            if (currentState != 2) {
-              setState(() => currentState++);
-            }
-          },
-          onStepCancel: () {
-            if (currentState != 0) {
-              setState(() => currentState--);
-            }
+
+          controlsBuilder: (BuildContext context, ControlsDetails details) {
+            return Container();
           },
           
           steps: [

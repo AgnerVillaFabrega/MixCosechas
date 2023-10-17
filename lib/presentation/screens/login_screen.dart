@@ -3,7 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import 'package:provider/provider.dart';
 import '../../model/clientes.dart';
 import '../../theme/limpiarCampos.dart';
 import '../widgets/mensaje_show_dialog.dart';
@@ -157,10 +159,11 @@ class _LoginPageState extends State<LoginPage> {
             rol: userDoc['Rol'],
             password: userDoc['Password'],
           );
+          context.read<ClienteProvider>().setCli(cli: cliente);
           FormUtils.clearTextControllers([_correoController, _passwordController]);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen(cliente: cliente)),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         }
       } on FirebaseAuthException catch (e) {

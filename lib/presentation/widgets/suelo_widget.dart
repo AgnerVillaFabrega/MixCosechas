@@ -48,7 +48,7 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _humusController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
-  TextEditingController _nombrePredioController = TextEditingController();
+  final TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection =
       FirebaseFirestore.instance.collection('Predios');
 
@@ -83,15 +83,8 @@ class _SueloWidgetState extends State<SueloWidget> {
                 onStepTapped: (index) {
                   setState(() => currentState = index);
                 },
-                onStepContinue: () {
-                  if (currentState != 3) {
-                    setState(() => currentState++);
-                  }
-                },
-                onStepCancel: () {
-                  if (currentState != 0) {
-                    setState(() => currentState--);
-                  }
+                controlsBuilder: (BuildContext context, ControlsDetails details) {
+                  return Container();
                 },
                 steps: [
                   Step(
@@ -302,11 +295,6 @@ class _SueloWidgetState extends State<SueloWidget> {
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
 
         final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
-
-        final Future<List<PruebaSuelo>> ListaPruebas = _serviceFirebase.getPruebaSuelo();
-
-        
-        //print(ListaPruebas);
 
         Navigator.push(
           context,

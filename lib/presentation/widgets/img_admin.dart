@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ImgAdmin extends StatelessWidget {
+  final double radio;
   const ImgAdmin({
-    super.key,
+    super.key, required this.radio,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const CircleAvatar(
-      radius: 30,
-      backgroundImage: AssetImage('assets/images/admin.png'), // Ruta de la imagen
+    return CircleAvatar(
+      radius: radio,
+      backgroundImage: const AssetImage('assets/images/admin.png'), // Ruta de la imagen
     );
   }
 }

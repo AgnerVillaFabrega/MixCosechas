@@ -120,15 +120,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     onStepTapped:(index) {
                       setState(() => currentState = index);
                     },
-                    onStepContinue: () {
-                      if (currentState != 1) {
-                        setState(() => currentState++);
-                      }
-                    },
-                    onStepCancel: () {
-                      if (currentState != 0) {
-                        setState(() => currentState--);
-                      }
+                    controlsBuilder: (BuildContext context, ControlsDetails details) {
+                      return Container();
                     },
                     steps: [
                       Step(

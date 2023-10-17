@@ -4,6 +4,8 @@ import 'package:mixcosechas_app/presentation/widgets/icon_logout_menu.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_userprofile.dart';
 import 'package:mixcosechas_app/presentation/widgets/info_home.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/clientes.dart';
 import '../widgets/icon_muestras.dart';
@@ -12,23 +14,22 @@ import '../widgets/img_agricultor.dart';
 import '../widgets/img_analista.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Cliente cliente;
   
   const HomeScreen({super.key, 
-    required this.cliente
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState(cliente);
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Cliente _cliente;
+  
 
-  _HomeScreenState(this._cliente);
+  _HomeScreenState();
 
   @override
   Widget build(BuildContext context) {
+    ClienteProvider watch =  context.watch<ClienteProvider>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -48,12 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (_cliente.rol == 'Admin')  const ImgAdmin(),
-                  if(_cliente.rol == 'Agricultor') const ImgAgricultor(),
-                  if(_cliente.rol == 'Analista') const ImgAnalista(),   
+                  if (watch.cliente.rol == 'Admin')  const ImgAdmin(radio: 30,),
+                  if(watch.cliente.rol == 'Agricultor') const ImgAgricultor(radio: 30),
+                  if(watch.cliente.rol == 'Analista') const ImgAnalista(radio: 30,),   
                   const SizedBox(height: 10),
                   Text(
-                    _cliente.nombre,
+                    watch.cliente.nombre,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Text(
-                    _cliente.correo,
+                    watch.cliente.correo,
                     style: const TextStyle(
                       color: Colors.white,
                       //color: Color(0XFFb3b3ba),
@@ -73,13 +74,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               children: [
+                IconUserProfile(cliente:  watch.cliente),
                 //Todo: que el menu cambie dependiendo del rol
-                // if(_cliente.rol == 'Agricultor') const IconClientesMenu(),
-                // if(_cliente.rol == 'Analista') const IconPredioMenu(),
-                IconUserProfile(cliente: _cliente),
-                const IconClientesMenu(),
-                const IconPredioMenu(),
-                const IconMuestasMenu(),
+                if( watch.cliente.rol == 'Admin') const IconClientesMenu(),
+                if( watch.cliente.rol == 'Admin') const IconPredioMenu(),
+                if( watch.cliente.rol == 'Admin') const IconMuestasMenu(),
+
+                if( watch.cliente.rol == 'Analista') const IconPredioMenu(),
+                if( watch.cliente.rol == 'Analista') const IconMuestasMenu(),
+
+                if( watch.cliente.rol == 'Agricultor') const IconPredioMenu(),
+
                 const Divider(),  
                 const IconLogout(),
               ],
@@ -106,8 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment:const AlignmentDirectional(0, -.88),
               child: Image.asset(
                 'assets/images/_MIXCOSECHAS.png',
-                width: 380,
-                height: 170,
+                width: 410,
+                height: 200,
               ),
             ),
             Align(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/img_admin.dart';
+import 'package:mixcosechas_app/presentation/widgets/img_agricultor.dart';
+import 'package:mixcosechas_app/presentation/widgets/img_analista.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/model/predios.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class UserProfileView extends StatelessWidget {
   final Cliente usuario;
@@ -15,7 +17,7 @@ class UserProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -35,10 +37,9 @@ class UserProfileView extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const CircleAvatar(
-                          radius: 50.0, // Ajusta el tamaño de la imagen
-                          backgroundImage: AssetImage('assets/images/admin.png'), // Reemplaza con la imagen del usuario
-                        ),
+                        if (usuario.rol == 'Admin')  const ImgAdmin(radio: 55,),
+                        if(usuario.rol == 'Agricultor') const ImgAgricultor(radio: 55),
+                        if(usuario.rol == 'Analista') const ImgAnalista(radio: 55),
                         const SizedBox(height: 10),
                         Text(
                           usuario.nombre,
@@ -59,7 +60,6 @@ class UserProfileView extends StatelessWidget {
                   const TabBar(
                     tabs: [
                       Tab(icon: Icon(Icons.person)),
-                      Tab(icon: Icon(Icons.dashboard)),
                       Tab(icon: Icon(Icons.location_city)),
                     ],
                   ),
@@ -82,32 +82,6 @@ class UserProfileView extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text('Rol: ${usuario.rol}'),
-                  ),
-                ],
-              ),
-              // Gráficas en 2 columnas
-              Column(
-                children: <Widget>[
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Gráficas:',
-                    style: TextStyle(fontSize: 18, color: Color(0xFF19AA89)),
-                    textAlign: TextAlign.start,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: _buildChart(),
-                      ),
-                      SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: _buildChart(),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -156,38 +130,8 @@ class UserProfileView extends StatelessWidget {
       ),
     );
   }
-
-// Ejemplo de gráfica
-  Widget _buildChart() {
-    final data = [
-      GraphData('Predios A', 30),
-      GraphData('Predios B', 40),
-      GraphData('Predios C', 30),
-    ];
-    var seriesList = [
-      charts.Series<GraphData, String>(
-        id: 'Cantidad',
-        domainFn: (GraphData data, _) => data.label,
-        measureFn: (GraphData data, _) => data.value,
-        data: data,
-        labelAccessorFn: (GraphData data, _) => '${data.value}%',
-        colorFn: (_, __) => charts.ColorUtil.fromDartColor(const Color(0xFF19AA89)), // Cambia el color de la gráfica de pastel
-      ),
-    ];
-    return charts.PieChart(
-      seriesList,
-      animate: true,
-    );
-  }
 }
 
-
-class GraphData {
-  final String label;
-  final int value;
-
-  GraphData(this.label, this.value);
-}
 
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   final TabBar tabBar;
