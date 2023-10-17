@@ -21,7 +21,7 @@ class _AguaWidgetState extends State<AguaWidget> {
     int currentState = 0;
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final ServiceFirebase _serviceFirebase = ServiceFirebase();
-    final TextEditingController _nController = TextEditingController();
+    //final TextEditingController _nController = TextEditingController();
     final TextEditingController _nh4Controller = TextEditingController();
     final TextEditingController _no2Controller = TextEditingController();
     final TextEditingController _no3Controller = TextEditingController();
@@ -33,7 +33,6 @@ class _AguaWidgetState extends State<AguaWidget> {
     final TextEditingController _feController = TextEditingController();
     final TextEditingController _mnController = TextEditingController();
     final TextEditingController _cuController = TextEditingController();
-    final TextEditingController _alController = TextEditingController();
     final TextEditingController _clController = TextEditingController();
     final TextEditingController _salesdisueltasController = TextEditingController();
     final TextEditingController _phController = TextEditingController();
@@ -92,7 +91,7 @@ class _AguaWidgetState extends State<AguaWidget> {
               title: const Text('Macronutrientes'), 
               content: Column(
                 children: [
-                  ImputVariable(nombreVariable: 'Nitrato de Nitrógeno - N',controller: _nController),
+                  //ImputVariable(nombreVariable: 'Nitrato de Nitrógeno - N',controller: _nController),
                   ImputVariable(nombreVariable: 'Nitrógeno amoniacal - NH4+',controller:  _nh4Controller),
                   ImputVariable(nombreVariable: 'Nitritos - NO2',controller: _no2Controller),
                   ImputVariable(nombreVariable: 'Nitratos - NO3',controller: _no3Controller),
@@ -112,7 +111,6 @@ class _AguaWidgetState extends State<AguaWidget> {
                   ImputVariable(nombreVariable: 'Hierro Férrico - Fe',controller: _feController),
                   ImputVariable(nombreVariable: 'Manganeso - Mn',controller: _mnController),
                   ImputVariable(nombreVariable: 'Cobre - Cu',controller: _cuController),
-                  ImputVariable(nombreVariable: 'Aluminio - Al',controller: _alController),
                   ImputVariable(nombreVariable: 'Cloruro - Cl',controller: _clController),
                   ImputVariable(nombreVariable: 'Sales Disueltas',controller: _salesdisueltasController),
                   ImputVariable(nombreVariable: 'Ph',controller: _phController),
@@ -145,7 +143,7 @@ class _AguaWidgetState extends State<AguaWidget> {
         nombrepropietario: _nombrepropietarioPredioController.text,
         telefonopropietario: _telefonopropietarioPredioController.text ,
         correopropietario:_correopropietarioPredioController.text,
-        N: double.parse(_nController.text), 
+        //N: double.parse(_nController.text), 
         NH4: double.parse(_nh4Controller.text), 
         NO2: double.parse(_no2Controller.text), 
         NO3: double.parse(_no3Controller.text), 
@@ -157,7 +155,6 @@ class _AguaWidgetState extends State<AguaWidget> {
         Fe: double.parse(_feController.text), 
         Mn: double.parse(_mnController.text), 
         Cu: double.parse(_cuController.text), 
-        Al: double.parse(_alController.text), 
         Cl: double.parse(_clController.text), 
         Ph: double.parse(_phController.text), 
         C_E: double.parse(_ceController.text), 
@@ -177,18 +174,6 @@ class _AguaWidgetState extends State<AguaWidget> {
           MaterialPageRoute(builder: (context) => ShowResult(nombreCompuestos: nombreCompuestos,valorCompuestos:valorCompuestos, interpretacionCompuestos: interpretacionCompuestos )),
         );
 
-
-
-
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(_nController.text),
-              content: Text(_nh4Controller.text),
-            );
-          },
-        );
       }else{
         showDialog(
           context: context,

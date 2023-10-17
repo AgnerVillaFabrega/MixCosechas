@@ -328,12 +328,12 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         'Telefono': pruebaAgua.telefonopropietario,
         'Correo': pruebaAgua.correopropietario,
 
-        'Nitrato de Nitrógeno - N': [
-          {
-            'valor': pruebaAgua.N,
-            'interpretacion': pruebaAgua.N_Interpretacion,
-          }
-        ],
+        // 'Nitrato de Nitrógeno - N': [
+        //   {
+        //     'valor': pruebaAgua.N,
+        //     'interpretacion': pruebaAgua.N_Interpretacion,
+        //   }
+        // ],
         'Nitrógeno amoniacal - NH4+':[
           {
             'valor': pruebaAgua.NH4,
@@ -348,7 +348,7 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         ],
         'Nitratos - NO3-':[
           {
-            'valor': pruebaAgua.N,
+            'valor': pruebaAgua.NO3,
             'interpretacion': pruebaAgua.NO3_Interpretacion,
           }
         ],
@@ -400,12 +400,6 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
             'interpretacion': pruebaAgua.Cu_Interpretacion,
           }
         ],
-        'Aluminio - Al':[
-          {
-            'valor': pruebaAgua.Al,
-            'interpretacion': pruebaAgua.Al_Interpretacion,
-          }
-        ],
         'Cloruro - Cl':[
           {
             'valor': pruebaAgua.Cl,
@@ -420,8 +414,8 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         ],
         'C.E':[
           {
-            'valor': 78, //pruebaSuelo.C_E,
-            'interpretacion':  'Por definir'//pruebaSuelo.C_E_Interpretacion,
+            'valor': pruebaAgua.C_E,
+            'interpretacion':  pruebaAgua.C_E_Interpretacion,
           }
         ],
         'Sales Disueltas':[
@@ -430,18 +424,18 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
             'interpretacion': pruebaAgua.salesDisueltas_Interpretacion,
           }
         ],
-        'C.I.C.E':[
-          {
-            'valor': 65,//pruebaSuelo.CICE,
-            'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
-          }
-        ],
-        'Ca/Mg':[
-          {
-            'valor': pruebaAgua.CaMg,
-            'interpretacion': pruebaAgua.CaMg_Interpretacion,
-          }
-        ],
+        // 'C.I.C.E':[
+        //   {
+        //     'valor': 65,//pruebaSuelo.CICE,
+        //     'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
+        //   }
+        // ],
+        // 'Ca/Mg':[
+        //   {
+        //     'valor': pruebaAgua.CaMg,
+        //     'interpretacion': pruebaAgua.CaMg_Interpretacion,
+        //   }
+        // ],
         'Tipo de Agua':pruebaAgua.tipoAgua
 
       }
