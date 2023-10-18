@@ -65,56 +65,31 @@ class PruebaSistemaFoliar {
 
   
 
-//   factory PruebaSistemaFoliar.fromMap(Map<String, dynamic> map) {
-//     Map<String, dynamic> N_Data = map['Nitrato de Nitrógeno - N'][0];
-//     Map<String, dynamic> NH4_Data = map['Nitrógeno amoniacal - NH4+'][0];
-//     Map<String, dynamic> NO2_Data = map['Nitritos - NO2-'][0];
-//     Map<String, dynamic> NO3_Data = map['Nitratos - NO3-'][0];
-//     Map<String, dynamic> P_Data = map['Fósforo - P'][0];
-//     Map<String, dynamic> K_Data = map['Potasio - K'][0];
-//     Map<String, dynamic> Ca_Data = map['Calcio - Ca'][0];
-//     Map<String, dynamic> Mg_Data = map['Magnesio - Mg'][0];
-//     Map<String, dynamic> SO4_Data = map['Sulfato - SO4'][0];
-//     Map<String, dynamic> Fe_Data = map['Hierro Férrico - Fe'][0];
-//     Map<String, dynamic> Mn_Data = map['Manganeso - Mn'][0];
-//     Map<String, dynamic> Cu_Data = map['Cobre - Cu'][0];
-//     //Map<String, dynamic> Al_Data = map['Aluminio - Al'][0];
-//     Map<String, dynamic> Cl_Data = map['Cloruro - Cl'][0];
-//     // Map<String, dynamic> Zn_Data = map['Zinc - Zn'][0];
-//     //Map<String, dynamic> Na_Data = map['Sodio - Na'][0];
+  factory PruebaSistemaFoliar.fromMap(Map<String, dynamic> map) {
 
-//     Map<String, dynamic> Ph_Data = map['Ph'][0];
-//     Map<String, dynamic> C_E_Data = map['C.E'][0];
-//     Map<String, dynamic> salesDisueltas_Data = map['Sales Disueltas'][0];
-
-//     return PruebaSistemaFoliar(
-//       nombrePredio: map['NombrePredio'],
-//       corregimientoPredio: map['Corregimiento'],
-//       cultivoPredio: map['Cultivo'],
-//       municipioPredio: map['Municipio'],
-//       variedadPredio: map['Variedad'],
-//       dptoPredio: map['Departamento'],
-//       edadPredio: map['Edad'],
-//       nombrepropietario: map['NombrePropietario'],
-//       telefonopropietario: map['Telefono'],
-//       correopropietario: map['Correo'],
-//       // N: N_Data['valor'],
-//       NH4: NH4_Data['valor'],
-//       NO2: NO2_Data['valor'],
-//       NO3: NO3_Data['valor'],
-//       P: P_Data['valor'],
-//       K: K_Data['valor'],
-//       Ca: Ca_Data['valor'],
-//       Mg: Mg_Data['valor'],
-//       SO4: SO4_Data['valor'],
-//       Fe: Fe_Data['valor'],
-//       Mn: Mn_Data['valor'],
-//       Cu: Cu_Data['valor'],
-//       //   Al: Al_Data['valor'],
-//       Cl: Cl_Data['valor'],
-//       Ph: Ph_Data['valor'],
-//       C_E: C_E_Data['valor'],
-//       salesDisueltas: salesDisueltas_Data['valor']
-//     );
-//   }
+    return PruebaSistemaFoliar(
+      nombrePredio: map['NombrePredio'],
+      corregimientoPredio: map['Corregimiento'],
+      cultivoPredio: map['Cultivo'],
+      municipioPredio: map['Municipio'],
+      variedadPredio: map['Variedad'],
+      dptoPredio: map['Departamento'],
+      edadPredio: map['Edad'],
+      nombrepropietario: map['NombrePropietario'],
+      telefonopropietario: map['Telefono'],
+      correopropietario: map['Correo'],
+      
+      Ca: map['Calcio - Ca'],
+      Mg: map['Magnesio - Mg'],
+      Na: map['Sodio - Na'],
+      K: map['Potasio - K'],
+      N: map['Nitrógeno - N'],
+      P: map['Fósforo - P'],
+      Fe: map['Hierro Férrico - Fe'],
+      Cu: map['Cobre - Cu'],
+      Zn: map['Zinc - Zn'],
+      Mn: map['Manganeso - Mn'],
+      B: map['Boro - B']
+    );
+  }
  }
