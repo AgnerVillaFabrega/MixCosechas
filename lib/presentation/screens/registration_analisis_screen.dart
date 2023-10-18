@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/widgets/sistema_foliar_widget.dart';
 import '../widgets/agua_widget.dart';
 import '../widgets/suelo_widget.dart';
 
@@ -8,6 +9,7 @@ int _index = 0;
 List<Widget> _opciones = <Widget>[
   const SueloWidget(),
   const AguaWidget(),
+  const SistemaFoliarWidget(),
 ];
 
 class RegistrationPruebaScreen extends StatelessWidget {
@@ -116,34 +118,33 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                                 ),
                               ),
         
-                              //* OPT SISTEMA FOLIAR
-                              // SizedBox(
-                              //   height: 50,
-                              //   width: 150,
-                              //   child: TextButton(
-                              //     style: ButtonStyle(
-                              //       backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(2)),
-                              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              //         RoundedRectangleBorder(
-                              //           borderRadius: BorderRadius.circular(6.0),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         //_index = 2;
-                              //       });
-                              //     },
-                              //     child: const Text(
-                              //       "Sistema foliar",
-                              //       style: TextStyle(
-                              //         fontSize: 18,
-                              //         color: Color.fromARGB(255, 255, 255, 255),
-                              //         fontWeight: FontWeight.w700,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
+                              SizedBox(
+                                height: 50,
+                                width: 150,
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(2)),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6.0),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _index = 2;
+                                    });
+                                  },
+                                  child: const Text(
+                                    "Sistema foliar",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),

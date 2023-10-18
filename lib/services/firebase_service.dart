@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
 import '../model/predios.dart';
@@ -452,6 +453,42 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         //   }
         // ],
         'Tipo de Agua':pruebaAgua.tipoAgua
+
+      }
+    );
+
+    } catch (e){
+      print("Error al agregar la prueba: $e");
+    }
+  }
+
+  Future<void> addPruebaSistemaFoliar (PruebaSistemaFoliar pruebaSistemaFoliar) async {
+    try {
+      await db.collection('PruebaSistemaFoliar').add({
+        
+        
+        'NombrePredio': pruebaSistemaFoliar.nombrePredio,
+        'Corregimiento': pruebaSistemaFoliar.corregimientoPredio,
+        'Cultivo': pruebaSistemaFoliar.cultivoPredio,
+        'Municipio': pruebaSistemaFoliar.municipioPredio,
+        'Variedad': pruebaSistemaFoliar.variedadPredio,
+        'Departamento': pruebaSistemaFoliar.dptoPredio,
+        'Edad': pruebaSistemaFoliar.edadPredio,
+        'Nombrepropietario': pruebaSistemaFoliar.nombrepropietario,
+        'Telefono': pruebaSistemaFoliar.telefonopropietario,
+        'Correo': pruebaSistemaFoliar.correopropietario,
+
+        'Calcio - Ca':pruebaSistemaFoliar.Ca,
+        'Magnesio - Mg':pruebaSistemaFoliar.Mg,
+        'Sodio - Na':pruebaSistemaFoliar.Na,
+        'Potasio - K':pruebaSistemaFoliar.K,
+        'Nitrógeno - N': pruebaSistemaFoliar.N,
+        'Fósforo - P':pruebaSistemaFoliar.P,
+        'Hierro Férrico - Fe ':pruebaSistemaFoliar.Fe,
+        'Cobre - Cu':pruebaSistemaFoliar.Cu,
+        'Zinc - Zn':pruebaSistemaFoliar.Zn,
+        'Manganeso - Mn':pruebaSistemaFoliar.Mn,
+        'Boro - B':pruebaSistemaFoliar.B,
 
       }
     );
