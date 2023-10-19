@@ -491,9 +491,9 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
 
         _serviceFirebase.addPruebaSistemaFoliar(pruebaSistemaFoliar);
         
-        final List<String> nombreCompuestos = pruebaSistemaFoliar.nombreCompuestos;
+        // final List<String> nombreCompuestos = pruebaSistemaFoliar.nombreCompuestos;
 
-        final List<String> valorCompuestos = pruebaSistemaFoliar.valorCompuestos;
+        // final List<String> valorCompuestos = pruebaSistemaFoliar.valorCompuestos;
 
         showDialog(
           context: context,
