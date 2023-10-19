@@ -495,6 +495,37 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
 
         final List<String> valorCompuestos = pruebaSistemaFoliar.valorCompuestos;
 
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
+          },
+        );
+        _nombrePredioController.text='';
+        _corregimientoPredioController.text='';
+        _cultivoPredioController.text='';
+        _municipioPredioController.text='';
+        _variedadPredioController.text='';
+        _dptoPredioController.text ='';
+        _edadPredioController.text='';
+        _nombrepropietarioPredioController.text='';
+        _telefonopropietarioPredioController.text ='';
+        _correopropietarioPredioController.text='';
+
+        _caController.text ='';
+        _mgController .text='';
+        _naController.text ='';
+        _kController.text ='';
+        _nController.text ='';
+        _pController.text ='';
+        _feController.text ='';
+        _cuController.text ='';
+        _znController.text ='';
+        _mnController.text ='';
+        _bController.text ='';
+        FocusScope.of(context).unfocus();
+      
+
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) => ShowResult(nombreCompuestos: nombreCompuestos,valorCompuestos:valorCompuestos)),
