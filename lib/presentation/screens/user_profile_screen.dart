@@ -25,7 +25,6 @@ class UserProfileView extends StatelessWidget {
                 pinned: false,
                 expandedHeight: 250.0,
                 flexibleSpace: FlexibleSpaceBar(
-                  //title: Text(usuario.nombre, textScaleFactor: 1),
                   background: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
@@ -70,33 +69,109 @@ class UserProfileView extends StatelessWidget {
           },
           body: TabBarView(
             children: [
-              // Información del cliente
-              Column(
-                children: <Widget>[
-                  const SizedBox(height: 16),
-                  ListTile(
-                    title: Text('Nombre: ${usuario.nombre}'),
+              Card(
+                elevation: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.badge), 
+                          SizedBox(width: 16), 
+                          Text(
+                            "Numero de identificacion",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 17),
+                      Container(
+                        alignment: const Alignment(-0.6, 0.0),
+                        child: Text(
+                          usuario.id,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Divider(),
+
+                      const Row(
+                        children: [
+                          Icon(Icons.email), 
+                          SizedBox(width: 16), 
+                          Text(
+                            "Correo electronico",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 17),
+                      Container(
+                        alignment: const Alignment(-0.6, 0.0),
+                        child: Text(
+                          usuario.correo,
+                        ),
+                      ),
+                      const SizedBox(height: 17),
+                      const Divider(),
+
+                      const Row(
+                        children: [
+                          Icon(Icons.phone_android), 
+                          SizedBox(width: 16), 
+                          Text(
+                            "Telefono",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 17),
+                      Container(
+                        alignment: const Alignment(-0.6, 0.0),
+                        child: Text(
+                          usuario.telefono,
+                        ),
+                      ),
+                      const SizedBox(height: 17),
+                      const Divider(),
+
+                      const Row(
+                        children: [
+                          Icon(Icons.email), 
+                          SizedBox(width: 16), 
+                          Text(
+                            "Corre",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 17),
+                      Container(
+                        alignment: const Alignment(-0.6, 0.0),
+                        child: Text(
+                          usuario.correo,
+                        ),
+                      ),
+                      const SizedBox(height: 17),
+                      const Divider(),
+                    ],
                   ),
-                  ListTile(
-                    title: Text('Correo: ${usuario.correo}'),
-                  ),
-                  ListTile(
-                    title: Text('Rol: ${usuario.rol}'),
-                  ),
-                ],
+                ),
               ),
               // Listado de predios
               FutureBuilder(
                 future: _serviceFirebase.getPrediosPorPropietario(usuario.id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     List<Predio> predios = snapshot.data as List<Predio>;
 
                     return ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       children: predios.map((predio) {
                         return GestureDetector(
                           onTap: () {
@@ -108,14 +183,25 @@ class UserProfileView extends StatelessWidget {
                             );
                           },
                           child: Card(
-                            elevation: 3,
-                            margin: const EdgeInsets.only(bottom: 16),
-                            child: ListTile(
-                              title: Text(
-                                'Nombre del predio: ${predio.nombre}',
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                            elevation: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(7),
+                              child: ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      predio.nombre,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      predio.id,  // Aquí colocamos el código del predio
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Text('${predio.departamento}, ${predio.municipio}'),
                               ),
-                              subtitle: Text('Ubicación: ${predio.departamento}, ${predio.municipio}'),
                             ),
                           ),
                         );
@@ -131,7 +217,6 @@ class UserProfileView extends StatelessWidget {
     );
   }
 }
-
 
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   final TabBar tabBar;

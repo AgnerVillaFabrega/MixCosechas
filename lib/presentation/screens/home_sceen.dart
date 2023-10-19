@@ -6,8 +6,6 @@ import 'package:mixcosechas_app/presentation/widgets/icon_userprofile.dart';
 import 'package:mixcosechas_app/presentation/widgets/info_home.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/clientes.dart';
 import '../widgets/icon_muestras.dart';
 import '../widgets/img_admin.dart';
 import '../widgets/img_agricultor.dart';
