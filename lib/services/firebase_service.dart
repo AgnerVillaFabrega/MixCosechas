@@ -64,6 +64,23 @@ class ServiceFirebase {
     return pruebaAgua;
   }
 
+  Future <List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
+
+    List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
+
+    try {
+      QuerySnapshot queryPruebaAgua = await  db.collection('PruebaSistemaFoliar').get();
+
+      queryPruebaAgua.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));
+      });
+    } catch (e){
+      print("Error al obtener la lista de Pruebas de Suelo: $e");
+    }
+    return pruebaSistemaFoliar;
+  }
+
   Future<Cliente?> consultarClientePorId(String clienteId) async {
   try {
     List<Cliente> tempClientes = await getPeople(); // Supongo que esta función existe y devuelve una lista de Clientes
@@ -465,8 +482,7 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
   Future<void> addPruebaSistemaFoliar (PruebaSistemaFoliar pruebaSistemaFoliar) async {
     try {
       await db.collection('PruebaSistemaFoliar').add({
-        
-        
+         
         'NombrePredio': pruebaSistemaFoliar.nombrePredio,
         'Corregimiento': pruebaSistemaFoliar.corregimientoPredio,
         'Cultivo': pruebaSistemaFoliar.cultivoPredio,
@@ -484,7 +500,7 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         'Potasio - K':pruebaSistemaFoliar.K,
         'Nitrógeno - N': pruebaSistemaFoliar.N,
         'Fósforo - P':pruebaSistemaFoliar.P,
-        'Hierro Férrico - Fe ':pruebaSistemaFoliar.Fe,
+        'Hierro Férrico - Fe':pruebaSistemaFoliar.Fe,
         'Cobre - Cu':pruebaSistemaFoliar.Cu,
         'Zinc - Zn':pruebaSistemaFoliar.Zn,
         'Manganeso - Mn':pruebaSistemaFoliar.Mn,
