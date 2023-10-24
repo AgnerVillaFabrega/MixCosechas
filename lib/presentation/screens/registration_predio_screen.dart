@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_propietario.dart';
+
 import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
@@ -127,7 +128,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       Step(
                         isActive: currentState >= 0,
                         title: const Text('Informacion del propietario'), 
-                        content:SearchPropietario(propietarioFilterController: _identificacionPropietarioController, propietarioCollection:propietariosCollection , nombrepropietarioPredioController: _nombrePropietarioController, telefonopropietarioPredioController: _telefonoPropietarioController, correopropietarioPredioController: _correoPropietarioController),
+                        content:SearchPropietario(propietarioFilterController: _identificacionPropietarioController, 
+                          propietarioCollection:propietariosCollection , nombrepropietarioPredioController: _nombrePropietarioController,
+                          telefonopropietarioPredioController: _telefonoPropietarioController, correopropietarioPredioController: _correoPropietarioController),
                       ),
                       Step(
                         isActive: currentState >= 1,

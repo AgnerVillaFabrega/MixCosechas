@@ -2,26 +2,41 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
 import '../../model/predios.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import 'package:mixcosechas_app/presentation/widgets/icon_add_predio.dart';
 
-Widget cargarDatosPredios(){
+Widget cargarDatosPredios() {
   return StreamBuilder(
     stream: FirebaseFirestore.instance.collection('Predios').snapshots(),
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-      switch(snapshot.connectionState){
-        case ConnectionState.waiting: 
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      ClienteProvider watch =  context.watch<ClienteProvider>();
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
           return const Center(
             child: CircularProgressIndicator(),
           );
-        case ConnectionState.active: 
-          if(snapshot.hasError) return const Text('error');
-          return snapshot.data != null? ViewPredioScreen(predios:conversiondelista(snapshot.data!.docs)): const Text('Sin datos');
-        default: return const Text('Presiona el boton para recargar');
+        case ConnectionState.active:
+          if (snapshot.hasError) return const Text('Error');
+          if (snapshot.data != null) {
+            //* Se condiciona la lista de consulta dependiendo del rol
+            if (watch.cliente.rol == 'Admin') return ViewPredioScreen(predios:conversiondelista(snapshot.data!.docs));
+            final predios = conversiondelista(snapshot.data!.docs);
+              final clienteId = watch.cliente.id;
+              final prediosFiltrados = predios.where((predio) => predio.idPropietario == clienteId).toList();
+              return prediosFiltrados.isNotEmpty
+                  ? ViewPredioScreen(predios: prediosFiltrados)
+                  : ViewPredioScreen(predios: prediosFiltrados);
+          } else {
+            return const Text('Sin datos');
+          }
+        default:
+          return const Text('Presiona el botón para recargar');
       }
-    }
+    },
   );
 }
 

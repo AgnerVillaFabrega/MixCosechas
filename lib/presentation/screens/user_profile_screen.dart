@@ -168,45 +168,74 @@ class UserProfileView extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
+                    
                     List<Predio> predios = snapshot.data as List<Predio>;
-
-                    return ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      children: predios.map((predio) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PredioProfileView(predio: predio),
-                              ),
-                            );
-                          },
-                          child: Card(
-                            elevation: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(7),
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      predio.nombre,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      predio.id,  // Aquí colocamos el código del predio
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                    if (predios.isEmpty){
+                      return const Card(
+                        elevation: 2,
+                        child: Padding(
+                          padding: EdgeInsets.all(16), // Aumenta el espacio de relleno
+                          child: ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "¡Upss! 🤷‍♂️",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20// Aumenta el tamaño del texto
+                                  ),
                                 ),
-                                subtitle: Text('${predio.departamento}, ${predio.municipio}'),
+                              ],
+                            ),
+                            subtitle: Text(
+                              'Parece que aún no tienes predios',
+                              style: TextStyle(
+                                fontSize: 17, // Aumenta el tamaño del texto
                               ),
                             ),
                           ),
-                        );
-                      }).toList(),
-                    );
+                        ),
+                      );
+                    }else{
+                      return ListView(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        children: predios.map((predio) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PredioProfileView(predio: predio),
+                                ),
+                              );
+                            },
+                            child: Card(
+                              elevation: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(7),
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        predio.nombre,
+                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        predio.id,  // Aquí colocamos el código del predio
+                                        style: const TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  subtitle: Text('${predio.departamento}, ${predio.municipio}'),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    }
                   }
                 },
               ),

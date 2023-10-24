@@ -37,9 +37,10 @@ class _AguaWidgetState extends State<AguaWidget> {
     final TextEditingController _salesdisueltasController = TextEditingController();
     final TextEditingController _phController = TextEditingController();
     final TextEditingController _ceController = TextEditingController();
+    final TextEditingController _fuenteaguaController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
-  TextEditingController _nombrePredioController = TextEditingController();
+  final TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection =
       FirebaseFirestore.instance.collection('Predios');
 
@@ -86,6 +87,40 @@ class _AguaWidgetState extends State<AguaWidget> {
               content: Column(
                 children: [
                   //ImputVariable(nombreVariable: 'Nitrato de Nitrógeno - N',controller: _nController),
+                  DropdownButtonFormField<String>(
+                    value: _fuenteaguaController.text,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _caController.text = newValue!;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Fuente de agua',
+                      labelStyle: TextStyle(
+                          color: Color(0xFF19AA89),
+                          fontWeight: FontWeight.w600),
+                    ),
+                    items: [
+                      const DropdownMenuItem<String>(
+                        value: '',
+                        child: Text(
+                            'Seleccione'),
+                      ),
+                      ...['Conduccion', 'Rio', 'Manantial', 'Lluvia', 'Cienega', ' Arroyos', 
+                            'Pozo', 'Lago', 'Estanque', 'Jaguey'].map((role) {
+                        return DropdownMenuItem<String>(
+                            value: role, child: Text(role));
+                      }).toList(),
+                    ],
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value == 'Seleccione') {
+                        return 'Por favor, seleccione un valor';
+                      }
+                      return null;
+                    },
+                  ),
                   ImputVariable(nombreVariable: 'Nitrógeno amoniacal - NH4+',controller:  _nh4Controller),
                   ImputVariable(nombreVariable: 'Nitritos - NO2',controller: _no2Controller),
                   ImputVariable(nombreVariable: 'Nitratos - NO3',controller: _no3Controller),
