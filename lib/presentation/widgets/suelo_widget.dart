@@ -83,7 +83,8 @@ class _SueloWidgetState extends State<SueloWidget> {
                 onStepTapped: (index) {
                   setState(() => currentState = index);
                 },
-                controlsBuilder: (BuildContext context, ControlsDetails details) {
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
                   return Container();
                 },
                 steps: [
@@ -232,7 +233,6 @@ class _SueloWidgetState extends State<SueloWidget> {
                           ),
                           const SizedBox(height: 20),
                           RegistrarPruebasButtom(onTap: _handleRegistroSuelo),
-                          
                         ],
                       )),
                 ])));
@@ -262,27 +262,27 @@ class _SueloWidgetState extends State<SueloWidget> {
             nombrepropietario: _nombrepropietarioPredioController.text,
             telefonopropietario: _telefonopropietarioPredioController.text,
             correopropietario: _correopropietarioPredioController.text,
-            N: double.parse(_nController.text),
-            NH4: double.parse(_nh4Controller.text),
-            NO2: double.parse(_no2Controller.text),
-            NO3: double.parse(_no3Controller.text),
-            P: double.parse(_pController.text),
-            K: double.parse(_kController.text),
-            Ca: double.parse(_caController.text),
-            Mg: double.parse(_mgController.text),
-            S: double.parse(_sController.text),
-            SO4: double.parse(_so4Controller.text),
-            Fe: double.parse(_feController.text),
-            Mn: double.parse(_mnController.text),
-            Cu: double.parse(_cuController.text),
-            Al: double.parse(_alController.text),
-            Cl: double.parse(_clController.text),
-            Zn: double.parse(_znController.text),
-            Na: double.parse(_naController.text),
-            Ph: double.parse(_phController.text),
-            C_E: double.parse(_ceController.text),
+            n: double.parse(_nController.text),
+            nh4: double.parse(_nh4Controller.text),
+            no2: double.parse(_no2Controller.text),
+            no3: double.parse(_no3Controller.text),
+            p: double.parse(_pController.text),
+            k: double.parse(_kController.text),
+            ca: double.parse(_caController.text),
+            mg: double.parse(_mgController.text),
+            s: double.parse(_sController.text),
+            so4: double.parse(_so4Controller.text),
+            fe: double.parse(_feController.text),
+            mn: double.parse(_mnController.text),
+            cu: double.parse(_cuController.text),
+            al: double.parse(_alController.text),
+            cl: double.parse(_clController.text),
+            zn: double.parse(_znController.text),
+            na: double.parse(_naController.text),
+            ph: double.parse(_phController.text),
+            ce: double.parse(_ceController.text),
             salesDisueltas: double.parse(_salesdisueltasController.text),
-            CICE: double.parse(_ciceController.text),
+            cice: double.parse(_ciceController.text),
             arcilla: double.parse(_arcillaController.text),
             limo: double.parse(_limoController.text),
             arena: double.parse(_arenaController.text),
@@ -294,7 +294,8 @@ class _SueloWidgetState extends State<SueloWidget> {
 
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
 
-        final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos =
+            pruebaSuelo.interpretacionCompuestos;
 
         Navigator.push(
           context,

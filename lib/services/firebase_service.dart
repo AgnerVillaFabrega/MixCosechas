@@ -8,163 +8,158 @@ import '../model/predios.dart';
 import '../model/pruebaAgua.dart';
 
 class ServiceFirebase {
-  
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<bool> isIDUnique(String id) async {
-    QuerySnapshot query = await FirebaseFirestore.instance.collection('predios').where('id', isEqualTo: id).get();
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('predios')
+        .where('id', isEqualTo: id)
+        .get();
     return query.docs.isEmpty;
   }
 
   Future<List<Cliente>> getPeople() async {
     List<Cliente> clientes = [];
     try {
-      QuerySnapshot queryclientes = await  db.collection('Usuarios').get();
+      QuerySnapshot queryclientes = await db.collection('Usuarios').get();
       queryclientes.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         clientes.add(Cliente.fromMap(data));
       });
-    } catch (e){
+    } catch (e) {
       print("Error al obtener la lista de clientes: $e");
     }
     return clientes;
   }
 
-  Future <List<PruebaSuelo>> getPruebaSuelo() async {
-
+  Future<List<PruebaSuelo>> getPruebaSuelo() async {
     List<PruebaSuelo> pruebaSuelo = [];
 
     try {
-      QuerySnapshot queryPruebaSuelo = await  db.collection('PruebaSuelo').get();
+      QuerySnapshot queryPruebaSuelo = await db.collection('PruebaSuelo').get();
 
       queryPruebaSuelo.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSuelo.add(PruebaSuelo.fromMap(data));
       });
-    } catch (e){
+    } catch (e) {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaSuelo;
   }
 
-  Future <List<PruebaAgua>> getPruebaAgua() async {
-
+  Future<List<PruebaAgua>> getPruebaAgua() async {
     List<PruebaAgua> pruebaAgua = [];
 
     try {
-      QuerySnapshot queryPruebaAgua = await  db.collection('PruebaAgua').get();
+      QuerySnapshot queryPruebaAgua = await db.collection('PruebaAgua').get();
 
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaAgua.add(PruebaAgua.fromMap(data));
       });
-    } catch (e){
+    } catch (e) {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaAgua;
   }
 
-  Future <List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
-
+  Future<List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
     List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
 
     try {
-      QuerySnapshot queryPruebaAgua = await  db.collection('PruebaSistemaFoliar').get();
+      QuerySnapshot queryPruebaAgua =
+          await db.collection('PruebaSistemaFoliar').get();
 
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));
       });
-    } catch (e){
+    } catch (e) {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaSistemaFoliar;
   }
 
   Future<Cliente?> consultarClientePorId(String clienteId) async {
-  try {
-    List<Cliente> tempClientes = await getPeople(); // Supongo que esta función existe y devuelve una lista de Clientes
-    Cliente? clienteEncontrado;
-    // Busca el cliente por su ID en la lista
-    if (tempClientes.isNotEmpty) {
-      clienteEncontrado = tempClientes.firstWhere(
-        (cliente) => cliente.id == clienteId
-      );
-    }
+    try {
+      List<Cliente> tempClientes =
+          await getPeople(); // Supongo que esta función existe y devuelve una lista de Clientes
+      Cliente? clienteEncontrado;
+      // Busca el cliente por su ID en la lista
+      if (tempClientes.isNotEmpty) {
+        clienteEncontrado =
+            tempClientes.firstWhere((cliente) => cliente.id == clienteId);
+      }
 
-    if (clienteEncontrado != null) {
-      return clienteEncontrado; // Retorna el cliente si se encuentra por su ID.
-    } else {
-      return null; // Retorna null si no se encuentra el cliente con ese ID.
+      if (clienteEncontrado != null) {
+        return clienteEncontrado; // Retorna el cliente si se encuentra por su ID.
+      } else {
+        return null; // Retorna null si no se encuentra el cliente con ese ID.
+      }
+    } catch (e) {
+      print("Error al consultar el cliente por ID: $e");
+      return null;
     }
-  } catch (e) {
-    print("Error al consultar el cliente por ID: $e");
-    return null;
   }
-}
 
-  Future<void> addPeople (Cliente cliente,UserCredential userCredential) async {
+  Future<void> addPeople(Cliente cliente, UserCredential userCredential) async {
     try {
       await db.collection('Usuarios').doc(userCredential.user!.uid).set({
-        "Id":cliente.id,
-        "Nombre":cliente.nombre,
-        "Telefono":cliente.telefono,
-        "Correo":cliente.correo,
-        "Rol":cliente.rol,
-        "Password":cliente.password
-        }
-      );
-    } catch (e){
+        "Id": cliente.id,
+        "Nombre": cliente.nombre,
+        "Telefono": cliente.telefono,
+        "Correo": cliente.correo,
+        "Rol": cliente.rol,
+        "Password": cliente.password
+      });
+    } catch (e) {
       print("Error al agregar el cliente: $e");
     }
   }
 
-  Future<void> addPredio (Predio predio) async {
+  Future<void> addPredio(Predio predio) async {
     try {
       await db.collection('Predios').add({
-        "Id":predio.id,
-        "IdPropietario":predio.idPropietario,
-        "NombrePropietario":predio.nombrePropietario,
-        "CorreoPropietario":predio.correoPropietario,
-        "TelefonoPropietario":predio.telefonoPropietario,
-        "Nombre":predio.nombre,
-        "CorregimientoVereda":predio.corregimientoVereda,
-        "Departamento":predio.departamento,
-        "Municipio":predio.municipio,
-        "Cultivo":predio.cultivo,
-        "Variedad":predio.variedad,
-        "Edad":predio.edad
-        }
-      );
-    } catch (e){
+        "Id": predio.id,
+        "IdPropietario": predio.idPropietario,
+        "NombrePropietario": predio.nombrePropietario,
+        "CorreoPropietario": predio.correoPropietario,
+        "TelefonoPropietario": predio.telefonoPropietario,
+        "Nombre": predio.nombre,
+        "CorregimientoVereda": predio.corregimientoVereda,
+        "Departamento": predio.departamento,
+        "Municipio": predio.municipio,
+        "Cultivo": predio.cultivo,
+        "Variedad": predio.variedad,
+        "Edad": predio.edad
+      });
+    } catch (e) {
       print("Error al agregar el cultivo: $e");
     }
   }
-  
 
-Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
-  List<Predio> predios = [];
+  Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
+    List<Predio> predios = [];
 
-  try {
-    QuerySnapshot queryPredios = await db
-        .collection('Predios')
-        .where('IdPropietario', isEqualTo: idPropietario)
-        .get();
-    predios = queryPredios.docs.map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>)).toList();
-  } catch (e) {
-    print("Error al obtener la lista de predios: $e");
+    try {
+      QuerySnapshot queryPredios = await db
+          .collection('Predios')
+          .where('IdPropietario', isEqualTo: idPropietario)
+          .get();
+      predios = queryPredios.docs
+          .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print("Error al obtener la lista de predios: $e");
+    }
+
+    return predios;
   }
 
-  return predios;
-}
-
-
-
-  Future<void> addPruebaSuelo (PruebaSuelo pruebaSuelo) async {
+  Future<void> addPruebaSuelo(PruebaSuelo pruebaSuelo) async {
     try {
       await db.collection('PruebaSuelo').add({
-        
-        
         'NombrePredio': pruebaSuelo.nombrePredio,
         'Corregimiento': pruebaSuelo.corregimientoPredio,
         'Cultivo': pruebaSuelo.cultivoPredio,
@@ -175,181 +170,175 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonopropietario,
         'Correo': pruebaSuelo.correopropietario,
-
         'Nitrato de Nitrógeno - N': [
           {
-            'valor': pruebaSuelo.N,
-            'interpretacion': pruebaSuelo.N_Interpretacion,
+            'valor': pruebaSuelo.n,
+            'interpretacion': pruebaSuelo.nInterpretacion,
           }
         ],
-        'Nitrógeno amoniacal - NH4+':[
+        'Nitrógeno amoniacal - NH4+': [
           {
-            'valor': pruebaSuelo.NH4,
-            'interpretacion': pruebaSuelo.NH4_Interpretacion,
+            'valor': pruebaSuelo.nh4,
+            'interpretacion': pruebaSuelo.nh4Interpretacion,
           }
         ],
-        'Nitritos - NO2-':[
+        'Nitritos - NO2-': [
           {
-            'valor': pruebaSuelo.NO2,
-            'interpretacion': pruebaSuelo.NO2_Interpretacion,
+            'valor': pruebaSuelo.no2,
+            'interpretacion': pruebaSuelo.no2Interpretacion,
           }
         ],
-        'Nitratos - NO3-':[
+        'Nitratos - NO3-': [
           {
-            'valor': pruebaSuelo.N,
-            'interpretacion': pruebaSuelo.NO3_Interpretacion,
+            'valor': pruebaSuelo.n,
+            'interpretacion': pruebaSuelo.no3Interpretacion,
           }
         ],
-        'Fósforo - P':[
+        'Fósforo - P': [
           {
-            'valor': pruebaSuelo.P,
-            'interpretacion': pruebaSuelo.P_Interpretacion,
+            'valor': pruebaSuelo.p,
+            'interpretacion': pruebaSuelo.pInterpretacion,
           }
         ],
-        'Potasio - K':[
+        'Potasio - K': [
           {
-            'valor': pruebaSuelo.K,
-            'interpretacion': pruebaSuelo.K_Interpretacion,
+            'valor': pruebaSuelo.k,
+            'interpretacion': pruebaSuelo.kInterpretacion,
           }
         ],
-        'Calcio - Ca':[
+        'Calcio - Ca': [
           {
-            'valor': pruebaSuelo.Ca,
-            'interpretacion': pruebaSuelo.Ca_Interpretacion,
+            'valor': pruebaSuelo.ca,
+            'interpretacion': pruebaSuelo.caInterpretacion,
           }
         ],
-        'Azufre - S':[
+        'Azufre - S': [
           {
-            'valor': pruebaSuelo.S,
-            'interpretacion': pruebaSuelo.S_Interpretacion,
+            'valor': pruebaSuelo.s,
+            'interpretacion': pruebaSuelo.sInterpretacion,
           }
         ],
-        'Magnesio - Mg':[
+        'Magnesio - Mg': [
           {
-            'valor': pruebaSuelo.Mg,
-            'interpretacion': pruebaSuelo.Mg_Interpretacion,
+            'valor': pruebaSuelo.mg,
+            'interpretacion': pruebaSuelo.mgInterpretacion,
           }
         ],
-        'Sulfato - SO4':[
+        'Sulfato - SO4': [
           {
-            'valor': pruebaSuelo.SO4,
-            'interpretacion': pruebaSuelo.SO4_Interpretacion,
+            'valor': pruebaSuelo.so4,
+            'interpretacion': pruebaSuelo.so4Interpretacion,
           }
         ],
-        'Hierro Férrico - Fe':[
+        'Hierro Férrico - Fe': [
           {
-            'valor': pruebaSuelo.Fe,
-            'interpretacion': pruebaSuelo.Fe_Interpretacion,
+            'valor': pruebaSuelo.fe,
+            'interpretacion': pruebaSuelo.feInterpretacion,
           }
         ],
-        'Manganeso - Mn':[
+        'Manganeso - Mn': [
           {
-            'valor': pruebaSuelo.Mn,
-            'interpretacion': pruebaSuelo.Mn_Interpretacion,
+            'valor': pruebaSuelo.mn,
+            'interpretacion': pruebaSuelo.mnInterpretacion,
           }
         ],
-        'Cobre - Cu':[
+        'Cobre - Cu': [
           {
-            'valor': pruebaSuelo.Cu,
-            'interpretacion': pruebaSuelo.Cu_Interpretacion,
+            'valor': pruebaSuelo.cu,
+            'interpretacion': pruebaSuelo.cuInterpretacion,
           }
         ],
-        'Aluminio - Al':[
+        'Aluminio - Al': [
           {
-            'valor': pruebaSuelo.Al,
-            'interpretacion': pruebaSuelo.Al_Interpretacion,
+            'valor': pruebaSuelo.al,
+            'interpretacion': pruebaSuelo.alInterpretacion,
           }
         ],
-        'Cloruro - Cl':[
+        'Cloruro - Cl': [
           {
-            'valor': pruebaSuelo.Cl,
-            'interpretacion': pruebaSuelo.Cl_Interpretacion,
+            'valor': pruebaSuelo.cl,
+            'interpretacion': pruebaSuelo.clInterpretacion,
           }
         ],
-        'Zinc - Zn':[
+        'Zinc - Zn': [
           {
-            'valor': pruebaSuelo.Zn,
-            'interpretacion': pruebaSuelo.Zn_Interpretacion,
+            'valor': pruebaSuelo.zn,
+            'interpretacion': pruebaSuelo.znInterpretacion,
           }
         ],
-        'Sodio - Na':[
+        'Sodio - Na': [
           {
-            'valor': pruebaSuelo.Na,
-            'interpretacion': pruebaSuelo.Na_Interpretacion,
+            'valor': pruebaSuelo.na,
+            'interpretacion': pruebaSuelo.naInterpretacion,
           }
         ],
-        'Ph':[
+        'Ph': [
           {
-            'valor': pruebaSuelo.Ph,
-            'interpretacion': pruebaSuelo.Ph_Interpretacion,
+            'valor': pruebaSuelo.ph,
+            'interpretacion': pruebaSuelo.phInterpretacion,
           }
         ],
-        'C.E':[
+        'C.E': [
           {
-            'valor': pruebaSuelo.C_E,
-            'interpretacion':  pruebaSuelo.C_E_Interpretacion,
+            'valor': pruebaSuelo.ce,
+            'interpretacion': pruebaSuelo.ceInterpretacion,
           }
         ],
-        'Sales Disueltas':[
+        'Sales Disueltas': [
           {
             'valor': pruebaSuelo.salesDisueltas,
-            'interpretacion': pruebaSuelo.salesDisueltas_Interpretacion,
+            'interpretacion': pruebaSuelo.salesDisueltasInterpretacion,
           }
         ],
-        'C.I.C.E':[
+        'C.I.C.E': [
           {
-            'valor': pruebaSuelo.CICE,
-            'interpretacion': pruebaSuelo.CICE_Interpretacion,
+            'valor': pruebaSuelo.cice,
+            'interpretacion': pruebaSuelo.ciceInterpretacion,
           }
         ],
-        'Ca/Mg':[
+        'Ca/Mg': [
           {
-            'valor': pruebaSuelo.CaMg,
-            'interpretacion': pruebaSuelo.CaMg_Interpretacion,
+            'valor': pruebaSuelo.camg,
+            'interpretacion': pruebaSuelo.camgInterpretacion,
           }
         ],
-        'Ca+Mg/K':[
+        'Ca+Mg/K': [
           {
-            'valor': pruebaSuelo.CaMgK,
-            'interpretacion': pruebaSuelo.CaMgK_Interpretacion,
+            'valor': pruebaSuelo.camgk,
+            'interpretacion': pruebaSuelo.camgkInterpretacion,
           }
         ],
-        'Ca/K':[
+        'Ca/K': [
           {
-            'valor': pruebaSuelo.CaK,
-            'interpretacion': pruebaSuelo.CaK_Interpretacion,
+            'valor': pruebaSuelo.cak,
+            'interpretacion': pruebaSuelo.cakInterpretacion,
           }
         ],
-        'Mg/K':[
+        'Mg/K': [
           {
-            'valor': pruebaSuelo.MgK,
-            'interpretacion': pruebaSuelo.MgK_Interpretacion,
+            'valor': pruebaSuelo.mgk,
+            'interpretacion': pruebaSuelo.mgkInterpretacion,
           }
         ],
         'Arcilla': pruebaSuelo.arcilla,
         'Limo': pruebaSuelo.limo,
-        'Arena':pruebaSuelo.arena,
-        'Humus':[
+        'Arena': pruebaSuelo.arena,
+        'Humus': [
           {
             'valor': pruebaSuelo.humus,
-            'interpretacion': pruebaSuelo.humus_Interpretacion,
+            'interpretacion': pruebaSuelo.humusInterpretacion,
           }
         ],
-        'Textura':pruebaSuelo.textura
-
-        }
-      );
-
-    } catch (e){
+        'Textura': pruebaSuelo.textura
+      });
+    } catch (e) {
       print("Error al agregar la prueba: $e");
     }
   }
 
-  Future<void> addPruebaAgua (PruebaAgua pruebaAgua) async {
+  Future<void> addPruebaAgua(PruebaAgua pruebaAgua) async {
     try {
       await db.collection('PruebaAgua').add({
-        
-        
         'NombrePredio': pruebaAgua.nombrePredio,
         'Corregimiento': pruebaAgua.corregimientoPredio,
         'Cultivo': pruebaAgua.cultivoPredio,
@@ -367,94 +356,94 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         //     'interpretacion': pruebaAgua.N_Interpretacion,
         //   }
         // ],
-        'Nitrógeno amoniacal - NH4+':[
+        'Nitrógeno amoniacal - NH4+': [
           {
-            'valor': pruebaAgua.NH4,
-            'interpretacion': pruebaAgua.NH4_Interpretacion,
+            'valor': pruebaAgua.nh4,
+            'interpretacion': pruebaAgua.nh4Interpretacion,
           }
         ],
-        'Nitritos - NO2-':[
+        'Nitritos - NO2-': [
           {
-            'valor': pruebaAgua.NO2,
-            'interpretacion': pruebaAgua.NO2_Interpretacion,
+            'valor': pruebaAgua.no2,
+            'interpretacion': pruebaAgua.no2Interpretacion,
           }
         ],
-        'Nitratos - NO3-':[
+        'Nitratos - NO3-': [
           {
-            'valor': pruebaAgua.NO3,
-            'interpretacion': pruebaAgua.NO3_Interpretacion,
+            'valor': pruebaAgua.no3,
+            'interpretacion': pruebaAgua.no3Interpretacion,
           }
         ],
-        'Fósforo - P':[
+        'Fósforo - P': [
           {
-            'valor': pruebaAgua.P,
-            'interpretacion': pruebaAgua.P_Interpretacion,
+            'valor': pruebaAgua.p,
+            'interpretacion': pruebaAgua.pInterpretacion,
           }
         ],
-        'Potasio - K':[
+        'Potasio - K': [
           {
-            'valor': pruebaAgua.K,
-            'interpretacion': pruebaAgua.K_Interpretacion,
+            'valor': pruebaAgua.k,
+            'interpretacion': pruebaAgua.kInterpretacion,
           }
         ],
-        'Calcio - Ca':[
+        'Calcio - Ca': [
           {
-            'valor': pruebaAgua.Ca,
-            'interpretacion': pruebaAgua.Ca_Interpretacion,
+            'valor': pruebaAgua.ca,
+            'interpretacion': pruebaAgua.caInterpretacion,
           }
         ],
-        'Magnesio - Mg':[
+        'Magnesio - Mg': [
           {
-            'valor': pruebaAgua.Mg,
-            'interpretacion': pruebaAgua.Mg_Interpretacion,
+            'valor': pruebaAgua.mg,
+            'interpretacion': pruebaAgua.mgInterpretacion,
           }
         ],
-        'Sulfato - SO4':[
+        'Sulfato - SO4': [
           {
-            'valor': pruebaAgua.SO4,
-            'interpretacion': pruebaAgua.SO4_Interpretacion,
+            'valor': pruebaAgua.so4,
+            'interpretacion': pruebaAgua.so4Interpretacion,
           }
         ],
-        'Hierro Férrico - Fe ':[
+        'Hierro Férrico - Fe ': [
           {
-            'valor': pruebaAgua.Fe,
-            'interpretacion': pruebaAgua.Fe_Interpretacion,
+            'valor': pruebaAgua.fe,
+            'interpretacion': pruebaAgua.feInterpretacion,
           }
         ],
-        'Manganeso - Mn':[
+        'Manganeso - Mn': [
           {
-            'valor': pruebaAgua.Mn,
-            'interpretacion': pruebaAgua.Mn_Interpretacion,
+            'valor': pruebaAgua.mn,
+            'interpretacion': pruebaAgua.mnInterpretacion,
           }
         ],
-        'Cobre - Cu':[
+        'Cobre - Cu': [
           {
-            'valor': pruebaAgua.Cu,
-            'interpretacion': pruebaAgua.Cu_Interpretacion,
+            'valor': pruebaAgua.cu,
+            'interpretacion': pruebaAgua.cuInterpretacion,
           }
         ],
-        'Cloruro - Cl':[
+        'Cloruro - Cl': [
           {
-            'valor': pruebaAgua.Cl,
-            'interpretacion': pruebaAgua.Cl_Interpretacion,
+            'valor': pruebaAgua.cl,
+            'interpretacion': pruebaAgua.clInterpretacion,
           }
         ],
-        'Ph':[
+        'Ph': [
           {
-            'valor': pruebaAgua.Ph,
-            'interpretacion': pruebaAgua.Ph_Interpretacion,
+            'valor': pruebaAgua.ph,
+            'interpretacion': pruebaAgua.phInterpretacion,
           }
         ],
-        'C.E':[
+        'C.E': [
           {
-            'valor': pruebaAgua.C_E,
-            'interpretacion':  pruebaAgua.C_E_Interpretacion,
+            'valor': pruebaAgua.ce,
+            'interpretacion': pruebaAgua.ceInterpretacion,
           }
         ],
-        'Sales Disueltas':[
+        'Sales Disueltas': [
           {
             'valor': pruebaAgua.salesDisueltas,
-            'interpretacion': pruebaAgua.salesDisueltas_Interpretacion,
+            'interpretacion': pruebaAgua.salesDisueltasInterpretacion,
           }
         ],
         // 'C.I.C.E':[
@@ -469,20 +458,17 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         //     'interpretacion': pruebaAgua.CaMg_Interpretacion,
         //   }
         // ],
-        'Tipo de Agua':pruebaAgua.tipoAgua
-
-      }
-    );
-
-    } catch (e){
+        'Tipo de Agua': pruebaAgua.tipoAgua
+      });
+    } catch (e) {
       print("Error al agregar la prueba: $e");
     }
   }
 
-  Future<void> addPruebaSistemaFoliar (PruebaSistemaFoliar pruebaSistemaFoliar) async {
+  Future<void> addPruebaSistemaFoliar(
+      PruebaSistemaFoliar pruebaSistemaFoliar) async {
     try {
       await db.collection('PruebaSistemaFoliar').add({
-         
         'NombrePredio': pruebaSistemaFoliar.nombrePredio,
         'Corregimiento': pruebaSistemaFoliar.corregimientoPredio,
         'Cultivo': pruebaSistemaFoliar.cultivoPredio,
@@ -493,29 +479,20 @@ Future<List<Predio>> getPrediosPorPropietario(String idPropietario) async {
         'Nombrepropietario': pruebaSistemaFoliar.nombrepropietario,
         'Telefono': pruebaSistemaFoliar.telefonopropietario,
         'Correo': pruebaSistemaFoliar.correopropietario,
-
-        'Calcio - Ca':pruebaSistemaFoliar.Ca,
-        'Magnesio - Mg':pruebaSistemaFoliar.Mg,
-        'Sodio - Na':pruebaSistemaFoliar.Na,
-        'Potasio - K':pruebaSistemaFoliar.K,
-        'Nitrógeno - N': pruebaSistemaFoliar.N,
-        'Fósforo - P':pruebaSistemaFoliar.P,
-        'Hierro Férrico - Fe':pruebaSistemaFoliar.Fe,
-        'Cobre - Cu':pruebaSistemaFoliar.Cu,
-        'Zinc - Zn':pruebaSistemaFoliar.Zn,
-        'Manganeso - Mn':pruebaSistemaFoliar.Mn,
-        'Boro - B':pruebaSistemaFoliar.B,
-
-      }
-    );
-
-    } catch (e){
+        'Calcio - Ca': pruebaSistemaFoliar.ca,
+        'Magnesio - Mg': pruebaSistemaFoliar.mg,
+        'Sodio - Na': pruebaSistemaFoliar.na,
+        'Potasio - K': pruebaSistemaFoliar.k,
+        'Nitrógeno - N': pruebaSistemaFoliar.n,
+        'Fósforo - P': pruebaSistemaFoliar.p,
+        'Hierro Férrico - Fe': pruebaSistemaFoliar.fe,
+        'Cobre - Cu': pruebaSistemaFoliar.cu,
+        'Zinc - Zn': pruebaSistemaFoliar.zn,
+        'Manganeso - Mn': pruebaSistemaFoliar.mn,
+        'Boro - B': pruebaSistemaFoliar.b,
+      });
+    } catch (e) {
       print("Error al agregar la prueba: $e");
     }
   }
-
 }
-
-
-
-

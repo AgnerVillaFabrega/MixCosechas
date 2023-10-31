@@ -10,17 +10,17 @@ class PruebaSistemaFoliar {
   final String telefonopropietario;
   final String correopropietario;
 
-  final String Ca;
-  final String Mg;
-  final String Na;
-  final String K;
-  final String N;
-  final String P;
-  final String Fe;
-  final String Cu;
-  final String Zn;
-  final String Mn;
-  final String B;
+  final String ca;
+  final String mg;
+  final String na;
+  final String k;
+  final String n;
+  final String p;
+  final String fe;
+  final String cu;
+  final String zn;
+  final String mn;
+  final String b;
 
   final List<String> nombreCompuestos = [
     'Calcio - Ca',
@@ -36,60 +36,53 @@ class PruebaSistemaFoliar {
     'Boro - B'
   ];
 
-  late List<String> valorCompuestos = [Ca, Mg, Na, K, N, P, Fe, Cu, Zn, Mn, B];
+  late List<String> valorCompuestos = [ca, mg, na, k, n, p, fe, cu, zn, mn, b];
 
-  PruebaSistemaFoliar({
-    required this.nombrePredio,
-    required this.corregimientoPredio,
-    required this.cultivoPredio,
-    required this.municipioPredio,
-    required this.variedadPredio,
-    required this.dptoPredio,
-    required this.edadPredio,
-    required this.nombrepropietario,
-    required this.telefonopropietario,
-    required this.correopropietario,
-
-    required this.Ca,
-    required this.Mg,
-    required this.Na,
-    required this.K,
-    required this.N,
-    required this.P,
-    required this.Fe, 
-    required this.Cu,
-    required this.Zn,
-    required this.Mn,
-    required this.B
-  });
-
-  
+  PruebaSistemaFoliar(
+      {required this.nombrePredio,
+      required this.corregimientoPredio,
+      required this.cultivoPredio,
+      required this.municipioPredio,
+      required this.variedadPredio,
+      required this.dptoPredio,
+      required this.edadPredio,
+      required this.nombrepropietario,
+      required this.telefonopropietario,
+      required this.correopropietario,
+      required this.ca,
+      required this.mg,
+      required this.na,
+      required this.k,
+      required this.n,
+      required this.p,
+      required this.fe,
+      required this.cu,
+      required this.zn,
+      required this.mn,
+      required this.b});
 
   factory PruebaSistemaFoliar.fromMap(Map<String, dynamic> map) {
-
     return PruebaSistemaFoliar(
-      nombrePredio: map['NombrePredio'],
-      corregimientoPredio: map['Corregimiento'],
-      cultivoPredio: map['Cultivo'],
-      municipioPredio: map['Municipio'],
-      variedadPredio: map['Variedad'],
-      dptoPredio: map['Departamento'],
-      edadPredio: map['Edad'],
-      nombrepropietario: map['NombrePropietario'],
-      telefonopropietario: map['Telefono'],
-      correopropietario: map['Correo'],
-      
-      Ca: map['Calcio - Ca'],
-      Mg: map['Magnesio - Mg'],
-      Na: map['Sodio - Na'],
-      K: map['Potasio - K'],
-      N: map['Nitrógeno - N'],
-      P: map['Fósforo - P'],
-      Fe: map['Hierro Férrico - Fe'],
-      Cu: map['Cobre - Cu'],
-      Zn: map['Zinc - Zn'],
-      Mn: map['Manganeso - Mn'],
-      B: map['Boro - B']
-    );
+        nombrePredio: map['NombrePredio'],
+        corregimientoPredio: map['Corregimiento'],
+        cultivoPredio: map['Cultivo'],
+        municipioPredio: map['Municipio'],
+        variedadPredio: map['Variedad'],
+        dptoPredio: map['Departamento'],
+        edadPredio: map['Edad'],
+        nombrepropietario: map['NombrePropietario'],
+        telefonopropietario: map['Telefono'],
+        correopropietario: map['Correo'],
+        ca: map['Calcio - Ca'],
+        mg: map['Magnesio - Mg'],
+        na: map['Sodio - Na'],
+        k: map['Potasio - K'],
+        n: map['Nitrógeno - N'],
+        p: map['Fósforo - P'],
+        fe: map['Hierro Férrico - Fe'],
+        cu: map['Cobre - Cu'],
+        zn: map['Zinc - Zn'],
+        mn: map['Manganeso - Mn'],
+        b: map['Boro - B']);
   }
- }
+}
