@@ -1,4 +1,6 @@
 class PruebaSuelo {
+  final String idPredio;
+  final String idPropietario;
   final String nombrePredio;
   final String corregimientoPredio;
   final String cultivoPredio;
@@ -7,8 +9,8 @@ class PruebaSuelo {
   final String dptoPredio;
   final String edadPredio;
   final String nombrepropietario;
-  final String telefonopropietario;
-  final String correopropietario;
+  final String telefonoPropietario;
+  final String correoPropietario;
 
   final double n;
   final double nh4;
@@ -174,6 +176,8 @@ class PruebaSuelo {
   late String humusInterpretacion;
 
   PruebaSuelo({
+    required this.idPredio,
+    required this.idPropietario,
     required this.nombrePredio,
     required this.corregimientoPredio,
     required this.cultivoPredio,
@@ -182,8 +186,8 @@ class PruebaSuelo {
     required this.dptoPredio,
     required this.edadPredio,
     required this.nombrepropietario,
-    required this.telefonopropietario,
-    required this.correopropietario,
+    required this.telefonoPropietario,
+    required this.correoPropietario,
     required this.n,
     required this.nh4,
     required this.no2,
@@ -462,8 +466,7 @@ class PruebaSuelo {
     }
   }
 
-  String ciceInterpretar(
-      double Al, double K, double Ca, double Mg, double Na) {
+  String ciceInterpretar(double Al, double K, double Ca, double Mg, double Na) {
     double cice = Al + K + Ca + Mg + Na;
 
     if (cice < 6) {
@@ -599,6 +602,9 @@ class PruebaSuelo {
     Map<String, dynamic> humusData = map['Humus'][0];
 
     return PruebaSuelo(
+
+      idPredio: map['IdPredio'],
+      idPropietario: map['IdPropietario'],
       nombrePredio: map['NombrePredio'],
       corregimientoPredio: map['Corregimiento'],
       cultivoPredio: map['Cultivo'],
@@ -607,8 +613,8 @@ class PruebaSuelo {
       dptoPredio: map['Departamento'],
       edadPredio: map['Edad'],
       nombrepropietario: map['NombrePropietario'],
-      telefonopropietario: map['Telefono'],
-      correopropietario: map['Correo'],
+      telefonoPropietario: map['Telefono'],
+      correoPropietario: map['Correo'],
       n: double.parse(nData['valor'].toString()),
       nh4: double.parse(nh4Data['valor'].toString()),
       no2: double.parse(no2Data['valor'].toString()),
@@ -616,22 +622,22 @@ class PruebaSuelo {
       p: double.parse(pData['valor'].toString()),
       k: double.parse(kData['valor'].toString()),
       ca: double.parse(caData['valor'].toString()),
-      s:double.parse(sData['valor'].toString()),
+      s: double.parse(sData['valor'].toString()),
       mg: double.parse(mgData['valor'].toString()),
-      so4:double.parse(so4Data['valor'].toString()),
+      so4: double.parse(so4Data['valor'].toString()),
       fe: double.parse(feData['valor'].toString()),
       mn: double.parse(mnData['valor'].toString()),
-      cu:double.parse(cuData['valor'].toString()),
-      al:double.parse(alData['valor'].toString()),
-      cl:double.parse(clData['valor'].toString()),
-      zn:double.parse(znData['valor'].toString()),
-      na:double.parse(naData['valor'].toString()),
-      ph:double.parse(phData['valor'].toString()),
-      ce:double.parse(ceData['valor'].toString()),
+      cu: double.parse(cuData['valor'].toString()),
+      al: double.parse(alData['valor'].toString()),
+      cl: double.parse(clData['valor'].toString()),
+      zn: double.parse(znData['valor'].toString()),
+      na: double.parse(naData['valor'].toString()),
+      ph: double.parse(phData['valor'].toString()),
+      ce: double.parse(ceData['valor'].toString()),
       salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
       cice: double.parse(ciceData['valor'].toString()),
       arcilla: double.parse(map['Arcilla'].toString()),
-      limo:double.parse( map['Limo'].toString()),
+      limo: double.parse(map['Limo'].toString()),
       arena: double.parse(map['Arena'].toString()),
       humus: double.parse(humusData['valor'].toString())
     );

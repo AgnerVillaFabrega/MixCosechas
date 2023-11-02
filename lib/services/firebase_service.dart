@@ -33,7 +33,6 @@ class ServiceFirebase {
     }
     return clientes;
   }
-  
 
   Future<List<PruebaSuelo>> getPruebaSuelo() async {
     List<PruebaSuelo> pruebaSuelo = [];
@@ -165,8 +164,8 @@ class ServiceFirebase {
         'Departamento': pruebaSuelo.dptoPredio,
         'Edad': pruebaSuelo.edadPredio,
         'NombrePropietario': pruebaSuelo.nombrepropietario,
-        'Telefono': pruebaSuelo.telefonopropietario,
-        'Correo': pruebaSuelo.correopropietario,
+        'Telefono': pruebaSuelo.telefonoPropietario,
+        'Correo': pruebaSuelo.correoPropietario,
         'Nitrato de Nitrógeno - N': [
           {
             'valor': pruebaSuelo.n,

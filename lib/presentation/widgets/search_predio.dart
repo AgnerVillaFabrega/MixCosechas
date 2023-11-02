@@ -7,25 +7,33 @@ class SearchPredio extends StatelessWidget {
     super.key,
     required this.predioFilterController,
     required this.prediosCollection,
+    required TextEditingController idPredioController,
     required TextEditingController corregimientoPredioController,
     required TextEditingController cultivoPredioController,
     required TextEditingController municipioPredioController,
     required TextEditingController variedadPredioController,
     required TextEditingController dptoPredioController,
     required TextEditingController edadPredioController,
+    required TextEditingController idpropietarioPredioController,
     required TextEditingController nombrepropietarioPredioController,
     required TextEditingController telefonopropietarioPredioController,
     required TextEditingController correopropietarioPredioController,
-  }) : _corregimientoPredioController = corregimientoPredioController, _cultivoPredioController = cultivoPredioController, _municipioPredioController = municipioPredioController, _variedadPredioController = variedadPredioController, _dptoPredioController = dptoPredioController, _edadPredioController = edadPredioController, _nombrepropietarioPredioController = nombrepropietarioPredioController, _telefonopropietarioPredioController = telefonopropietarioPredioController, _correopropietarioPredioController = correopropietarioPredioController;
+  }) : _idPredioController = idPredioController, _corregimientoPredioController = corregimientoPredioController, _cultivoPredioController = cultivoPredioController, 
+      _municipioPredioController = municipioPredioController, _variedadPredioController = variedadPredioController, _dptoPredioController = dptoPredioController,
+      _edadPredioController = edadPredioController,_idpropietarioPredioController = idpropietarioPredioController, _nombrepropietarioPredioController = nombrepropietarioPredioController, 
+      _telefonopropietarioPredioController = telefonopropietarioPredioController, _correopropietarioPredioController = correopropietarioPredioController;
 
   final TextEditingController predioFilterController;
   final CollectionReference<Object?> prediosCollection;
+  
+  final TextEditingController _idPredioController;
   final TextEditingController _corregimientoPredioController;
   final TextEditingController _cultivoPredioController;
   final TextEditingController _municipioPredioController;
   final TextEditingController _variedadPredioController;
   final TextEditingController _dptoPredioController;
   final TextEditingController _edadPredioController;
+  final TextEditingController _idpropietarioPredioController;
   final TextEditingController _nombrepropietarioPredioController;
   final TextEditingController _telefonopropietarioPredioController;
   final TextEditingController _correopropietarioPredioController;
@@ -63,12 +71,14 @@ class SearchPredio extends StatelessWidget {
             final predioData = suggestion.data() as Map<String, dynamic>;
             predioFilterController.text = predioData['Nombre'];
 
+            _idPredioController.text = predioData['Id'];
             _corregimientoPredioController.text = predioData['CorregimientoVereda'];
             _cultivoPredioController.text = predioData['Cultivo']; 
             _municipioPredioController.text = predioData['Municipio'];
             _variedadPredioController.text = predioData['Variedad'];
             _dptoPredioController.text =predioData['Departamento']; 
             _edadPredioController.text = predioData['Edad']; 
+            _idpropietarioPredioController.text = predioData['IdPropietario'];
             _nombrepropietarioPredioController.text = predioData['NombrePropietario'];
             _telefonopropietarioPredioController.text =  predioData['TelefonoPropietario'];
             _correopropietarioPredioController.text = predioData['CorreoPropietario'];
@@ -79,10 +89,22 @@ class SearchPredio extends StatelessWidget {
             Expanded(
               child:TextFormField(
                 enabled: false, 
+                controller: _idpropietarioPredioController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Identificación Propietario',
+                  labelStyle: TextStyle(
+                      color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+            Expanded(
+              child:TextFormField(
+                enabled: false, 
                 controller: _nombrepropietarioPredioController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Propietario',
+                  labelText: 'Nombre Propietario',
                   labelStyle: TextStyle(
                       color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                 ),

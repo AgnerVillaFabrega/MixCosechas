@@ -65,7 +65,7 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                             children: <Widget>[
                               SizedBox(
                                 height: 50,
-                                width: 165,
+                                width: 15,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(0)),
@@ -92,7 +92,7 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                               ),
                               SizedBox(
                                 height: 50,
-                                width: 165,
+                                width: 120,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(1)),

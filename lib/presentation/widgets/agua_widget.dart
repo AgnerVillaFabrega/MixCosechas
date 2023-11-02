@@ -34,33 +34,26 @@ class _AguaWidgetState extends State<AguaWidget> {
   final TextEditingController _mnController = TextEditingController();
   final TextEditingController _cuController = TextEditingController();
   final TextEditingController _clController = TextEditingController();
-  final TextEditingController _salesdisueltasController =
-      TextEditingController();
+  final TextEditingController _salesdisueltasController =TextEditingController();
   final TextEditingController _phController = TextEditingController();
   final TextEditingController _ceController = TextEditingController();
   final TextEditingController _fuenteaguaController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
   final TextEditingController _nombrePredioController = TextEditingController();
-  CollectionReference prediosCollection =
-      FirebaseFirestore.instance.collection('Predios');
+  CollectionReference prediosCollection =FirebaseFirestore.instance.collection('Predios');
 
-  final TextEditingController _corregimientoPredioController =
-      TextEditingController();
-  final TextEditingController _cultivoPredioController =
-      TextEditingController();
-  final TextEditingController _municipioPredioController =
-      TextEditingController();
-  final TextEditingController _variedadPredioController =
-      TextEditingController();
+  final TextEditingController _idPredioController =TextEditingController();
+  final TextEditingController _corregimientoPredioController =TextEditingController();
+  final TextEditingController _cultivoPredioController =TextEditingController();
+  final TextEditingController _municipioPredioController =TextEditingController();
+  final TextEditingController _variedadPredioController =TextEditingController();
   final TextEditingController _dptoPredioController = TextEditingController();
   final TextEditingController _edadPredioController = TextEditingController();
-  final TextEditingController _nombrepropietarioPredioController =
-      TextEditingController();
-  final TextEditingController _telefonopropietarioPredioController =
-      TextEditingController();
-  final TextEditingController _correopropietarioPredioController =
-      TextEditingController();
+  final TextEditingController _idpropietarioPredioController =TextEditingController();
+  final TextEditingController _nombrepropietarioPredioController =TextEditingController();
+  final TextEditingController _telefonopropietarioPredioController =TextEditingController();
+  final TextEditingController _correopropietarioPredioController =TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,19 +79,17 @@ class _AguaWidgetState extends State<AguaWidget> {
                   content: SearchPredio(
                       predioFilterController: _nombrePredioController,
                       prediosCollection: prediosCollection,
-                      corregimientoPredioController:
-                          _corregimientoPredioController,
+                      idPredioController:_idPredioController,
+                      corregimientoPredioController:_corregimientoPredioController,
                       cultivoPredioController: _cultivoPredioController,
                       municipioPredioController: _municipioPredioController,
                       variedadPredioController: _variedadPredioController,
                       dptoPredioController: _dptoPredioController,
                       edadPredioController: _edadPredioController,
-                      nombrepropietarioPredioController:
-                          _nombrepropietarioPredioController,
-                      telefonopropietarioPredioController:
-                          _telefonopropietarioPredioController,
-                      correopropietarioPredioController:
-                          _correopropietarioPredioController),
+                      idpropietarioPredioController:_idpropietarioPredioController,
+                      nombrepropietarioPredioController:_nombrepropietarioPredioController,
+                      telefonopropietarioPredioController:_telefonopropietarioPredioController,
+                      correopropietarioPredioController:_correopropietarioPredioController),
                 ),
                 Step(
                   isActive: currentState >= 1,

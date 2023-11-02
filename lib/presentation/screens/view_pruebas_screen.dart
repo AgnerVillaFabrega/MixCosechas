@@ -78,7 +78,7 @@ class _ViewPruebasScreenState extends State<ViewPruebasScreen> {
                             itemBuilder: (context, index) {
                               return ListTile(
                                 title: Text(pruebasSuelo[index].nombrePredio.toString()),
-                                subtitle: Text(pruebasSuelo[index].alInterpretacion.toString()),
+                                subtitle: Text(pruebasSuelo[index].idPredio.toString()),
                                 onTap: () {
                                   // Puedes implementar la navegación aquí si es necesario.
                                 },
