@@ -238,7 +238,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                 ])));
   }
 
-  void _handleRegistroSuelo() {
+  Future<void> _handleRegistroSuelo() async {
     if (_nombrePredioController.text.isNotEmpty &&
         _corregimientoPredioController.text.isNotEmpty &&
         _cultivoPredioController.text.isNotEmpty &&
@@ -294,8 +294,9 @@ class _SueloWidgetState extends State<SueloWidget> {
 
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
 
-        final List<String> interpretacionCompuestos =
-            pruebaSuelo.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos =pruebaSuelo.interpretacionCompuestos;
+
+        
 
         Navigator.push(
           context,

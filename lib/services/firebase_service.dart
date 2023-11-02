@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
@@ -31,13 +33,12 @@ class ServiceFirebase {
     }
     return clientes;
   }
+  
 
   Future<List<PruebaSuelo>> getPruebaSuelo() async {
     List<PruebaSuelo> pruebaSuelo = [];
-
     try {
       QuerySnapshot queryPruebaSuelo = await db.collection('PruebaSuelo').get();
-
       queryPruebaSuelo.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSuelo.add(PruebaSuelo.fromMap(data));
@@ -50,10 +51,8 @@ class ServiceFirebase {
 
   Future<List<PruebaAgua>> getPruebaAgua() async {
     List<PruebaAgua> pruebaAgua = [];
-
     try {
       QuerySnapshot queryPruebaAgua = await db.collection('PruebaAgua').get();
-
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaAgua.add(PruebaAgua.fromMap(data));
@@ -66,11 +65,9 @@ class ServiceFirebase {
 
   Future<List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
     List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
-
     try {
       QuerySnapshot queryPruebaAgua =
           await db.collection('PruebaSistemaFoliar').get();
-
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));

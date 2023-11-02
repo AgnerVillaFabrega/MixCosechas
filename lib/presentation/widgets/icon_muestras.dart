@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/registration_analisis_screen.dart';
+import '../screens/view_pruebas_screen.dart';
 
 class IconMuestasMenu extends StatelessWidget {
   const IconMuestasMenu({
@@ -15,7 +15,7 @@ class IconMuestasMenu extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
+            MaterialPageRoute(builder: (context) => ViewPruebasScreen()),
           );
       },
     );
