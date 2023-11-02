@@ -10,33 +10,33 @@ class PruebaSuelo {
   final String telefonopropietario;
   final String correopropietario;
 
-  final double N;
-  final double NH4;
-  final double NO2;
-  final double NO3;
-  final double P;
-  final double K;
-  final double Ca;
-  final double S;
-  final double Mg;
-  final double SO4;
-  final double Fe;
-  final double Mn;
-  final double Cu;
-  final double Al;
-  final double Cl;
-  final double Zn;
-  final double Na;
+  final double n;
+  final double nh4;
+  final double no2;
+  final double no3;
+  final double p;
+  final double k;
+  final double ca;
+  final double s;
+  final double mg;
+  final double so4;
+  final double fe;
+  final double mn;
+  final double cu;
+  final double al;
+  final double cl;
+  final double zn;
+  final double na;
 
-  final double Ph;
-  final double C_E;
+  final double ph;
+  final double ce;
   final double salesDisueltas;
-  final double CICE;
+  final double cice;
 
-  late double CaMg;
-  late double CaMgK;
-  late double CaK;
-  late double MgK;
+  late double camg;
+  late double camgk;
+  late double cak;
+  late double mgk;
 
   final double arcilla;
   final double limo;
@@ -78,31 +78,31 @@ class PruebaSuelo {
   ];
 
   late List<double> valorCompuestos = [
-    N,
-    NH4,
-    NO2,
-    NO3,
-    P,
-    K,
-    Ca,
-    S,
-    Mg,
-    SO4,
-    Fe,
-    Mn,
-    Cu,
-    Al,
-    Cl,
-    Zn,
-    Na,
-    Ph,
-    C_E,
+    n,
+    nh4,
+    no2,
+    no3,
+    p,
+    k,
+    ca,
+    s,
+    mg,
+    so4,
+    fe,
+    mn,
+    cu,
+    al,
+    cl,
+    zn,
+    na,
+    ph,
+    ce,
     salesDisueltas,
-    CICE,
-    CaMg,
-    CaMgK,
-    CaK,
-    MgK,
+    cice,
+    camg,
+    camgk,
+    cak,
+    mgk,
     arcilla,
     limo,
     arena,
@@ -111,67 +111,67 @@ class PruebaSuelo {
   ];
 
   late List<String> interpretacionCompuestos = [
-    N_Interpretacion,
-    NH4_Interpretacion,
-    NO2_Interpretacion,
-    NO3_Interpretacion,
-    P_Interpretacion,
-    K_Interpretacion,
-    Ca_Interpretacion,
-    S_Interpretacion,
-    Mg_Interpretacion,
-    SO4_Interpretacion,
-    Fe_Interpretacion,
-    Mn_Interpretacion,
-    Cu_Interpretacion,
-    Al_Interpretacion,
-    Cl_Interpretacion,
-    Zn_Interpretacion,
-    Na_Interpretacion,
-    Ph_Interpretacion,
-    C_E_Interpretacion,
-    salesDisueltas_Interpretacion,
-    CICE_Interpretacion,
-    CaMg_Interpretacion,
-    CaMgK_Interpretacion,
-    CaK_Interpretacion,
-    MgK_Interpretacion,
+    nInterpretacion,
+    nh4Interpretacion,
+    no2Interpretacion,
+    no3Interpretacion,
+    pInterpretacion,
+    kInterpretacion,
+    caInterpretacion,
+    sInterpretacion,
+    mgInterpretacion,
+    so4Interpretacion,
+    feInterpretacion,
+    mnInterpretacion,
+    cuInterpretacion,
+    alInterpretacion,
+    clInterpretacion,
+    znInterpretacion,
+    naInterpretacion,
+    phInterpretacion,
+    ceInterpretacion,
+    salesDisueltasInterpretacion,
+    ciceInterpretacion,
+    camgInterpretacion,
+    camgkInterpretacion,
+    cakInterpretacion,
+    mgkInterpretacion,
     'NA',
     'NA',
     'NA',
-    humus_Interpretacion,
+    humusInterpretacion,
     textura
   ];
 
-  late String N_Interpretacion;
-  late String NH4_Interpretacion;
-  late String NO2_Interpretacion;
-  late String NO3_Interpretacion;
-  late String P_Interpretacion;
-  late String K_Interpretacion;
-  late String Ca_Interpretacion;
-  late String Mg_Interpretacion;
-  late String S_Interpretacion;
-  late String SO4_Interpretacion;
-  late String Fe_Interpretacion;
-  late String Mn_Interpretacion;
-  late String Cu_Interpretacion;
-  late String Al_Interpretacion;
-  late String Cl_Interpretacion;
-  late String Zn_Interpretacion;
-  late String Na_Interpretacion;
+  late String nInterpretacion;
+  late String nh4Interpretacion;
+  late String no2Interpretacion;
+  late String no3Interpretacion;
+  late String pInterpretacion;
+  late String kInterpretacion;
+  late String caInterpretacion;
+  late String mgInterpretacion;
+  late String sInterpretacion;
+  late String so4Interpretacion;
+  late String feInterpretacion;
+  late String mnInterpretacion;
+  late String cuInterpretacion;
+  late String alInterpretacion;
+  late String clInterpretacion;
+  late String znInterpretacion;
+  late String naInterpretacion;
 
-  late String Ph_Interpretacion;
-  late String C_E_Interpretacion;
-  late String salesDisueltas_Interpretacion;
-  late String CICE_Interpretacion;
+  late String phInterpretacion;
+  late String ceInterpretacion;
+  late String salesDisueltasInterpretacion;
+  late String ciceInterpretacion;
 
-  late String CaMg_Interpretacion;
-  late String CaMgK_Interpretacion;
-  late String CaK_Interpretacion;
-  late String MgK_Interpretacion;
+  late String camgInterpretacion;
+  late String camgkInterpretacion;
+  late String cakInterpretacion;
+  late String mgkInterpretacion;
 
-  late String humus_Interpretacion;
+  late String humusInterpretacion;
 
   PruebaSuelo({
     required this.nombrePredio,
@@ -184,27 +184,27 @@ class PruebaSuelo {
     required this.nombrepropietario,
     required this.telefonopropietario,
     required this.correopropietario,
-    required this.N,
-    required this.NH4,
-    required this.NO2,
-    required this.NO3,
-    required this.P,
-    required this.K,
-    required this.Ca,
-    required this.Mg,
-    required this.S,
-    required this.SO4,
-    required this.Fe,
-    required this.Mn,
-    required this.Cu,
-    required this.Al,
-    required this.Cl,
-    required this.Zn,
-    required this.Na,
-    required this.Ph,
-    required this.C_E,
+    required this.n,
+    required this.nh4,
+    required this.no2,
+    required this.no3,
+    required this.p,
+    required this.k,
+    required this.ca,
+    required this.mg,
+    required this.s,
+    required this.so4,
+    required this.fe,
+    required this.mn,
+    required this.cu,
+    required this.al,
+    required this.cl,
+    required this.zn,
+    required this.na,
+    required this.ph,
+    required this.ce,
     required this.salesDisueltas,
-    required this.CICE,
+    required this.cice,
     required this.arcilla,
     required this.limo,
     required this.arena,
@@ -213,44 +213,44 @@ class PruebaSuelo {
     // double d = (Ca / Mg);
     // String inString = d.toStringAsFixed(3); // '2.35'
     // CaMg = double.parse(inString);
-    CaMg = (Ca / Mg);
-    CaMgK = (Ca + Mg / K);
-    CaK = Ca / K;
-    MgK = Mg / K;
-    N_Interpretacion = interpretar_n(N);
-    NH4_Interpretacion = interpretar_nh4(NH4);
-    NO2_Interpretacion = interpretar_no2(NO2);
-    NO3_Interpretacion = interpretar_no3(NO3);
-    P_Interpretacion = interpretar_p(P);
-    K_Interpretacion = interpretar_k(K);
-    Ca_Interpretacion = interpretar_ca(Ca);
-    Mg_Interpretacion = interpretar_mg(Mg);
-    S_Interpretacion = interpretar_s(S);
-    SO4_Interpretacion = interpretar_so4(SO4);
-    Fe_Interpretacion = interpretar_fe(Mn);
-    Mn_Interpretacion = interpretar_mn(Mn);
-    Cu_Interpretacion = interpretar_cu(Cu);
-    Al_Interpretacion = interpretar_al(Al);
-    Cl_Interpretacion = interpretar_cl(Cl);
-    Zn_Interpretacion = interpretar_zn(Zn);
-    Na_Interpretacion = interpretar_na(Na);
+    camg = (ca / mg);
+    camgk = (ca + mg / k);
+    cak = ca / k;
+    mgk = mg / k;
+    nInterpretacion = nInterpretar(n);
+    nh4Interpretacion = nh4Interpretar(nh4);
+    no2Interpretacion = no2Interpretar(no2);
+    no3Interpretacion = no3Interpretar(no3);
+    pInterpretacion = pInterpretar(p);
+    kInterpretacion = kInterpretar(k);
+    caInterpretacion = caInterpretar(ca);
+    mgInterpretacion = mgInterpretar(mg);
+    sInterpretacion = sInterpretar(s);
+    so4Interpretacion = so4Interpretar(so4);
+    feInterpretacion = feInterpretar(mn);
+    mnInterpretacion = mnInterpretar(mn);
+    cuInterpretacion = cuInterpretar(cu);
+    alInterpretacion = alInterpretar(al);
+    clInterpretacion = clInterpretar(cl);
+    znInterpretacion = znInterpretar(zn);
+    naInterpretacion = naInterpretar(na);
 
-    Ph_Interpretacion = interpretar_ph(Ph);
-    C_E_Interpretacion = interpretar_ce(C_E);
-    salesDisueltas_Interpretacion = interpretar_salesDisueltas(salesDisueltas);
-    CICE_Interpretacion = interpretar_cice(Al, K, Ca, Mg, Na);
+    phInterpretacion = phInterpretar(ph);
+    ceInterpretacion = ceInterpretar(ce);
+    salesDisueltasInterpretacion = interpretarSalesDisueltas(salesDisueltas);
+    ciceInterpretacion = ciceInterpretar(al, k, ca, mg, na);
 
-    CaMg_Interpretacion = interpretar_CaMg(CaMg);
-    CaMgK_Interpretacion = interpretar_CaMgK(CaMgK);
-    CaK_Interpretacion = interpretar_CaK(CaK);
-    MgK_Interpretacion = interpretar_MgK(MgK);
+    camgInterpretacion = camgInterpretar(camg);
+    camgkInterpretacion = camgkInterpretar(camgk);
+    cakInterpretacion = cakInterpretar(cak);
+    mgkInterpretacion = mgkInterpretar(mgk);
 
-    humus_Interpretacion = interpretar_humus(humus);
-    
-    textura = valor_textura(arcilla, limo, arena);
+    humusInterpretacion = interpretarHumus(humus);
+
+    textura = valorTextura(arcilla, limo, arena);
   }
 
-  String interpretar_n(double valor) {
+  String nInterpretar(double valor) {
     if (valor < 0.08) {
       return "Bajo";
     } else if (valor >= 0.08 && valor <= 0.10) {
@@ -262,7 +262,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_nh4(double valor) {
+  String nh4Interpretar(double valor) {
     if (valor < 12) {
       return "Bajo";
     } else if (valor >= 12 && valor <= 34) {
@@ -272,7 +272,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_no2(double valor) {
+  String no2Interpretar(double valor) {
     if (valor < 1) {
       return "Bajo";
     } else if (valor >= 1 && valor <= 5) {
@@ -282,7 +282,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_no3(double valor) {
+  String no3Interpretar(double valor) {
     if (valor < 5.5) {
       return "Bajo";
     } else if (valor >= 5.5 && valor <= 25.5) {
@@ -292,7 +292,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_p(double valor) {
+  String pInterpretar(double valor) {
     if (valor < 17) {
       return "Bajo";
     } else if (valor >= 17 && valor <= 33.5) {
@@ -302,7 +302,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_k(double valor) {
+  String kInterpretar(double valor) {
     if (valor < 38) {
       return "Bajo";
     } else if (valor >= 38 && valor <= 71.5) {
@@ -312,7 +312,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_ca(double valor) {
+  String caInterpretar(double valor) {
     if (valor < 200) {
       return "Bajo";
     } else if (valor >= 200 && valor <= 400) {
@@ -324,7 +324,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_mg(double valor) {
+  String mgInterpretar(double valor) {
     if (valor < 10) {
       return "Bajo";
     } else if (valor >= 10 && valor <= 50) {
@@ -334,7 +334,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_s(double valor) {
+  String sInterpretar(double valor) {
     if (valor < 16) {
       return "Bajo";
     } else if (valor >= 16 && valor <= 50) {
@@ -344,7 +344,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_so4(double valor) {
+  String so4Interpretar(double valor) {
     if (valor < 16) {
       return "Bajo";
     } else if (valor >= 16 && valor <= 50) {
@@ -354,7 +354,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_fe(double valor) {
+  String feInterpretar(double valor) {
     if (valor < 3) {
       return "Bajo";
     } else if (valor >= 3 && valor <= 10) {
@@ -364,7 +364,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_mn(double valor) {
+  String mnInterpretar(double valor) {
     if (valor < 5) {
       return "Bajo";
     } else if (valor >= 5 && valor <= 24) {
@@ -374,7 +374,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_cu(double valor) {
+  String cuInterpretar(double valor) {
     if (valor < 1) {
       return "Bajo";
     } else if (valor >= 1 && valor <= 3) {
@@ -384,7 +384,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_al(double valor) {
+  String alInterpretar(double valor) {
     if (valor < 2) {
       return "Bajo - Aceptable";
     } else {
@@ -392,7 +392,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_cl(double valor) {
+  String clInterpretar(double valor) {
     if (valor < 100) {
       return "Bajo";
     } else if (valor >= 100 && valor <= 400) {
@@ -402,7 +402,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_zn(double valor) {
+  String znInterpretar(double valor) {
     if (valor < 0.5) {
       return "Bajo";
     } else if (valor >= 0.5 && valor <= 1) {
@@ -412,7 +412,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_na(double valor) {
+  String naInterpretar(double valor) {
     if (valor < 0.9) {
       return "Aceptable";
     } else {
@@ -420,7 +420,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_ph(double valor) {
+  String phInterpretar(double valor) {
     if (valor >= 4.0 && valor < 4.5) {
       return "Muy Fuertemente Ácida";
     } else if (valor >= 4.5 && valor < 5.5) {
@@ -442,7 +442,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_ce(double valor) {
+  String ceInterpretar(double valor) {
     if (valor < 0.8) {
       return "Bajo - Adecuado";
     } else if (valor >= 0.08 && valor <= 1.6) {
@@ -452,7 +452,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_salesDisueltas(double valor) {
+  String interpretarSalesDisueltas(double valor) {
     if (valor < 100) {
       return "Bajo";
     } else if (valor >= 100 && valor <= 400) {
@@ -462,7 +462,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_cice(
+  String ciceInterpretar(
       double Al, double K, double Ca, double Mg, double Na) {
     double cice = Al + K + Ca + Mg + Na;
 
@@ -477,7 +477,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_CaMg(double valor) {
+  String camgInterpretar(double valor) {
     if (valor < 1) {
       return "Deficiencia de Ca";
     } else if (valor >= 1 && valor <= 2) {
@@ -489,7 +489,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_CaMgK(double valor) {
+  String camgkInterpretar(double valor) {
     if (valor < 40) {
       return "Adecuado para K";
     } else {
@@ -497,7 +497,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_CaK(double valor) {
+  String cakInterpretar(double valor) {
     if (valor < 30) {
       return "Adecuado para K";
     } else {
@@ -505,7 +505,7 @@ class PruebaSuelo {
     }
   }
 
-  String interpretar_MgK(double valor) {
+  String mgkInterpretar(double valor) {
     if (valor < 1) {
       return "Deficiencia de Mg";
     } else if (valor >= 1 && valor <= 18) {
@@ -516,7 +516,7 @@ class PruebaSuelo {
   }
 
 //ARREGLAR INTERPRETACION HUMUS
-  String interpretar_humus(double valor) {
+  String interpretarHumus(double valor) {
     if (valor < 2) {
       return "Bajo";
     } else if (valor > 3) {
@@ -526,7 +526,7 @@ class PruebaSuelo {
     }
   }
 
-  String valor_textura(double arcilla, double limo, double arena) {
+  String valorTextura(double arcilla, double limo, double arena) {
     if (arcilla >= 40 && limo <= 40 && arena <= 45) {
       return "Arcilloso";
     } else if ((arcilla >= 35 && arcilla <= 55) &&
@@ -573,69 +573,66 @@ class PruebaSuelo {
   }
 
   factory PruebaSuelo.fromMap(Map<String, dynamic> map) {
+    Map<String, dynamic> nData = map['Nitrato de Nitrógeno - N'][0];
+    Map<String, dynamic> nh4Data = map['Nitrógeno amoniacal - NH4+'][0];
+    Map<String, dynamic> no2Data = map['Nitritos - NO2-'][0];
+    Map<String, dynamic> no3Data = map['Nitratos - NO3-'][0];
+    Map<String, dynamic> pData = map['Fósforo - P'][0];
+    Map<String, dynamic> kData = map['Potasio - K'][0];
+    Map<String, dynamic> caData = map['Calcio - Ca'][0];
+    Map<String, dynamic> sData = map['Azufre - S'][0];
+    Map<String, dynamic> mgData = map['Magnesio - Mg'][0];
+    Map<String, dynamic> so4Data = map['Sulfato - SO4'][0];
+    Map<String, dynamic> feData = map['Hierro Férrico - Fe'][0];
+    Map<String, dynamic> mnData = map['Manganeso - Mn'][0];
+    Map<String, dynamic> cuData = map['Cobre - Cu'][0];
+    Map<String, dynamic> alData = map['Aluminio - Al'][0];
+    Map<String, dynamic> clData = map['Cloruro - Cl'][0];
+    Map<String, dynamic> znData = map['Zinc - Zn'][0];
+    Map<String, dynamic> naData = map['Sodio - Na'][0];
 
-    Map<String, dynamic> N_Data = map['Nitrato de Nitrógeno - N'][0];
-    Map<String, dynamic> NH4_Data = map['Nitrógeno amoniacal - NH4+'][0];
-    Map<String, dynamic> NO2_Data = map['Nitritos - NO2-'][0];
-    Map<String, dynamic> NO3_Data = map['Nitratos - NO3-'][0];
-    Map<String, dynamic> P_Data = map['Fósforo - P'][0];
-    Map<String, dynamic> K_Data = map['Potasio - K'][0];
-    Map<String, dynamic> Ca_Data = map['Calcio - Ca'][0];
-    Map<String, dynamic> S_Data = map['Azufre - S'][0];
-    Map<String, dynamic> Mg_Data = map['Magnesio - Mg'][0];
-    Map<String, dynamic> SO4_Data = map['Sulfato - SO4'][0];
-    Map<String, dynamic> Fe_Data = map['Hierro Férrico - Fe'][0];
-    Map<String, dynamic> Mn_Data = map['Manganeso - Mn'][0];
-    Map<String, dynamic> Cu_Data = map['Cobre - Cu'][0];
-    Map<String, dynamic> Al_Data = map['Aluminio - Al'][0];
-    Map<String, dynamic> Cl_Data = map['Cloruro - Cl'][0];
-    Map<String, dynamic> Zn_Data = map['Zinc - Zn'][0];
-    Map<String, dynamic> Na_Data = map['Sodio - Na'][0];
+    Map<String, dynamic> phData = map['Ph'][0];
+    Map<String, dynamic> ceData = map['C.E'][0];
+    Map<String, dynamic> salesDisueltasData = map['Sales Disueltas'][0];
+    Map<String, dynamic> ciceData = map['C.I.C.E'][0];
 
-    Map<String, dynamic> Ph_Data = map['Ph'][0];
-    Map<String, dynamic> C_E_Data = map['C.E'][0];
-    Map<String, dynamic> salesDisueltas_Data = map['Sales Disueltas'][0];
-    Map<String, dynamic> CICE_Data = map['C.I.C.E'][0];
-
-    Map<String, dynamic> humus_Data = map['Humus'][0];
-    
+    Map<String, dynamic> humusData = map['Humus'][0];
 
     return PruebaSuelo(
-      nombrePredio: map['NombrePredio'],
-      corregimientoPredio: map['Corregimiento'],
-      cultivoPredio: map['Cultivo'],
-      municipioPredio: map['Municipio'],
-      variedadPredio: map['Variedad'],
-      dptoPredio: map['Departamento'],
-      edadPredio: map['Edad'],
-      nombrepropietario: map['NombrePropietario'],
-      telefonopropietario: map['Telefono'],
-      correopropietario: map['Correo'],
-      N: N_Data['valor'],
-      NH4: NH4_Data['valor'],
-      NO2: NO2_Data['valor'],
-      NO3: NO3_Data['valor'],
-      P: P_Data['valor'],
-      K: K_Data['valor'],
-      Ca: Ca_Data['valor'],
-      S: S_Data['valor'],
-      Mg: Mg_Data['valor'],
-      SO4: SO4_Data['valor'],
-      Fe: Fe_Data['valor'],
-      Mn: Mn_Data['valor'],
-      Cu: Cu_Data['valor'],
-      Al: Al_Data['valor'],
-      Cl: Cl_Data['valor'],
-      Zn: Zn_Data['valor'],
-      Na: Na_Data['valor'],
-      Ph: Ph_Data['valor'],
-      C_E: C_E_Data['valor'],
-      salesDisueltas: salesDisueltas_Data['valor'],
-      CICE: CICE_Data['valor'],
-      arcilla: map['Arcilla'],
-      limo: map['Limo'],
-      arena: map['Arena'],
-      humus: humus_Data['valor']
-    );
+        nombrePredio: map['NombrePredio'],
+        corregimientoPredio: map['Corregimiento'],
+        cultivoPredio: map['Cultivo'],
+        municipioPredio: map['Municipio'],
+        variedadPredio: map['Variedad'],
+        dptoPredio: map['Departamento'],
+        edadPredio: map['Edad'],
+        nombrepropietario: map['NombrePropietario'],
+        telefonopropietario: map['Telefono'],
+        correopropietario: map['Correo'],
+        n: nData['valor'],
+        nh4: nh4Data['valor'],
+        no2: no2Data['valor'],
+        no3: no3Data['valor'],
+        p: pData['valor'],
+        k: kData['valor'],
+        ca: caData['valor'],
+        s: sData['valor'],
+        mg: mgData['valor'],
+        so4: so4Data['valor'],
+        fe: feData['valor'],
+        mn: mnData['valor'],
+        cu: cuData['valor'],
+        al: alData['valor'],
+        cl: clData['valor'],
+        zn: znData['valor'],
+        na: naData['valor'],
+        ph: phData['valor'],
+        ce: ceData['valor'],
+        salesDisueltas: salesDisueltasData['valor'],
+        cice: ciceData['valor'],
+        arcilla: map['Arcilla'],
+        limo: map['Limo'],
+        arena: map['Arena'],
+        humus: humusData['valor']);
   }
 }
