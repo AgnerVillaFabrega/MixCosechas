@@ -200,19 +200,22 @@ class _AguaWidgetState extends State<AguaWidget> {
   }
 
   void _handleRegistroAgua() {
-    if (_nombrePredioController.text.isNotEmpty &&
+    if (_idPredioController.text.isNotEmpty &&
+        _nombrePredioController.text.isNotEmpty &&
         _corregimientoPredioController.text.isNotEmpty &&
         _cultivoPredioController.text.isNotEmpty &&
         _municipioPredioController.text.isNotEmpty &&
         _variedadPredioController.text.isNotEmpty &&
         _dptoPredioController.text.isNotEmpty &&
         _edadPredioController.text.isNotEmpty &&
+        _idpropietarioPredioController.text.isNotEmpty &&
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&
         _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaAgua pruebaAgua = PruebaAgua(
+            idPredio: _nombrePredioController.text,
             nombrePredio: _nombrePredioController.text,
             corregimientoPredio: _corregimientoPredioController.text,
             cultivoPredio: _cultivoPredioController.text,
@@ -220,6 +223,7 @@ class _AguaWidgetState extends State<AguaWidget> {
             variedadPredio: _variedadPredioController.text,
             dptoPredio: _dptoPredioController.text,
             edadPredio: _edadPredioController.text,
+            idPropietario: _idpropietarioPredioController.text,
             nombrepropietario: _nombrepropietarioPredioController.text,
             telefonopropietario: _telefonopropietarioPredioController.text,
             correopropietario: _correopropietarioPredioController.text,

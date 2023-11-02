@@ -1,4 +1,5 @@
 class PruebaAgua {
+  final String idPredio;
   final String nombrePredio;
   final String corregimientoPredio;
   final String cultivoPredio;
@@ -6,6 +7,7 @@ class PruebaAgua {
   final String variedadPredio;
   final String dptoPredio;
   final String edadPredio;
+  final String idPropietario;
   final String nombrepropietario;
   final String telefonopropietario;
   final String correopropietario;
@@ -116,6 +118,7 @@ class PruebaAgua {
   //late String CaMg_Interpretacion;
 
   PruebaAgua({
+    required this.idPredio,
     required this.nombrePredio,
     required this.corregimientoPredio,
     required this.cultivoPredio,
@@ -123,6 +126,7 @@ class PruebaAgua {
     required this.variedadPredio,
     required this.dptoPredio,
     required this.edadPredio,
+    required this.idPropietario,
     required this.nombrepropietario,
     required this.telefonopropietario,
     required this.correopropietario,
@@ -371,6 +375,7 @@ class PruebaAgua {
     Map<String, dynamic> salesDisueltasData = map['Sales Disueltas'][0];
 
     return PruebaAgua(
+      idPredio: map['IdPredio'],
       nombrePredio: map['NombrePredio'],
       corregimientoPredio: map['Corregimiento'],
       cultivoPredio: map['Cultivo'],
@@ -378,6 +383,7 @@ class PruebaAgua {
       variedadPredio: map['Variedad'],
       dptoPredio: map['Departamento'],
       edadPredio: map['Edad'],
+      idPropietario: map['IdPropietario'],
       nombrepropietario: map['NombrePropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
@@ -398,6 +404,6 @@ class PruebaAgua {
       ph: double.parse(phData['valor']),
       ce: double.parse(ceData['valor']),
       salesDisueltas: double.parse(salesDisueltasData['valor'])
-    );
+      );
   }
 }

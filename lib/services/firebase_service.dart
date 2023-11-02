@@ -337,6 +337,7 @@ class ServiceFirebase {
   Future<void> addPruebaAgua(PruebaAgua pruebaAgua) async {
     try {
       await db.collection('PruebaAgua').add({
+        'IdPredio': pruebaAgua.idPredio,
         'NombrePredio': pruebaAgua.nombrePredio,
         'Corregimiento': pruebaAgua.corregimientoPredio,
         'Cultivo': pruebaAgua.cultivoPredio,
@@ -344,6 +345,7 @@ class ServiceFirebase {
         'Variedad': pruebaAgua.variedadPredio,
         'Departamento': pruebaAgua.dptoPredio,
         'Edad': pruebaAgua.edadPredio,
+        'Idpropietario': pruebaAgua.idPropietario,
         'Nombrepropietario': pruebaAgua.nombrepropietario,
         'Telefono': pruebaAgua.telefonopropietario,
         'Correo': pruebaAgua.correopropietario,
@@ -467,6 +469,7 @@ class ServiceFirebase {
       PruebaSistemaFoliar pruebaSistemaFoliar) async {
     try {
       await db.collection('PruebaSistemaFoliar').add({
+        'IdPredio': pruebaSistemaFoliar.idPredio,
         'NombrePredio': pruebaSistemaFoliar.nombrePredio,
         'Corregimiento': pruebaSistemaFoliar.corregimientoPredio,
         'Cultivo': pruebaSistemaFoliar.cultivoPredio,
@@ -474,6 +477,7 @@ class ServiceFirebase {
         'Variedad': pruebaSistemaFoliar.variedadPredio,
         'Departamento': pruebaSistemaFoliar.dptoPredio,
         'Edad': pruebaSistemaFoliar.edadPredio,
+        'Idpropietario': pruebaSistemaFoliar.idPropietario,
         'Nombrepropietario': pruebaSistemaFoliar.nombrepropietario,
         'Telefono': pruebaSistemaFoliar.telefonopropietario,
         'Correo': pruebaSistemaFoliar.correopropietario,
