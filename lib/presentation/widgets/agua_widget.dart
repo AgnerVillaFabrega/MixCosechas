@@ -91,7 +91,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                     value: _fuenteaguaController.text,
                     onChanged: (String? newValue) {
                       setState(() {
-                        _caController.text = newValue!;
+                        _fuenteaguaController.text = newValue!;
                       });
                     },
                     decoration: const InputDecoration(

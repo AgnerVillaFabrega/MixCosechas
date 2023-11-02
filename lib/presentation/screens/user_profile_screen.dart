@@ -134,26 +134,6 @@ class UserProfileView extends StatelessWidget {
                       ),
                       const SizedBox(height: 17),
                       const Divider(),
-
-                      const Row(
-                        children: [
-                          Icon(Icons.email), 
-                          SizedBox(width: 16), 
-                          Text(
-                            "Corre",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 17),
-                      Container(
-                        alignment: const Alignment(-0.6, 0.0),
-                        child: Text(
-                          usuario.correo,
-                        ),
-                      ),
-                      const SizedBox(height: 17),
-                      const Divider(),
                     ],
                   ),
                 ),

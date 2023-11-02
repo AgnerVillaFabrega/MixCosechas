@@ -48,7 +48,48 @@ class PredioProfileView extends StatelessWidget {
                   color: Color(0XFF636363)
                 ),
               ),
-              const Divider()
+              const Divider(),
+              const Column(
+                
+              ),
+
+            // ListView(
+            //   padding: const EdgeInsets.symmetric(horizontal: 14),
+            //   children: predios.map((predio) {
+            //     return GestureDetector(
+            //       onTap: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => PredioProfileView(predio: predio),
+            //           ),
+            //         );
+            //       },
+            //       child: Card(
+            //         elevation: 2,
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(7),
+            //           child: ListTile(
+            //             title: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //               children: [
+            //                 Text(
+            //                   predio.nombre,
+            //                   style: const TextStyle(fontWeight: FontWeight.bold),
+            //                 ),
+            //                 Text(
+            //                   predio.id,  // Aquí colocamos el código del predio
+            //                   style: const TextStyle(fontWeight: FontWeight.bold),
+            //                 ),
+            //               ],
+            //             ),
+            //             subtitle: Text('${predio.departamento}, ${predio.municipio}'),
+            //           ),
+            //         ),
+            //       ),
+            //     );
+            //   }).toList(),
+            // );
 
             ],
           ),
