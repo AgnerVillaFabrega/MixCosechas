@@ -156,6 +156,7 @@ class ServiceFirebase {
   Future<void> addPruebaSuelo(PruebaSuelo pruebaSuelo) async {
     try {
       await db.collection('PruebaSuelo').add({
+        'IdPredio': pruebaSuelo.idPredio,
         'NombrePredio': pruebaSuelo.nombrePredio,
         'Corregimiento': pruebaSuelo.corregimientoPredio,
         'Cultivo': pruebaSuelo.cultivoPredio,
@@ -163,6 +164,7 @@ class ServiceFirebase {
         'Variedad': pruebaSuelo.variedadPredio,
         'Departamento': pruebaSuelo.dptoPredio,
         'Edad': pruebaSuelo.edadPredio,
+        'IdPropietario': pruebaSuelo.idPropietario,
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonoPropietario,
         'Correo': pruebaSuelo.correoPropietario,
