@@ -51,6 +51,50 @@ class PruebaSuelo {
   final double humus;
   late String textura;
 
+  final List<String> graficaCompuestos = [
+    'N',
+    'NH4',
+    'NO2',
+    'NO3',
+    'P',
+    'K',
+    'Ca',
+    'S',
+    'Mg',
+    
+  ];
+  late List<double> valorgraficaCompuestos = [
+    n,
+    nh4,
+    no2,
+    no3,
+    p,
+    k,
+    ca,
+    s,
+    mg,
+  ];
+  final List<String> graficaCompuestos2 = [
+    'SO4',
+    'Fe ',
+    'Mn',
+    'Cu',
+    'Al',
+    'Cl',
+    'Zn',
+    'Na',
+  ];
+  late List<double> valorgraficaCompuestos2 = [
+    so4,
+    fe,
+    mn,
+    cu,
+    al,
+    cl,
+    zn,
+    na
+  ];
+
   final List<String> nombreCompuestos = [
     'Nitrato de Nitrógeno',
     'Nitrógeno amoniacal',

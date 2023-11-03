@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/registration_analisis_screen.dart';
 import 'package:mixcosechas_app/presentation/screens/view_pruebas_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
 import 'package:mixcosechas_app/presentation/widgets/mensaje_show_dialog.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
@@ -105,9 +106,30 @@ class ShowSuelo extends StatelessWidget {
                 ),
               ),
             ),
-            const SingleChildScrollView(
-              child: Center(
-                child: Text('Contenido de la Pestaña 2'),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Diagrama de Liebig',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: 300,
+                    height: 300,
+                    child: CompuestosChart(pruebasuelo.graficaCompuestos, pruebasuelo.valorgraficaCompuestos) ,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: 300,
+                    height: 300,
+                    child: CompuestosChart(pruebasuelo.graficaCompuestos2, pruebasuelo.valorgraficaCompuestos2) ,
+                  )
+                ],
               ),
             ),
             
@@ -117,9 +139,15 @@ class ShowSuelo extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      const Text('Ingresa la información en cada campo:'),
-                      const SizedBox(height: 16), // Espacio entre el texto y los campos
-                
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Recomendaciones y plan de nutricion',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       _buildTextField('Recomendaciones', 'Ingresa el primer texto aquí',_recomendacionesController),
                       const SizedBox(height: 16),
                 
@@ -130,8 +158,9 @@ class ShowSuelo extends StatelessWidget {
                       const SizedBox(height: 16),
                 
                       _buildTextField('Mantenimiento', 'Ingresa el cuarto texto aquí', _mantenimientoController),
-                      SizedBox(
+                      Container(
                         width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 9),
                         child: ElevatedButton(
                           onPressed:(){
                             pruebasuelo.recomendaciones = _recomendacionesController.text;
