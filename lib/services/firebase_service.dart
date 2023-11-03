@@ -168,6 +168,10 @@ class ServiceFirebase {
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonoPropietario,
         'Correo': pruebaSuelo.correoPropietario,
+        'Recomendaciones': pruebaSuelo.recomendaciones,
+        'Presiembra': pruebaSuelo.presiembra,
+        'Siembra': pruebaSuelo.siembra,
+        'Mantenimiento': pruebaSuelo.mantenimiento,
         'Nitrato de Nitrógeno - N': [
           {
             'valor': pruebaSuelo.n,
@@ -349,6 +353,9 @@ class ServiceFirebase {
         'Nombrepropietario': pruebaAgua.nombrepropietario,
         'Telefono': pruebaAgua.telefonopropietario,
         'Correo': pruebaAgua.correopropietario,
+        'Interpretacion': pruebaAgua.interpretacion,
+        'Recomendaciones': pruebaAgua.recomendaciones,
+        'Restricciones': pruebaAgua.restricciones,
 
         // 'Nitrato de Nitrógeno - N': [
         //   {
