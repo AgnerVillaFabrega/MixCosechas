@@ -12,6 +12,10 @@ class PruebaAgua {
   final String telefonopropietario;
   final String correopropietario;
 
+  final String interpretacion;
+  final String recomendaciones;
+  final String restricciones;
+
   //final double N;
   final double nh4;
   final double no2;
@@ -130,6 +134,9 @@ class PruebaAgua {
     required this.nombrepropietario,
     required this.telefonopropietario,
     required this.correopropietario,
+    required this.interpretacion,
+    required this.recomendaciones,
+    required this.restricciones,
 
     //required this.N,
     required this.nh4,
@@ -387,6 +394,9 @@ class PruebaAgua {
       nombrepropietario: map['NombrePropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
+      interpretacion: map['Interpretacion'],
+      recomendaciones: map['Recomendaciones'],
+      restricciones: map['Restricciones'],
       // N: N_Data['valor'],
       nh4: double.parse(nh4Data['valor']),
       no2: double.parse(no2Data['valor']),

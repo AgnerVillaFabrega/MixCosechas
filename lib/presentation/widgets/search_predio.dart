@@ -71,7 +71,7 @@ class SearchPredio extends StatelessWidget {
             final predioData = suggestion.data() as Map<String, dynamic>;
             predioFilterController.text = predioData['Nombre'];
 
-            _idPredioController.text = predioData['Id'];
+            _idPredioController.text = predioData['IdPredio'];
             _corregimientoPredioController.text = predioData['CorregimientoVereda'];
             _cultivoPredioController.text = predioData['Cultivo']; 
             _municipioPredioController.text = predioData['Municipio'];

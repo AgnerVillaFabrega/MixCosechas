@@ -101,7 +101,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                         value: _fuenteaguaController.text,
                         onChanged: (String? newValue) {
                           setState(() {
-                            _caController.text = newValue!;
+                            _fuenteaguaController.text = newValue!;
                           });
                         },
                         decoration: const InputDecoration(
@@ -215,7 +215,7 @@ class _AguaWidgetState extends State<AguaWidget> {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaAgua pruebaAgua = PruebaAgua(
-            idPredio: _nombrePredioController.text,
+            idPredio: _idPredioController.text,
             nombrePredio: _nombrePredioController.text,
             corregimientoPredio: _corregimientoPredioController.text,
             cultivoPredio: _cultivoPredioController.text,
@@ -227,6 +227,9 @@ class _AguaWidgetState extends State<AguaWidget> {
             nombrepropietario: _nombrepropietarioPredioController.text,
             telefonopropietario: _telefonopropietarioPredioController.text,
             correopropietario: _correopropietarioPredioController.text,
+            interpretacion: '',
+            recomendaciones: '',
+            restricciones: '',
             //N: double.parse(_nController.text),
             nh4: double.parse(_nh4Controller.text),
             no2: double.parse(_no2Controller.text),

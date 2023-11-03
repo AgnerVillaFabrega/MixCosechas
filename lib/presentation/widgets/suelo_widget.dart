@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:mixcosechas_app/presentation/widgets/show_result.dart';
@@ -37,8 +38,7 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _clController = TextEditingController();
   final TextEditingController _znController = TextEditingController();
   final TextEditingController _naController = TextEditingController();
-  final TextEditingController _salesdisueltasController =
-      TextEditingController();
+  final TextEditingController _salesdisueltasController = TextEditingController();
   final TextEditingController _phController = TextEditingController();
   final TextEditingController _ceController = TextEditingController();
   final TextEditingController _ciceController = TextEditingController();
@@ -46,6 +46,14 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _limoController = TextEditingController();
   final TextEditingController _arenaController = TextEditingController();
   final TextEditingController _humusController = TextEditingController();
+
+  //SE DEBEN LLENAR EN SHOW_RESULT
+
+  final TextEditingController _recomendacionesController  = TextEditingController();
+  final TextEditingController _presiembraController  = TextEditingController();
+  final TextEditingController _siembraController  = TextEditingController();
+  final TextEditingController _mantenimientoController  = TextEditingController();
+  
 
   //*INFORMACION DEL PREDIO */
   final TextEditingController _nombrePredioController = TextEditingController();
@@ -231,65 +239,72 @@ class _SueloWidgetState extends State<SueloWidget> {
   }
 
   Future<void> _handleRegistroSuelo() async {
-    if (_nombrePredioController.text.isNotEmpty &&
-        _corregimientoPredioController.text.isNotEmpty &&
-        _cultivoPredioController.text.isNotEmpty &&
-        _municipioPredioController.text.isNotEmpty &&
-        _variedadPredioController.text.isNotEmpty &&
-        _dptoPredioController.text.isNotEmpty &&
-        _edadPredioController.text.isNotEmpty &&
-        _nombrepropietarioPredioController.text.isNotEmpty &&
-        _telefonopropietarioPredioController.text.isNotEmpty &&
-        _correopropietarioPredioController.text.isNotEmpty) {
+    if (_idPredioController.text.isNotEmpty &&
+      _nombrePredioController.text.isNotEmpty &&
+      _corregimientoPredioController.text.isNotEmpty &&
+      _cultivoPredioController.text.isNotEmpty &&
+      _municipioPredioController.text.isNotEmpty &&
+      _variedadPredioController.text.isNotEmpty &&
+      _dptoPredioController.text.isNotEmpty &&
+      _edadPredioController.text.isNotEmpty &&
+      _idpropietarioPredioController.text.isNotEmpty &&
+      _nombrepropietarioPredioController.text.isNotEmpty &&
+      _telefonopropietarioPredioController.text.isNotEmpty &&
+      _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaSuelo pruebaSuelo = PruebaSuelo(
-            idPredio: _idPredioController.text,
-            nombrePredio: _nombrePredioController.text,
-            corregimientoPredio: _corregimientoPredioController.text,
-            cultivoPredio: _cultivoPredioController.text,
-            municipioPredio: _municipioPredioController.text,
-            variedadPredio: _variedadPredioController.text,
-            dptoPredio: _dptoPredioController.text,
-            edadPredio: _edadPredioController.text,
-            idPropietario: _idpropietarioPredioController.text,
-            nombrepropietario: _nombrepropietarioPredioController.text,
-            telefonoPropietario: _telefonopropietarioPredioController.text,
-            correoPropietario: _correopropietarioPredioController.text,
-            n: double.parse(_nController.text),
-            nh4: double.parse(_nh4Controller.text),
-            no2: double.parse(_no2Controller.text),
-            no3: double.parse(_no3Controller.text),
-            p: double.parse(_pController.text),
-            k: double.parse(_kController.text),
-            ca: double.parse(_caController.text),
-            mg: double.parse(_mgController.text),
-            s: double.parse(_sController.text),
-            so4: double.parse(_so4Controller.text),
-            fe: double.parse(_feController.text),
-            mn: double.parse(_mnController.text),
-            cu: double.parse(_cuController.text),
-            al: double.parse(_alController.text),
-            cl: double.parse(_clController.text),
-            zn: double.parse(_znController.text),
-            na: double.parse(_naController.text),
-            ph: double.parse(_phController.text),
-            ce: double.parse(_ceController.text),
-            salesDisueltas: double.parse(_salesdisueltasController.text),
-            cice: double.parse(_ciceController.text),
-            arcilla: double.parse(_arcillaController.text),
-            limo: double.parse(_limoController.text),
-            arena: double.parse(_arenaController.text),
-            humus: double.parse(_humusController.text));
+          idPredio: _idPredioController.text,
+          nombrePredio: _nombrePredioController.text,
+          corregimientoPredio: _corregimientoPredioController.text,
+          cultivoPredio: _cultivoPredioController.text,
+          municipioPredio: _municipioPredioController.text,
+          variedadPredio: _variedadPredioController.text,
+          dptoPredio: _dptoPredioController.text,
+          edadPredio: _edadPredioController.text,
+          recomendaciones: "",
+          presiembra: "",
+          siembra: "",
+          mantenimiento: "",
+          idPropietario: _idpropietarioPredioController.text,
+          nombrepropietario: _nombrepropietarioPredioController.text,
+          telefonoPropietario: _telefonopropietarioPredioController.text,
+          correoPropietario: _correopropietarioPredioController.text,
+          n: double.parse(_nController.text),
+          nh4: double.parse(_nh4Controller.text),
+          no2: double.parse(_no2Controller.text),
+          no3: double.parse(_no3Controller.text),
+          p: double.parse(_pController.text),
+          k: double.parse(_kController.text),
+          ca: double.parse(_caController.text),
+          mg: double.parse(_mgController.text),
+          s: double.parse(_sController.text),
+          so4: double.parse(_so4Controller.text),
+          fe: double.parse(_feController.text),
+          mn: double.parse(_mnController.text),
+          cu: double.parse(_cuController.text),
+          al: double.parse(_alController.text),
+          cl: double.parse(_clController.text),
+          zn: double.parse(_znController.text),
+          na: double.parse(_naController.text),
+          ph: double.parse(_phController.text),
+          ce: double.parse(_ceController.text),
+          salesDisueltas: double.parse(_salesdisueltasController.text),
+          cice: double.parse(_ciceController.text),
+          arcilla: double.parse(_arcillaController.text),
+          limo: double.parse(_limoController.text),
+          arena: double.parse(_arenaController.text),
+          humus: double.parse(_humusController.text)
+        );
 
-        _serviceFirebase.addPruebaSuelo(pruebaSuelo);
+       //  SE DEBE GUARDAR EN SHOW_RESULT 
+       _serviceFirebase.addPruebaSuelo(pruebaSuelo);
 
         final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
 
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
 
-        final List<String> interpretacionCompuestos =
-            pruebaSuelo.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
 
         Navigator.push(
           context,
@@ -297,7 +312,8 @@ class _SueloWidgetState extends State<SueloWidget> {
               builder: (context) => ShowResult(
                   nombreCompuestos: nombreCompuestos,
                   valorCompuestos: valorCompuestos,
-                  interpretacionCompuestos: interpretacionCompuestos)),
+                  interpretacionCompuestos: interpretacionCompuestos
+                )),
         );
       } else {
         showDialog(
