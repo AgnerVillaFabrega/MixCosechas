@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/pruebaAgua.dart';
+import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 
-class ShowResult extends StatelessWidget {
-  const ShowResult(
+class ShowAgua extends StatelessWidget {
+  const ShowAgua(
       {super.key,
       required nombreCompuestos,
       required valorCompuestos,
-      required interpretacionCompuestos})
+      required interpretacionCompuestos,
+      required pruebaagua})
       : _nombreCompuestos = nombreCompuestos,
         _valorCompuestos = valorCompuestos,
-        _interpretacionCompuestos = interpretacionCompuestos;
+        _interpretacionCompuestos = interpretacionCompuestos,
+        _pa = pruebaagua;
 
   final List<String> _nombreCompuestos;
   final List<double> _valorCompuestos;
   final List<String> _interpretacionCompuestos;
+  final PruebaAgua _pa;
   
 
   @override

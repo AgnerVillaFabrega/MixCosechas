@@ -12,10 +12,10 @@ class PruebaSuelo {
   final String telefonoPropietario;
   final String correoPropietario;
 
-  final String recomendaciones;
-  final String presiembra;
-  final String siembra;
-  final String mantenimiento;
+  late String recomendaciones;
+  late String presiembra;
+  late String siembra;
+  late String mantenimiento;
 
   final double n;
   final double nh4;
@@ -52,23 +52,23 @@ class PruebaSuelo {
   late String textura;
 
   final List<String> nombreCompuestos = [
-    'Nitrato de Nitrógeno - N',
-    'Nitrógeno amoniacal - NH4+',
-    'Nitritos - NO2-',
-    'Nitratos - NO3-',
-    'Fósforo - P',
-    'Potasio - K',
-    'Calcio - Ca',
-    'Azufre - S',
-    'Magnesio - Mg',
-    'Sulfato - SO4',
-    'Hierro Férrico - Fe ',
-    'Manganeso - Mn',
-    'Cobre - Cu',
-    'Aluminio - Al',
-    'Cloruro - Cl',
-    'Zinc - Zn',
-    'Sodio - Na',
+    'Nitrato de Nitrógeno',
+    'Nitrógeno amoniacal',
+    'Nitritos NO2',
+    'Nitratos NO3',
+    'Fósforo P',
+    'Potasio K',
+    'Calcio Ca',
+    'Azufre S',
+    'Magnesio Mg',
+    'Sulfato SO4',
+    'Hierro Férrico Fe ',
+    'Manganeso Mn',
+    'Cobre Cu',
+    'Aluminio Al',
+    'Cloruro Cl',
+    'Zinc Zn',
+    'Sodio Na',
     'Ph',
     'C.E',
     'Sales Disueltas',

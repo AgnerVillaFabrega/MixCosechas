@@ -519,7 +519,7 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
           builder: (context) {
             return const MensajeShowDialog(
                 title: "Registro",
-                message: "Se registró el usuario correctamente");
+                message: "Se registró la prueba correctamente");
           },
         );
         _nombrePredioController.text = '';

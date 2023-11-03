@@ -71,7 +71,7 @@ class SearchPredio extends StatelessWidget {
             final predioData = suggestion.data() as Map<String, dynamic>;
             predioFilterController.text = predioData['Nombre'];
 
-            _idPredioController.text = predioData['IdPredio'];
+            _idPredioController.text = predioData['Id'];
             _corregimientoPredioController.text = predioData['CorregimientoVereda'];
             _cultivoPredioController.text = predioData['Cultivo']; 
             _municipioPredioController.text = predioData['Municipio'];
@@ -92,7 +92,7 @@ class SearchPredio extends StatelessWidget {
                 controller: _idpropietarioPredioController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Identificación Propietario',
+                  labelText: 'Identificación',
                   labelStyle: TextStyle(
                       color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                 ),
@@ -110,19 +110,17 @@ class SearchPredio extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child:TextFormField(
-                enabled: false, 
-                controller: _telefonopropietarioPredioController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Telefono',
-                  labelStyle: TextStyle(
-                      color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
           ],
+        ),
+        TextFormField(
+          enabled: false, 
+          controller: _telefonopropietarioPredioController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: 'Telefono',
+            labelStyle: TextStyle(
+                color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+          ),
         ),
         TextFormField(
           enabled: false, 

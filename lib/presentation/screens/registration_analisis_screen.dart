@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/view_pruebas_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/sistema_foliar_widget.dart';
 import '../widgets/agua_widget.dart';
 import '../widgets/suelo_widget.dart';
@@ -49,6 +50,16 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registrar prueba'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ViewPruebasScreen()),
+            );
+          },
+        ),
       ),
       body: SingleChildScrollView(
           child: Column(
@@ -65,7 +76,7 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                             children: <Widget>[
                               SizedBox(
                                 height: 50,
-                                width: 15,
+                                width: 150,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(0)),
@@ -92,7 +103,7 @@ class _RegisterAnalisisPageState extends State<RegisterAnalisisPage> {
                               ),
                               SizedBox(
                                 height: 50,
-                                width: 120,
+                                width: 150,
                                 child: TextButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(cambiarColor(1)),

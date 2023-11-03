@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
+import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
-import 'package:mixcosechas_app/presentation/widgets/show_result.dart';
+import 'package:mixcosechas_app/presentation/widgets/show_suelo_inter.dart';
 import '../../services/firebase_service.dart';
 import 'input_variables.dart';
 import 'mensaje_show_dialog.dart';
@@ -20,7 +20,7 @@ class SueloWidget extends StatefulWidget {
 class _SueloWidgetState extends State<SueloWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final ServiceFirebase _serviceFirebase = ServiceFirebase();
+  
   final TextEditingController _nController = TextEditingController();
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();
@@ -46,14 +46,6 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _limoController = TextEditingController();
   final TextEditingController _arenaController = TextEditingController();
   final TextEditingController _humusController = TextEditingController();
-
-  //SE DEBEN LLENAR EN SHOW_RESULT
-
-  final TextEditingController _recomendacionesController  = TextEditingController();
-  final TextEditingController _presiembraController  = TextEditingController();
-  final TextEditingController _siembraController  = TextEditingController();
-  final TextEditingController _mantenimientoController  = TextEditingController();
-  
 
   //*INFORMACION DEL PREDIO */
   final TextEditingController _nombrePredioController = TextEditingController();
@@ -231,8 +223,10 @@ class _SueloWidgetState extends State<SueloWidget> {
                               return null;
                             },
                           ),
+                          //pop-push a la siguiente vista
+                          //en la siguiente vista se se almacenan los valores en la db
                           const SizedBox(height: 20),
-                          RegistrarPruebasButtom(onTap: _handleRegistroSuelo),
+                          ContinuarPruebasButtom(onTap: _handleRegistroSuelo),
                         ],
                       )),
                 ])));
@@ -297,19 +291,15 @@ class _SueloWidgetState extends State<SueloWidget> {
           humus: double.parse(_humusController.text)
         );
 
-       //  SE DEBE GUARDAR EN SHOW_RESULT 
-       _serviceFirebase.addPruebaSuelo(pruebaSuelo);
-
         final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
-
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
-
         final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
 
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ShowResult(
+              builder: (context) => ShowSuelo(
+                  pruebasuelo: pruebaSuelo,
                   nombreCompuestos: nombreCompuestos,
                   valorCompuestos: valorCompuestos,
                   interpretacionCompuestos: interpretacionCompuestos
@@ -338,30 +328,4 @@ class _SueloWidgetState extends State<SueloWidget> {
   }
 }
 
-class RegistrarPruebasButtom extends StatelessWidget {
-  const RegistrarPruebasButtom({super.key, required VoidCallback onTap})
-      : _onTap = onTap;
-  final VoidCallback _onTap;
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: _onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF19AA89),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-        ),
-        child: const Text(
-          'Registrar analisis',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Color(0XFFeeeeee),
-          ),
-        ),
-      ),
-    );
-  }
-}
+

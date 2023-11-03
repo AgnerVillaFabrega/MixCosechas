@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
+import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
-import 'package:mixcosechas_app/presentation/widgets/show_result.dart';
+import 'package:mixcosechas_app/presentation/widgets/show_agua_inter.dart';
 
 import '../../services/firebase_service.dart';
 import 'input_variables.dart';
@@ -192,7 +193,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                         ImputVariable(
                             nombreVariable: 'C.E', controller: _ceController),
                         const SizedBox(height: 20),
-                        RegistrarPruebasButtom(onTap: _handleRegistroAgua),
+                        ContinuarPruebasButtom(onTap: _handleRegistroAgua),
                       ],
                     )),
               ],
@@ -247,19 +248,16 @@ class _AguaWidgetState extends State<AguaWidget> {
             ce: double.parse(_ceController.text),
             salesDisueltas: double.parse(_salesdisueltasController.text));
 
-        _serviceFirebase.addPruebaAgua(pruebaAgua);
-
         final List<String> nombreCompuestos = pruebaAgua.nombreCompuestos;
-
         final List<double> valorCompuestos = pruebaAgua.valorCompuestos;
-
         final List<String> interpretacionCompuestos =
             pruebaAgua.interpretacionCompuestos;
 
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ShowResult(
+              builder: (context) => ShowAgua(
+                  pruebaagua:pruebaAgua,
                   nombreCompuestos: nombreCompuestos,
                   valorCompuestos: valorCompuestos,
                   interpretacionCompuestos: interpretacionCompuestos)),
@@ -284,33 +282,5 @@ class _AguaWidgetState extends State<AguaWidget> {
         },
       );
     }
-  }
-}
-
-class RegistrarPruebasButtom extends StatelessWidget {
-  const RegistrarPruebasButtom({super.key, required VoidCallback onTap})
-      : _onTap = onTap;
-  final VoidCallback _onTap;
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: _onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF19AA89),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-        ),
-        child: const Text(
-          'Registrar analisis',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Color(0XFFeeeeee),
-          ),
-        ),
-      ),
-    );
   }
 }
