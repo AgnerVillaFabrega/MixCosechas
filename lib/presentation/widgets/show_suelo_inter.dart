@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/registration_analisis_screen.dart';
-import 'package:mixcosechas_app/presentation/screens/view_pruebas_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
-import 'package:mixcosechas_app/presentation/widgets/mensaje_show_dialog.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
 
@@ -14,7 +12,7 @@ class ShowSuelo extends StatelessWidget {
     required this.nombreCompuestos,
     required this.valorCompuestos,
     required this.interpretacionCompuestos,
-    required this.pruebasuelo,
+    required this.pruebasuelo
   }) : super(key: key);
 
   final List<String> nombreCompuestos;

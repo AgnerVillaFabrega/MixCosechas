@@ -202,65 +202,68 @@ class _AguaWidgetState extends State<AguaWidget> {
 
   void _handleRegistroAgua() {
     if (_idPredioController.text.isNotEmpty &&
-        _nombrePredioController.text.isNotEmpty &&
-        _corregimientoPredioController.text.isNotEmpty &&
-        _cultivoPredioController.text.isNotEmpty &&
-        _municipioPredioController.text.isNotEmpty &&
-        _variedadPredioController.text.isNotEmpty &&
-        _dptoPredioController.text.isNotEmpty &&
-        _edadPredioController.text.isNotEmpty &&
-        _idpropietarioPredioController.text.isNotEmpty &&
-        _nombrepropietarioPredioController.text.isNotEmpty &&
-        _telefonopropietarioPredioController.text.isNotEmpty &&
-        _correopropietarioPredioController.text.isNotEmpty) {
+      _nombrePredioController.text.isNotEmpty &&
+      _corregimientoPredioController.text.isNotEmpty &&
+      _cultivoPredioController.text.isNotEmpty &&
+      _municipioPredioController.text.isNotEmpty &&
+      _variedadPredioController.text.isNotEmpty &&
+      _dptoPredioController.text.isNotEmpty &&
+      _edadPredioController.text.isNotEmpty &&
+      _idpropietarioPredioController.text.isNotEmpty &&
+      _nombrepropietarioPredioController.text.isNotEmpty &&
+      _telefonopropietarioPredioController.text.isNotEmpty &&
+      _correopropietarioPredioController.text.isNotEmpty &&
+      _fuenteaguaController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaAgua pruebaAgua = PruebaAgua(
-            idPredio: _idPredioController.text,
-            nombrePredio: _nombrePredioController.text,
-            corregimientoPredio: _corregimientoPredioController.text,
-            cultivoPredio: _cultivoPredioController.text,
-            municipioPredio: _municipioPredioController.text,
-            variedadPredio: _variedadPredioController.text,
-            dptoPredio: _dptoPredioController.text,
-            edadPredio: _edadPredioController.text,
-            idPropietario: _idpropietarioPredioController.text,
-            nombrepropietario: _nombrepropietarioPredioController.text,
-            telefonopropietario: _telefonopropietarioPredioController.text,
-            correopropietario: _correopropietarioPredioController.text,
-            interpretacion: '',
-            recomendaciones: '',
-            restricciones: '',
-            //N: double.parse(_nController.text),
-            nh4: double.parse(_nh4Controller.text),
-            no2: double.parse(_no2Controller.text),
-            no3: double.parse(_no3Controller.text),
-            p: double.parse(_pController.text),
-            k: double.parse(_kController.text),
-            ca: double.parse(_caController.text),
-            mg: double.parse(_mgController.text),
-            so4: double.parse(_so4Controller.text),
-            fe: double.parse(_feController.text),
-            mn: double.parse(_mnController.text),
-            cu: double.parse(_cuController.text),
-            cl: double.parse(_clController.text),
-            ph: double.parse(_phController.text),
-            ce: double.parse(_ceController.text),
-            salesDisueltas: double.parse(_salesdisueltasController.text));
+          idPredio: _idPredioController.text,
+          nombrePredio: _nombrePredioController.text,
+          corregimientoPredio: _corregimientoPredioController.text,
+          cultivoPredio: _cultivoPredioController.text,
+          municipioPredio: _municipioPredioController.text,
+          variedadPredio: _variedadPredioController.text,
+          dptoPredio: _dptoPredioController.text,
+          edadPredio: _edadPredioController.text,
+          idPropietario: _idpropietarioPredioController.text,
+          nombrepropietario: _nombrepropietarioPredioController.text,
+          telefonopropietario: _telefonopropietarioPredioController.text,
+          correopropietario: _correopropietarioPredioController.text,
+          interpretacion: '',
+          recomendaciones: '',
+          restricciones: '',
+          //N: double.parse(_nController.text),
+          nh4: double.parse(_nh4Controller.text),
+          no2: double.parse(_no2Controller.text),
+          no3: double.parse(_no3Controller.text),
+          p: double.parse(_pController.text),
+          k: double.parse(_kController.text),
+          ca: double.parse(_caController.text),
+          mg: double.parse(_mgController.text),
+          so4: double.parse(_so4Controller.text),
+          fe: double.parse(_feController.text),
+          mn: double.parse(_mnController.text),
+          cu: double.parse(_cuController.text),
+          cl: double.parse(_clController.text),
+          ph: double.parse(_phController.text),
+          ce: double.parse(_ceController.text),
+          salesDisueltas: double.parse(_salesdisueltasController.text),
+          tipoAgua:  _fuenteaguaController.text
+        );
 
         final List<String> nombreCompuestos = pruebaAgua.nombreCompuestos;
         final List<double> valorCompuestos = pruebaAgua.valorCompuestos;
-        final List<String> interpretacionCompuestos =
-            pruebaAgua.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos = pruebaAgua.interpretacionCompuestos;
 
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ShowAgua(
-                  pruebaagua:pruebaAgua,
-                  nombreCompuestos: nombreCompuestos,
-                  valorCompuestos: valorCompuestos,
-                  interpretacionCompuestos: interpretacionCompuestos)),
+            builder: (context) => ShowAgua(
+              pruebaagua:pruebaAgua,
+              nombreCompuestos: nombreCompuestos,
+              valorCompuestos: valorCompuestos,
+              interpretacionCompuestos: interpretacionCompuestos)
+            ),
         );
       } else {
         showDialog(

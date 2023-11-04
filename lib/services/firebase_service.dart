@@ -65,8 +65,7 @@ class ServiceFirebase {
   Future<List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
     List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
     try {
-      QuerySnapshot queryPruebaAgua =
-          await db.collection('PruebaSistemaFoliar').get();
+      QuerySnapshot queryPruebaAgua = await db.collection('PruebaSistemaFoliar').get();
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));
@@ -356,6 +355,8 @@ class ServiceFirebase {
         'Interpretacion': pruebaAgua.interpretacion,
         'Recomendaciones': pruebaAgua.recomendaciones,
         'Restricciones': pruebaAgua.restricciones,
+        'TipoAgua': pruebaAgua.tipoAgua,
+
 
         // 'Nitrato de Nitrógeno - N': [
         //   {
@@ -411,7 +412,7 @@ class ServiceFirebase {
             'interpretacion': pruebaAgua.so4Interpretacion,
           }
         ],
-        'Hierro Férrico - Fe ': [
+        'Hierro Férrico - Fe': [
           {
             'valor': pruebaAgua.fe,
             'interpretacion': pruebaAgua.feInterpretacion,
@@ -465,7 +466,6 @@ class ServiceFirebase {
         //     'interpretacion': pruebaAgua.CaMg_Interpretacion,
         //   }
         // ],
-        'Tipo de Agua': pruebaAgua.tipoAgua
       });
     } catch (e) {
       print("Error al agregar la prueba: $e");

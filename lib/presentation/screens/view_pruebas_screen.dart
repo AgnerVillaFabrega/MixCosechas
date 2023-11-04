@@ -40,6 +40,7 @@ class _ViewPruebasScreenState extends State<ViewPruebasScreen> {
         _isLoading = false; // Los datos se han cargado, establecemos _isLoading a falso.
       });
     } catch (e) {
+      
       print("Error al obtener la lista de Pruebas de Suelo: $e");
       setState(() {
         _isLoading = false; // En caso de error, asegúrate de que _isLoading se establezca en falso.
