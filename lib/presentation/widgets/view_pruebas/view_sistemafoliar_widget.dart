@@ -12,7 +12,7 @@ class ViewPruebaSistemaFoliarWidget extends StatefulWidget {
   
 class _ViewPruebaSistemaFoliarWidgetState extends State<ViewPruebaSistemaFoliarWidget> {  
   final ServiceFirebase _serviceFirebase = ServiceFirebase();  
-  List<PruebaSistemaFoliar> ppruebasSistemaFoliar = [];  
+  List<PruebaSistemaFoliar> _pruebasSistemaFoliar = [];  
   bool _isLoading = true;  
   
   @override  
@@ -25,7 +25,7 @@ class _ViewPruebaSistemaFoliarWidgetState extends State<ViewPruebaSistemaFoliarW
     try {  
       List<PruebaSistemaFoliar> pruebasSistemaFoliar = await _serviceFirebase.getPruebaSistemaFoliar();  
       setState(() {  
-        ppruebasSistemaFoliar = pruebasSistemaFoliar;  
+        _pruebasSistemaFoliar = pruebasSistemaFoliar;  
         _isLoading = false;  
       });  
     } catch (e) {  
@@ -59,16 +59,16 @@ class _ViewPruebaSistemaFoliarWidgetState extends State<ViewPruebaSistemaFoliarW
           _isLoading  
               ? const IndicadorCircularProgress()  
               : Expanded(  
-                  child: ppruebasSistemaFoliar.isEmpty  
+                  child: _pruebasSistemaFoliar.isEmpty  
                       ? const Center(  
                           child: Text('No hay datos disponibles'),  
                         )  
                       : ListView.separated(  
-                          itemCount: ppruebasSistemaFoliar.length,  
+                          itemCount: _pruebasSistemaFoliar.length,  
                           separatorBuilder: (context, index) => const Divider(),  
                           itemBuilder: (context, index) {  
                             return ListTile(  
-                              title: Text(ppruebasSistemaFoliar[index].nombrePredio.toString()),  
+                              title: Text(_pruebasSistemaFoliar[index].nombrePredio.toString()),  
                               //subtitle: Text(ppruebasSistemaFoliar[index].alInterpretacion.toString()),  
                               onTap: () {},  
                             );  

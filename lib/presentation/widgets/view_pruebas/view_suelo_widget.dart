@@ -12,7 +12,7 @@ class ViewPruebaSueloWidget extends StatefulWidget {
   
 class _ViewPruebaSueloWidgetState extends State<ViewPruebaSueloWidget> {  
   final ServiceFirebase _serviceFirebase = ServiceFirebase();  
-  List<PruebaSuelo> pruebasSuelo = [];  
+  List<PruebaSuelo> _pruebasSuelo = [];  
   bool _isLoading = true;  
   
   @override  
@@ -25,7 +25,7 @@ class _ViewPruebaSueloWidgetState extends State<ViewPruebaSueloWidget> {
     try {  
       List<PruebaSuelo> pruebas = await _serviceFirebase.getPruebaSuelo();  
       setState(() {  
-        pruebasSuelo = pruebas;  
+        _pruebasSuelo = pruebas;  
         _isLoading = false;  
       });  
     } catch (e) {  
@@ -59,16 +59,16 @@ class _ViewPruebaSueloWidgetState extends State<ViewPruebaSueloWidget> {
           _isLoading  
               ? const IndicadorCircularProgress()  
               : Expanded(  
-                  child: pruebasSuelo.isEmpty  
+                  child: _pruebasSuelo.isEmpty  
                       ? const Center(  
                           child: Text('No hay datos disponibles'),  
                         )  
                       : ListView.separated(  
-                          itemCount: pruebasSuelo.length,  
+                          itemCount: _pruebasSuelo.length,  
                           separatorBuilder: (context, index) => const Divider(),  
                           itemBuilder: (context, index) {  
                             return ListTile(  
-                              title: Text(pruebasSuelo[index].nombrePredio.toString()),  
+                              title: Text(_pruebasSuelo[index].nombrePredio.toString()),  
                               //subtitle: Text(pruebasSuelo[index].alInterpretacion.toString()),  
                               onTap: () {},  
                             );  

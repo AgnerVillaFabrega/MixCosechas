@@ -12,7 +12,7 @@ class ViewPruebaAguaWidget extends StatefulWidget {
   
 class _ViewPruebaAguaWidgetState extends State<ViewPruebaAguaWidget> {  
   final ServiceFirebase _serviceFirebase = ServiceFirebase();  
-  List<PruebaAgua> pruebasAgua = [];  
+  List<PruebaAgua> _pruebasAgua = [];  
   bool _isLoading = true;  
   
   @override  
@@ -25,7 +25,7 @@ class _ViewPruebaAguaWidgetState extends State<ViewPruebaAguaWidget> {
     try {  
       List<PruebaAgua> pruebasAgua = await _serviceFirebase.getPruebaAgua();  
       setState(() {  
-        pruebasAgua = pruebasAgua;  
+        _pruebasAgua = pruebasAgua;  
         _isLoading = false;  
       });  
     } catch (e) {  
@@ -59,16 +59,16 @@ class _ViewPruebaAguaWidgetState extends State<ViewPruebaAguaWidget> {
           _isLoading  
               ? const IndicadorCircularProgress()  
               : Expanded(  
-                  child: pruebasAgua.isEmpty  
+                  child: _pruebasAgua.isEmpty  
                       ? const Center(  
                           child: Text('No hay datos disponibles'),  
                         )  
                       : ListView.separated(  
-                          itemCount: pruebasAgua.length,  
+                          itemCount: _pruebasAgua.length,  
                           separatorBuilder: (context, index) => const Divider(),  
                           itemBuilder: (context, index) {  
                             return ListTile(  
-                              title: Text(pruebasAgua[index].nombrePredio.toString()),  
+                              title: Text(_pruebasAgua[index].nombrePredio.toString()),  
                               //subtitle: Text(pruebasSuelo[index].alInterpretacion.toString()),  
                               onTap: () {},  
                             );  

@@ -20,7 +20,6 @@ class AguaWidget extends StatefulWidget {
 class _AguaWidgetState extends State<AguaWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  //final TextEditingController _nController = TextEditingController();
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();
   final TextEditingController _no3Controller = TextEditingController();
