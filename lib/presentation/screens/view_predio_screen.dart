@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
 import '../../model/predios.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_add_predio.dart';
+
+import '../widgets/icons/icon_add_predio.dart';
 
 Widget cargarDatosPredios() {
   return StreamBuilder(

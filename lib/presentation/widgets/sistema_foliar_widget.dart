@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../services/firebase_service.dart';
-import 'mensaje_show_dialog.dart';
+import 'messages/quickalert_msg.dart';
 
 class SistemaFoliarWidget extends StatefulWidget {
   const SistemaFoliarWidget({
@@ -509,19 +510,9 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
         );
 
         _serviceFirebase.addPruebaSistemaFoliar(pruebaSistemaFoliar);
-
-        // final List<String> nombreCompuestos = pruebaSistemaFoliar.nombreCompuestos;
-
-        // final List<String> valorCompuestos = pruebaSistemaFoliar.valorCompuestos;
-
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const MensajeShowDialog(
-                title: "Registro",
-                message: "Se registró la prueba correctamente");
-          },
-        );
+        
+        QuickAlertDialog.showAlert(context, QuickAlertType.success,"Se registró la prueba correctamente");
+        _idPredioController.text = '';
         _nombrePredioController.text = '';
         _corregimientoPredioController.text = '';
         _cultivoPredioController.text = '';
@@ -529,6 +520,7 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
         _variedadPredioController.text = '';
         _dptoPredioController.text = '';
         _edadPredioController.text = '';
+        _idpropietarioPredioController.text = '';
         _nombrepropietarioPredioController.text = '';
         _telefonopropietarioPredioController.text = '';
         _correopropietarioPredioController.text = '';
@@ -545,30 +537,11 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
         _mnController.text = '';
         _bController.text = '';
         FocusScope.of(context).unfocus();
-
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => ShowResult(nombreCompuestos: nombreCompuestos,valorCompuestos:valorCompuestos)),
-        // );
       } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              title: Text("Upss!"),
-              content: Text("Debes llenar todos los campos"),
-            );
-          },
-        );
+        QuickAlertDialog.showAlert(context, QuickAlertType.error,"Debes llenar todos los campos");
       }
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(
-              title: "Ups!", message: "Debes elegir un propietario");
-        },
-      );
+      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un predio");
     }
   }
 }

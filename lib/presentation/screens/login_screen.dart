@@ -5,10 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 import '../../model/clientes.dart';
 import '../../theme/limpiarCampos.dart';
-import '../widgets/mensaje_show_dialog.dart';
 import 'registration_clients_scren.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -168,26 +169,11 @@ class _LoginPageState extends State<LoginPage> {
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const MensajeShowDialog(title: "Error al iniciar sesión", message: "El usuario no está registrado");
-            },
-          );
+          QuickAlertDialog.showAlert(context, QuickAlertType.error,"El usuario no está registrado");
         } else if (e.code == 'wrong-password') {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const MensajeShowDialog(title: "Error al iniciar sesión", message: "Contraseña incorrecta");
-            },
-          );
+          QuickAlertDialog.showAlert(context, QuickAlertType.error,"Contraseña incorrecta");
         } else {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const MensajeShowDialog(title: "Upss!", message: "inténtalo de nuevo");
-            },
-          );
+          QuickAlertDialog.showAlert(context, QuickAlertType.error,"Parece que estamos teniendo problemas, intenta registrar luego");
         }
       } finally {
         setState(() {

@@ -70,7 +70,6 @@ class SearchPredio extends StatelessWidget {
           onSuggestionSelected: (suggestion) {
             final predioData = suggestion.data() as Map<String, dynamic>;
             predioFilterController.text = predioData['Nombre'];
-
             _idPredioController.text = predioData['Id'];
             _corregimientoPredioController.text = predioData['CorregimientoVereda'];
             _cultivoPredioController.text = predioData['Cultivo']; 
@@ -83,6 +82,16 @@ class SearchPredio extends StatelessWidget {
             _telefonopropietarioPredioController.text =  predioData['TelefonoPropietario'];
             _correopropietarioPredioController.text = predioData['CorreoPropietario'];
           },
+        ),
+        TextFormField(
+          enabled: false, 
+          controller: _idPredioController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: 'Identificación del predio',
+            labelStyle: TextStyle(
+                color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+          ),
         ),
         Row(
           children: [

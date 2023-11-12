@@ -26,7 +26,7 @@ class ShowAgua extends StatelessWidget {
   
   
 
- String recortarTexto(String texto, int maxLength) {
+  String recortarTexto(String texto, int maxLength) {
     if (texto.length > maxLength) {
       return texto.substring(0, maxLength) + '...';
     }

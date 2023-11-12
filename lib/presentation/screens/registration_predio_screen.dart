@@ -1,13 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_propietario.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 import 'dart:math';
 import '../../model/predios.dart';
 import '../../services/firebase_service.dart';
 import '../../theme/limpiarCampos.dart';
-import '../widgets/mensaje_show_dialog.dart';
 import 'package:csv/csv.dart' as csv;
+
+import '../widgets/messages/quickalert_msg.dart';
 
 
 class RegistrationPredioScreen extends StatelessWidget {
@@ -327,24 +331,15 @@ class _RegisterPageState extends State<RegisterPage> {
           edad: _edadController.text
         );
         _serviceFirebase.addPredio(predio);
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const MensajeShowDialog(title: "Registro Exitoso",message: "Se registró correctamente el predio");
-          },
-        );
+        QuickAlertDialog.showAlert(context, QuickAlertType.success,"Se registró correctamente el predio");
+        
         FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,_telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
           _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
         ]);
         FocusScope.of(context).unfocus();
       }
     }else{
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(title: "Ups!",message: "Debes elegir un propietario");
-        },
-      );
+      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un propietario para continuar con el registro");
     }
   }
 }

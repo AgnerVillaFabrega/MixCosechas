@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/view_clientes_screen.dart';
+import '../../screens/view_clientes_screen.dart';
 
 // ignore: camel_case_types
 class IconClientesMenu extends StatelessWidget {

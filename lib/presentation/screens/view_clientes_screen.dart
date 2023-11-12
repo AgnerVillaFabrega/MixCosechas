@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/screens/user_profile_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import '../../model/clientes.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_add_clientes.dart';
+import '../widgets/icons/icon_add_clientes.dart';
 
 Widget cargarDatos(){
   return StreamBuilder(

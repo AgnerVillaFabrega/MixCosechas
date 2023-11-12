@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/view_pruebas_screen.dart';
+import '../../screens/view_pruebas_screen.dart';
 
 class IconMuestasMenu extends StatelessWidget {
   const IconMuestasMenu({

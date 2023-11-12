@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:mixcosechas_app/presentation/widgets/show_agua_inter.dart';
-
-import '../../services/firebase_service.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 import 'input_variables.dart';
-import 'mensaje_show_dialog.dart';
 
 class AguaWidget extends StatefulWidget {
   const AguaWidget({
@@ -21,7 +20,6 @@ class AguaWidget extends StatefulWidget {
 class _AguaWidgetState extends State<AguaWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final ServiceFirebase _serviceFirebase = ServiceFirebase();
   //final TextEditingController _nController = TextEditingController();
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();
@@ -122,7 +120,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                             'Manantial',
                             'Lluvia',
                             'Cienega',
-                            ' Arroyos',
+                            'Arroyos',
                             'Pozo',
                             'Lago',
                             'Estanque',
@@ -212,8 +210,7 @@ class _AguaWidgetState extends State<AguaWidget> {
       _idpropietarioPredioController.text.isNotEmpty &&
       _nombrepropietarioPredioController.text.isNotEmpty &&
       _telefonopropietarioPredioController.text.isNotEmpty &&
-      _correopropietarioPredioController.text.isNotEmpty &&
-      _fuenteaguaController.text.isNotEmpty) {
+      _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaAgua pruebaAgua = PruebaAgua(
@@ -266,24 +263,10 @@ class _AguaWidgetState extends State<AguaWidget> {
             ),
         );
       } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              title: Text("Upss!"),
-              content: Text("Debes llenar todos los campos"),
-            );
-          },
-        );
+        QuickAlertDialog.showAlert(context, QuickAlertType.error,"Debes llenar todos los campos");
       }
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(
-              title: "Ups!", message: "Debes elegir un propietario");
-        },
-      );
+      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un predio");
     }
   }
 }

@@ -4,9 +4,9 @@ import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:mixcosechas_app/presentation/widgets/show_suelo_inter.dart';
-import '../../services/firebase_service.dart';
+import 'package:quickalert/quickalert.dart';
 import 'input_variables.dart';
-import 'mensaje_show_dialog.dart';
+import 'messages/quickalert_msg.dart';
 
 class SueloWidget extends StatefulWidget {
   const SueloWidget({
@@ -306,24 +306,10 @@ class _SueloWidgetState extends State<SueloWidget> {
                 )),
         );
       } else {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              title: Text("Upss!"),
-              content: Text("Debes llenar todos los campos"),
-            );
-          },
-        );
+        QuickAlertDialog.showAlert(context, QuickAlertType.error,"Debes llenar todos los campos");
       }
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const MensajeShowDialog(
-              title: "Ups!", message: "Debes elegir un propietario");
-        },
-      );
+      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un predio");
     }
   }
 }

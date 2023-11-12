@@ -1,51 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/model/pruebaAgua.dart';
-import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
-import 'package:mixcosechas_app/model/pruebaSuelo.dart';
-import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_add_prueba.dart';
-import '../../services/firebase_service.dart';
-import '../widgets/indicador_circle_progress.dart';
+// ignore_for_file: use_build_context_synchronously
 
-class ViewPruebasScreen extends StatefulWidget {
-  const ViewPruebasScreen({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_prueba.dart';
+import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_agua_widget.dart';
+import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_sistemafoliar_widget.dart';
+import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_suelo_widget.dart';
+
+int _index = 0;
+List<Widget> _opciones = <Widget>[
+  const ViewPruebaSueloWidget(),
+  const ViewPruebaAguaWidget(),
+  const ViewPruebaSistemaFoliarWidget(),
+];
+
+class ViewPruebasScreen extends StatelessWidget {
+  const ViewPruebasScreen({super.key});
 
   @override
-  _ViewPruebasScreenState createState() => _ViewPruebasScreenState();
+  Widget build(BuildContext context) {
+    return const ViewPruebasPage();
+  }
 }
 
-class _ViewPruebasScreenState extends State<ViewPruebasScreen> {
-  final ServiceFirebase _serviceFirebase = ServiceFirebase();
-  List<PruebaSuelo> pruebasSuelo = [];
-  List<PruebaAgua> pruebasAgua = [];
-  List<PruebaSistemaFoliar> pruebasSistemaFoliar = [];
-  bool _isLoading = true; // Inicialmente, estamos cargando datos.
+class ViewPruebasPage extends StatefulWidget {
+  const ViewPruebasPage({Key? key}) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
+  _ViewPruebasPageState createState() => _ViewPruebasPageState();
+}
 
-  Future<void> _loadData() async {
-    try {
-      // Llama a la función para obtener la lista de PruebaSuelo.
-      List<PruebaSuelo> pruebas = await _serviceFirebase.getPruebaSuelo();
-      List<PruebaAgua> pruebas_agua = await _serviceFirebase.getPruebaAgua();
-      List<PruebaSistemaFoliar> pruebas_sistemafoliar = await _serviceFirebase.getPruebaSistemaFoliar();
-      setState(() {
-        pruebasSuelo = pruebas;
-        pruebasAgua= pruebas_agua;
-        pruebasSistemaFoliar= pruebas_sistemafoliar;
-        _isLoading = false; // Los datos se han cargado, establecemos _isLoading a falso.
-      });
-    } catch (e) {
-      
-      print("Error al obtener la lista de Pruebas de Suelo: $e");
-      setState(() {
-        _isLoading = false; // En caso de error, asegúrate de que _isLoading se establezca en falso.
-      });
-    }
+class _ViewPruebasPageState extends State<ViewPruebasPage> {
+
+  Color activo = const Color(0xFF19AA89);
+  Color inactivo = const Color(0xFFc3c6c9);
+
+  Color cambiarColor(int index) {
+    return index == _index ? activo : inactivo;
   }
 
   @override
@@ -67,47 +58,83 @@ class _ViewPruebasScreenState extends State<ViewPruebasScreen> {
           IconAddPrueba(),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: const Color(0xFFCFCFCF)),
-              ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Buscar',
-                  prefixIcon: Icon(Icons.search),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            _isLoading
-                ? const IndicadorCircularProgress() // Muestra un indicador de carga mientras se obtienen los datos.
-                : Expanded(
-                    child: pruebasSuelo.isEmpty
-                        ? const Center(
-                            child: Text('No hay datos disponibles'),
-                          )
-                        : ListView.separated(
-                            itemCount: pruebasSuelo.length,
-                            separatorBuilder: (context, index) => const Divider(),
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(pruebasSuelo[index].nombrePredio.toString()),
-                                subtitle: Text(pruebasSuelo[index].idPredio.toString()),
-                                onTap: () {
-                                  // Puedes implementar la navegación aquí si es necesario.
-                                },
-                              );
-                            },
-                          ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: cambiarColor(0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
                   ),
-          ],
-        ),
+                  onPressed: () {
+                    setState(() {
+                      _index = 0;
+                    });
+                  },
+                  child: const Text(
+                    "Suelo",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: cambiarColor(1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _index = 1;
+                    });
+                  },
+                  child: const Text(
+                    "Agua",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: cambiarColor(2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _index = 2;
+                    });
+                  },
+                  child: const Text(
+                    "Sistema foliar",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: _opciones[_index],
+          ),
+        ],
       ),
     );
   }

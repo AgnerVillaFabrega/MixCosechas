@@ -3,9 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
-import 'package:mixcosechas_app/presentation/widgets/mensaje_show_dialog.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:quickalert/quickalert.dart';
 
 class RegistrationClientScreen extends StatelessWidget {
   const RegistrationClientScreen({super.key});
@@ -18,7 +19,7 @@ class RegistrationClientScreen extends StatelessWidget {
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
-
+  
   @override
   // ignore: library_private_types_in_public_api
   _RegisterPageState createState() => _RegisterPageState();
@@ -253,50 +254,30 @@ class _RegisterPageState extends State<RegisterPage> {
               password: _passwordController.text
             );
             _serviceFirebase.addPeople(cliente,userCredential);
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Registro",message: "Se registró el usuario correctamente");
-              },
-            );
+
+            QuickAlertDialog.showAlert(context, QuickAlertType.success,"Se registró el usuario correctamente");
+
             FormUtils.clearTextControllers([_identificacionController,_nombreController,_telefonoController,_correoController,_rolController,_passwordController,_confirmPasswordController ]);
             FocusScope.of(context).unfocus();
           }
         }on FirebaseException catch (e) {
           if (e.code == 'weak-password') {
             // Contraseña débil
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "!",message: "Contraseña debil");
-              },
-            );
+            QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Contraseña debil, intenta con una mejor contraseña");
+            
           } else if (e.code == 'email-already-in-use') {
             // El correo ya está en uso por otro usuario
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Cuidado!",message: "Parece que ese correo ya es usado por otro usuaio");
-              },
-            );
+            QuickAlertDialog.showAlert(context, QuickAlertType.error,"Parece que ese correo ya esta en uso");
+            
           } else {
             // Otro tipo de error
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const MensajeShowDialog(title: "Upsss!",message: "Parece que estamos teniendo problemas, intenta registrar luego");
-              },
-            );
+            QuickAlertDialog.showAlert(context, QuickAlertType.error,"Parece que estamos teniendo problemas, intenta registrar luego");
+            
           }
         }
       } else {
         // Los campos de contraseña no coinciden, muestra un mensaje de error
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const MensajeShowDialog(title: "Cuidado",message: "Las contraseñas no coinciden. Por favor, verificalo");
-          },
-        );
+        QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Las contraseñas no coinciden. Por favor, verificalo");
       }
     }
   }

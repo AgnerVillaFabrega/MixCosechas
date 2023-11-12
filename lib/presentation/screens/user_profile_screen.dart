@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
-import 'package:mixcosechas_app/presentation/widgets/img_admin.dart';
-import 'package:mixcosechas_app/presentation/widgets/img_agricultor.dart';
-import 'package:mixcosechas_app/presentation/widgets/img_analista.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/model/predios.dart';
+
+import '../widgets/img/img_admin.dart';
+import '../widgets/img/img_agricultor.dart';
+import '../widgets/img/img_analista.dart';
 
 class UserProfileView extends StatelessWidget {
   final Cliente usuario;

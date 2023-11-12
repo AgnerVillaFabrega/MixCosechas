@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_clientes_menu.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_logout_menu.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_predio_menu.dart';
-import 'package:mixcosechas_app/presentation/widgets/icon_userprofile.dart';
 import 'package:mixcosechas_app/presentation/widgets/info_home.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:provider/provider.dart';
-import '../widgets/icon_muestras.dart';
-import '../widgets/img_admin.dart';
-import '../widgets/img_agricultor.dart';
-import '../widgets/img_analista.dart';
+
+import '../widgets/icons/icon_clientes_menu.dart';
+import '../widgets/icons/icon_logout_menu.dart';
+import '../widgets/icons/icon_muestras.dart';
+import '../widgets/icons/icon_predio_menu.dart';
+import '../widgets/icons/icon_userprofile.dart';
+import '../widgets/img/img_admin.dart';
+import '../widgets/img/img_agricultor.dart';
+import '../widgets/img/img_analista.dart';
 
 class HomeScreen extends StatefulWidget {
   

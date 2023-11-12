@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/registration_analisis_screen.dart';
+import '../../screens/registration_analisis_screen.dart';
 
 class IconAddPrueba extends StatelessWidget {
   const IconAddPrueba({
