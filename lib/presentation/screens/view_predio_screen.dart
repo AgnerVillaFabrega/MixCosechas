@@ -110,7 +110,7 @@ class _PredioPageState extends State<ViewPredioScreen> {
               decoration: BoxDecoration(
                 //color: const Color.fromARGB(255, 227, 227, 227),
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: const Color(0xFFCFCFCF)), // Contorno de color #cfcfcf
+                border: Border.all(color: const Color(0xFFCFCFCF)),
               ),
               child: TextField(
                 onChanged: _filterPredios,

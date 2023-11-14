@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
         } else if (e.code == 'wrong-password') {
           QuickAlertDialog.showAlert(context, QuickAlertType.error,"Contraseña incorrecta");
         } else {
-          QuickAlertDialog.showAlert(context, QuickAlertType.error,"Parece que estamos teniendo problemas, intenta registrar luego");
+          QuickAlertDialog.showAlert(context, QuickAlertType.error,"Parece que estamos teniendo problemas, intentalo luego");
         }
       } finally {
         setState(() {

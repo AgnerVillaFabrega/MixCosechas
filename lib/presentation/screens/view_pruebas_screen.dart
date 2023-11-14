@@ -1,21 +1,16 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/pruebaAgua.dart';
+import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
+import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
 import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_prueba.dart';
-import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_agua_widget.dart';
-import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_sistemafoliar_widget.dart';
-import 'package:mixcosechas_app/presentation/widgets/view_pruebas/view_suelo_widget.dart';
-
-int _index = 0;
-List<Widget> _opciones = <Widget>[
-  const ViewPruebaSueloWidget(),
-  const ViewPruebaAguaWidget(),
-  const ViewPruebaSistemaFoliarWidget(),
-];
+import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
+import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class ViewPruebasScreen extends StatelessWidget {
-  const ViewPruebasScreen({super.key});
+  const ViewPruebasScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +26,58 @@ class ViewPruebasPage extends StatefulWidget {
 }
 
 class _ViewPruebasPageState extends State<ViewPruebasPage> {
+  bool _isLoading = true;
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
+  List<PruebaSuelo> _pruebasSuelo = [];
+  List<PruebaAgua> _pruebaAgua = [];
+  List<PruebaSistemaFoliar> _pruebaSistemaFoliar = [];
+  String _selectedMuestra = 'Todos';
+  final List<String> _options = ['Todos', 'Suelo', 'Agua', 'Sistema foliar'];
+  TextEditingController _searchController = TextEditingController();
 
-  Color activo = const Color(0xFF19AA89);
-  Color inactivo = const Color(0xFFc3c6c9);
+  Future<void> _loadData() async {
+    try {
+      List<PruebaSuelo> pruebasSuelo = [];
+      List<PruebaAgua> pruebaAgua = [];
+      List<PruebaSistemaFoliar> pruebasSistemaFoliar = [];
 
-  Color cambiarColor(int index) {
-    return index == _index ? activo : inactivo;
+      if (_selectedMuestra == 'Todos') {
+        pruebasSuelo = await _serviceFirebase.getPruebaSuelo();
+        pruebaAgua = await _serviceFirebase.getPruebaAgua();
+        pruebasSistemaFoliar = await _serviceFirebase.getPruebaSistemaFoliar();
+      } else if (_selectedMuestra == 'Suelo') {
+        pruebasSuelo = await _serviceFirebase.getPruebaSuelo();
+      } else if (_selectedMuestra == 'Agua') {
+        pruebaAgua = await _serviceFirebase.getPruebaAgua();
+      } else if (_selectedMuestra == 'Sistema foliar') {
+        pruebasSistemaFoliar = await _serviceFirebase.getPruebaSistemaFoliar();
+      }
+
+      setState(() {
+        _pruebasSuelo = pruebasSuelo;
+        _pruebaAgua = pruebaAgua;
+        _pruebaSistemaFoliar = pruebasSistemaFoliar;
+        _isLoading = false;
+      });
+    } catch (e) {
+      QuickAlertDialog.showAlert(
+        context,
+        QuickAlertType.error,
+        "Error al obtener la lista de Pruebas: $e",
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+  List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -58,84 +98,175 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
           IconAddPrueba(),
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 50,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: cambiarColor(0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: const Color(0xFFCFCFCF)),
                     ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _index = 0;
-                    });
-                  },
-                  child: const Text(
-                    "Suelo",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontWeight: FontWeight.w700,
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      _filterPredios(value);
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Buscar',
+                      prefixIcon: Icon(Icons.search),
+                      border: InputBorder.none,
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: cambiarColor(1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Filtrar por tipo de prueba',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _index = 1;
-                    });
-                  },
-                  child: const Text(
-                    "Agua",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: cambiarColor(2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
+                const SizedBox(height: 8), 
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: const Color(0xFFCFCFCF)),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _index = 2;
-                    });
-                  },
-                  child: const Text(
-                    "Sistema foliar",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontWeight: FontWeight.w700,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                              value: _selectedMuestra,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedMuestra = newValue!;
+                                });
+                                _loadData();
+                              },
+                              items: _options
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: _opciones[_index],
-          ),
-        ],
-      ),
+            const SizedBox(height: 10),
+            const Divider(),
+            const SizedBox(height: 10),
+            _isLoading
+                ? const IndicadorCircularProgress()
+                : Expanded(
+                    child: _buildListView(),
+                  ),
+          ],
+        ),
+      )
     );
   }
+
+  Widget _buildListView() {
+    List<Widget> listWidgets = [];
+
+    if (_pruebasSuelo.isNotEmpty) {
+      listWidgets.add(_buildList("Suelo", _pruebasSuelo));
+    }
+
+    if (_pruebaAgua.isNotEmpty) {
+      listWidgets.add(_buildList("Agua", _pruebaAgua));
+    }
+
+    if (_pruebaSistemaFoliar.isNotEmpty) {
+      listWidgets.add(_buildList("Sistema foliar", _pruebaSistemaFoliar));
+    }
+
+    return ListView(
+      children: listWidgets,
+    );
+  }
+
+  _buildList(String title, List<dynamic> data) {
+    List<dynamic> filteredData = data;
+
+    if (_searchController.text.isNotEmpty) {
+      filteredData = data.where((item) {
+        return item.nombrePredio
+            .toLowerCase()
+            .contains(_searchController.text.toLowerCase());
+      }).toList();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          itemCount: filteredData.length,
+          separatorBuilder: (context, index) => const Divider(),
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(filteredData[index].nombrePredio.toString()),
+              subtitle: Text(filteredData[index].nombrepropietario.toString()),
+              onTap: () {
+                // Acción al presionar el elemento
+                // Puedes abrir una pantalla de detalles o realizar alguna otra acción
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+
+
+
+  void _filterPredios(String searchText) {
+    setState(() {
+      if (searchText.isNotEmpty) {
+        _pruebasSuelo = _pruebasSuelo
+            .where((item) => item.nombrePredio
+                .toLowerCase()
+                .contains(searchText.toLowerCase()))
+            .toList();
+        _pruebaAgua = _pruebaAgua
+            .where((item) => item.nombrePredio
+                .toLowerCase()
+                .contains(searchText.toLowerCase()))
+            .toList();
+        _pruebaSistemaFoliar = _pruebaSistemaFoliar
+            .where((item) => item.nombrePredio
+                .toLowerCase()
+                .contains(searchText.toLowerCase()))
+            .toList();
+      } else {
+        _loadData();
+      }
+    });
+  }
+
 }
