@@ -11,6 +11,7 @@ class PruebaAgua {
   final String nombrepropietario;
   final String telefonopropietario;
   final String correopropietario;
+  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
 
   late String interpretacion;
   late String recomendaciones;
@@ -38,9 +39,40 @@ class PruebaAgua {
 
   final String tipoAgua;
 
+  final List<String> graficaCompuestos = [
+    'NH4',
+    'NO2',
+    'NO3',
+    'P',
+    'K',
+    'Ca',
+    'Mg',
+    'SO4',
+  ];
+  late List<double> valorgraficaCompuestos = [
+    nh4,
+    no2,
+    no3,
+    p,
+    k,
+    ca,
+    mg,
+    so4
+  ];
+  final List<String> graficaCompuestos2 = [
+    'Fe',
+    'Mn',
+    'Cu',
+    'Cl',
+    'Ph',
+    'C.E',
+    'Sales',
+  ];
+  late List<double> valorgraficaCompuestos2 = [fe, mn, cu, cl, ph,ce, salesDisueltas];
+
   final List<String> nombreCompuestos = [
-    //'Nitrato de Nitrógeno - N',
-    'Nitrógeno amoniacal - NH4+',
+    
+    'Nitrógeno - NH4+',
     'Nitritos - NO2-',
     'Nitratos - NO3-',
     'Fósforo - P',
@@ -154,7 +186,8 @@ class PruebaAgua {
     required this.ph,
     required this.ce,
     required this.salesDisueltas,
-    required this.tipoAgua
+    required this.tipoAgua,
+    fechaPrueba
   }) {
     //double d = (Ca / Mg);
     //String inString = d.toStringAsFixed(3); // '2.35'
@@ -397,6 +430,7 @@ class PruebaAgua {
       nombrepropietario: map['Nombrepropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
+      fechaPrueba : map ['Fecha'],
       interpretacion: map['Interpretacion'],
       recomendaciones: map['Recomendaciones'],
       restricciones: map['Restricciones'],

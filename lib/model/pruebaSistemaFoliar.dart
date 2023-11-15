@@ -11,6 +11,7 @@ class PruebaSistemaFoliar {
   final String nombrepropietario;
   final String telefonopropietario;
   final String correopropietario;
+  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
 
   final String ca;
   final String mg;
@@ -63,7 +64,8 @@ class PruebaSistemaFoliar {
     required this.cu,
     required this.zn,
     required this.mn,
-    required this.b
+    required this.b,
+    fechaPrueba
   });
 
   factory PruebaSistemaFoliar.fromMap(Map<String, dynamic> map) {
@@ -80,6 +82,7 @@ class PruebaSistemaFoliar {
       nombrepropietario: map['Nombrepropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
+      fechaPrueba: map['Fecha'],
       ca: map['Calcio - Ca'],
       mg: map['Magnesio - Mg'],
       na: map['Sodio - Na'],

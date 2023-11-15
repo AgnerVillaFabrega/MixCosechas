@@ -21,6 +21,7 @@ class _SueloWidgetState extends State<SueloWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
+  
   final TextEditingController _nController = TextEditingController();
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();

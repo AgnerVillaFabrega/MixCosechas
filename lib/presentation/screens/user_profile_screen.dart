@@ -155,7 +155,7 @@ class UserProfileView extends StatelessWidget {
                       return const Card(
                         elevation: 2,
                         child: Padding(
-                          padding: EdgeInsets.all(16), // Aumenta el espacio de relleno
+                          padding: EdgeInsets.all(7), // Aumenta el espacio de relleno
                           child: ListTile(
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

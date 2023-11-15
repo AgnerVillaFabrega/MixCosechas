@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
+import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 
 import '../../theme/limpiarCampos.dart';
@@ -35,14 +36,15 @@ class ShowAgua extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Resultados de análisis'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Interpretacion'),
-              Tab(text: 'Plan fertilizacion'),
+              Tab(text: 'Grafica'),
+              Tab(text: 'Plan de Riego'),
             ],
           ),
         ),
@@ -102,6 +104,34 @@ class ShowAgua extends StatelessWidget {
                 ),
               ),
             ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Diagrama de Liebig',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: 500,
+                    height: 300,
+                    child: CompuestosChart(pruebaagua.graficaCompuestos,
+                        pruebaagua.valorgraficaCompuestos),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: 500,
+                    height: 300,
+                    child: CompuestosChart(pruebaagua.graficaCompuestos2,
+                        pruebaagua.valorgraficaCompuestos2),
+                  )
+                ],
+              ),
+            ),
             
             SingleChildScrollView(
               child: Center(
@@ -111,7 +141,7 @@ class ShowAgua extends StatelessWidget {
                     children: [
                       const SizedBox(height: 16),
                       const Text(
-                        'Recomendaciones y plan de nutricion',
+                        'Recomendaciones y plan de Riego',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,

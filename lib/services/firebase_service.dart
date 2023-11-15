@@ -14,9 +14,9 @@ class ServiceFirebase {
 
   Future<bool> isIDUnique(String id) async {
     QuerySnapshot query = await FirebaseFirestore.instance
-        .collection('predios')
-        .where('id', isEqualTo: id)
-        .get();
+      .collection('predios')
+      .where('id', isEqualTo: id)
+      .get();
     return query.docs.isEmpty;
   }
 
@@ -74,6 +74,23 @@ class ServiceFirebase {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaSistemaFoliar;
+  }
+
+   Future<List<PruebaSuelo>> getPruebaSueloPorPredio(String idPredio) async {
+    List<PruebaSuelo> pruebaSuelo = [];
+    try {
+      QuerySnapshot queryPruebaSuelo = await db
+      .collection('PruebaSuelo')
+      .where('IdPredio', isEqualTo: idPredio)
+      .get();
+      queryPruebaSuelo.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        pruebaSuelo.add(PruebaSuelo.fromMap(data));
+      });
+    } catch (e) {
+      print("Error al obtener la lista de Pruebas de Suelo: $e");
+    }
+    return pruebaSuelo;
   }
 
   Future<Cliente?> consultarClientePorId(String clienteId) async {
@@ -139,12 +156,12 @@ class ServiceFirebase {
 
     try {
       QuerySnapshot queryPredios = await db
-          .collection('Predios')
-          .where('IdPropietario', isEqualTo: idPropietario)
-          .get();
-      predios = queryPredios.docs
-          .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
-          .toList();
+        .collection('Predios')
+        .where('IdPropietario', isEqualTo: idPropietario)
+        .get();
+        predios = queryPredios.docs
+        .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
+        .toList();
     } catch (e) {
       print("Error al obtener la lista de predios: $e");
     }
@@ -167,6 +184,7 @@ class ServiceFirebase {
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonoPropietario,
         'Correo': pruebaSuelo.correoPropietario,
+        'Fecha' : pruebaSuelo.fechaPrueba,
         'Recomendaciones': pruebaSuelo.recomendaciones,
         'Presiembra': pruebaSuelo.presiembra,
         'Siembra': pruebaSuelo.siembra,
@@ -352,6 +370,7 @@ class ServiceFirebase {
         'Nombrepropietario': pruebaAgua.nombrepropietario,
         'Telefono': pruebaAgua.telefonopropietario,
         'Correo': pruebaAgua.correopropietario,
+        'Fecha' : pruebaAgua.fechaPrueba,
         'Interpretacion': pruebaAgua.interpretacion,
         'Recomendaciones': pruebaAgua.recomendaciones,
         'Restricciones': pruebaAgua.restricciones,
@@ -488,6 +507,7 @@ class ServiceFirebase {
         'Nombrepropietario': pruebaSistemaFoliar.nombrepropietario,
         'Telefono': pruebaSistemaFoliar.telefonopropietario,
         'Correo': pruebaSistemaFoliar.correopropietario,
+        'Fecha': pruebaSistemaFoliar.fechaPrueba,
         'Calcio - Ca': pruebaSistemaFoliar.ca,
         'Magnesio - Mg': pruebaSistemaFoliar.mg,
         'Sodio - Na': pruebaSistemaFoliar.na,
