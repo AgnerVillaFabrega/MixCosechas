@@ -3,16 +3,20 @@ class PruebaSuelo {
   final String idPropietario;
   final String nombrePredio;
   final String corregimientoPredio;
-  final String cultivoPredio;
   final String municipioPredio;
-  final String variedadPredio;
   final String dptoPredio;
-  final String edadPredio;
   final String nombrepropietario;
   final String telefonoPropietario;
   final String correoPropietario;
-  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
 
+  final String idPrueba;
+  String? fechaPrueba ='${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  final String fechaTomaMuestra;
+  final String fechaRecibido;
+  final String edad;
+  final String cultivo;
+  final String variedad;
+  final String lote;
   late String recomendaciones;
   late String presiembra;
   late String siembra;
@@ -215,19 +219,24 @@ class PruebaSuelo {
 
   late String humusInterpretacion;
 
-  PruebaSuelo({
+  PruebaSuelo(
+    {
+    required this.idPrueba,
     required this.idPredio,
     required this.idPropietario,
     required this.nombrePredio,
     required this.corregimientoPredio,
-    required this.cultivoPredio,
+    required this.cultivo,
     required this.municipioPredio,
-    required this.variedadPredio,
+    required this.variedad,
     required this.dptoPredio,
-    required this.edadPredio,
+    required this.edad,
     required this.nombrepropietario,
     required this.telefonoPropietario,
     required this.correoPropietario,
+    required this.lote,
+    required this.fechaTomaMuestra,
+    required this.fechaRecibido,
     required this.recomendaciones,
     required this.presiembra,
     required this.siembra,
@@ -257,8 +266,7 @@ class PruebaSuelo {
     required this.limo,
     required this.arena,
     required this.humus,
-    fechaPrueba
-  }) {
+    fechaPrueba}) {
     // double d = (Ca / Mg);
     // String inString = d.toStringAsFixed(3); // '2.35'
     // CaMg = double.parse(inString);
@@ -298,7 +306,6 @@ class PruebaSuelo {
 
     textura = valorTextura(arcilla, limo, arena);
   }
-
 
   String nInterpretar(double valor) {
     if (valor < 0.08) {
@@ -648,48 +655,51 @@ class PruebaSuelo {
     Map<String, dynamic> humusData = map['Humus'][0];
 
     return PruebaSuelo(
-      idPredio: map['IdPredio'],
-      idPropietario: map['IdPropietario'],
-      nombrePredio: map['NombrePredio'],
-      corregimientoPredio: map['Corregimiento'],
-      cultivoPredio: map['Cultivo'],
-      municipioPredio: map['Municipio'],
-      variedadPredio: map['Variedad'],
-      dptoPredio: map['Departamento'],
-      edadPredio: map['Edad'],
-      nombrepropietario: map['NombrePropietario'],
-      telefonoPropietario: map['Telefono'],
-      correoPropietario: map['Correo'],
-      fechaPrueba : map ['Fecha'],
-      recomendaciones: map['Recomendaciones'],
-      presiembra: map['Presiembra'],
-      siembra: map['Siembra'],
-      mantenimiento: map['Mantenimiento'],
-      n: double.parse(nData['valor'].toString()),
-      nh4: double.parse(nh4Data['valor'].toString()),
-      no2: double.parse(no2Data['valor'].toString()),
-      no3: double.parse(no3Data['valor'].toString()),
-      p: double.parse(pData['valor'].toString()),
-      k: double.parse(kData['valor'].toString()),
-      ca: double.parse(caData['valor'].toString()),
-      s: double.parse(sData['valor'].toString()),
-      mg: double.parse(mgData['valor'].toString()),
-      so4: double.parse(so4Data['valor'].toString()),
-      fe: double.parse(feData['valor'].toString()),
-      mn: double.parse(mnData['valor'].toString()),
-      cu: double.parse(cuData['valor'].toString()),
-      al: double.parse(alData['valor'].toString()),
-      cl: double.parse(clData['valor'].toString()),
-      zn: double.parse(znData['valor'].toString()),
-      na: double.parse(naData['valor'].toString()),
-      ph: double.parse(phData['valor'].toString()),
-      ce: double.parse(ceData['valor'].toString()),
-      salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
-      cice: double.parse(ciceData['valor'].toString()),
-      arcilla: double.parse(map['Arcilla'].toString()),
-      limo: double.parse(map['Limo'].toString()),
-      arena: double.parse(map['Arena'].toString()),
-      humus: double.parse(humusData['valor'].toString())
-      );
+    idPrueba: map['IdPrueba'],
+    idPredio: map['IdPredio'],
+    idPropietario: map['IdPropietario'],
+    nombrePredio: map['NombrePredio'],
+    corregimientoPredio: map['Corregimiento'],
+    cultivo: map['Cultivo'],
+    municipioPredio: map['Municipio'],
+    variedad: map['Variedad'],
+    dptoPredio: map['Departamento'],
+    edad: map['Edad'],
+    nombrepropietario: map['NombrePropietario'],
+    telefonoPropietario: map['Telefono'],
+    correoPropietario: map['Correo'],
+    lote: map['Lote'],
+    fechaTomaMuestra: map['FechaTomaMuestra'],
+    fechaRecibido: map['FechaRecibido'],
+    fechaPrueba: map['Fecha'],
+    recomendaciones: map['Recomendaciones'],
+    presiembra: map['Presiembra'],
+    siembra: map['Siembra'],
+    mantenimiento: map['Mantenimiento'],
+    n: double.parse(nData['valor'].toString()),
+    nh4: double.parse(nh4Data['valor'].toString()),
+    no2: double.parse(no2Data['valor'].toString()),
+    no3: double.parse(no3Data['valor'].toString()),
+    p: double.parse(pData['valor'].toString()),
+    k: double.parse(kData['valor'].toString()),
+    ca: double.parse(caData['valor'].toString()),
+    s: double.parse(sData['valor'].toString()),
+    mg: double.parse(mgData['valor'].toString()),
+    so4: double.parse(so4Data['valor'].toString()),
+    fe: double.parse(feData['valor'].toString()),
+    mn: double.parse(mnData['valor'].toString()),
+    cu: double.parse(cuData['valor'].toString()),
+    al: double.parse(alData['valor'].toString()),
+    cl: double.parse(clData['valor'].toString()),
+    zn: double.parse(znData['valor'].toString()),
+    na: double.parse(naData['valor'].toString()),
+    ph: double.parse(phData['valor'].toString()),
+    ce: double.parse(ceData['valor'].toString()),
+    salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
+    cice: double.parse(ciceData['valor'].toString()),
+    arcilla: double.parse(map['Arcilla'].toString()),
+    limo: double.parse(map['Limo'].toString()),
+    arena: double.parse(map['Arena'].toString()),
+    humus: double.parse(humusData['valor'].toString()));
   }
 }

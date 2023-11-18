@@ -9,34 +9,47 @@ class SearchPredio extends StatelessWidget {
     required this.prediosCollection,
     required TextEditingController idPredioController,
     required TextEditingController corregimientoPredioController,
-    required TextEditingController cultivoPredioController,
     required TextEditingController municipioPredioController,
-    required TextEditingController variedadPredioController,
     required TextEditingController dptoPredioController,
-    required TextEditingController edadPredioController,
     required TextEditingController idpropietarioPredioController,
     required TextEditingController nombrepropietarioPredioController,
     required TextEditingController telefonopropietarioPredioController,
     required TextEditingController correopropietarioPredioController,
-  }) : _idPredioController = idPredioController, _corregimientoPredioController = corregimientoPredioController, _cultivoPredioController = cultivoPredioController, 
-      _municipioPredioController = municipioPredioController, _variedadPredioController = variedadPredioController, _dptoPredioController = dptoPredioController,
-      _edadPredioController = edadPredioController,_idpropietarioPredioController = idpropietarioPredioController, _nombrepropietarioPredioController = nombrepropietarioPredioController, 
-      _telefonopropietarioPredioController = telefonopropietarioPredioController, _correopropietarioPredioController = correopropietarioPredioController;
+    required TextEditingController latitudPredioController,
+    required TextEditingController longitudPredioController,
+    required TextEditingController msnmPredioController,
+    required TextEditingController profundidadSBPredioController,
+    required TextEditingController puntosPredioController,
+    required TextEditingController temperaturaPredioController,
+    required TextEditingController lotesPredioController,
+  }) : _idPredioController = idPredioController, _corregimientoPredioController = corregimientoPredioController,  
+      _municipioPredioController = municipioPredioController, _dptoPredioController = dptoPredioController,
+      _idpropietarioPredioController = idpropietarioPredioController, _nombrepropietarioPredioController = nombrepropietarioPredioController, 
+      _telefonopropietarioPredioController = telefonopropietarioPredioController, _correopropietarioPredioController = correopropietarioPredioController, 
+      _latitudPredioController = latitudPredioController, _longitudPredioController = longitudPredioController, _msnmPredioController = msnmPredioController,
+      _profundidadSBPredioController = profundidadSBPredioController, _puntosPredioController = puntosPredioController, 
+      _temperaturaPredioController = temperaturaPredioController, _lotesPredioController = lotesPredioController;
 
   final TextEditingController predioFilterController;
   final CollectionReference<Object?> prediosCollection;
   
   final TextEditingController _idPredioController;
   final TextEditingController _corregimientoPredioController;
-  final TextEditingController _cultivoPredioController;
   final TextEditingController _municipioPredioController;
-  final TextEditingController _variedadPredioController;
   final TextEditingController _dptoPredioController;
-  final TextEditingController _edadPredioController;
   final TextEditingController _idpropietarioPredioController;
   final TextEditingController _nombrepropietarioPredioController;
   final TextEditingController _telefonopropietarioPredioController;
   final TextEditingController _correopropietarioPredioController;
+
+  
+  final TextEditingController _latitudPredioController;
+  final TextEditingController _longitudPredioController;
+  final TextEditingController _msnmPredioController;
+  final TextEditingController _profundidadSBPredioController;
+  final TextEditingController _puntosPredioController;
+  final TextEditingController _temperaturaPredioController;
+  final TextEditingController _lotesPredioController;
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +85,22 @@ class SearchPredio extends StatelessWidget {
             predioFilterController.text = predioData['Nombre'];
             _idPredioController.text = predioData['Id'];
             _corregimientoPredioController.text = predioData['CorregimientoVereda'];
-            _cultivoPredioController.text = predioData['Cultivo']; 
             _municipioPredioController.text = predioData['Municipio'];
-            _variedadPredioController.text = predioData['Variedad'];
             _dptoPredioController.text =predioData['Departamento']; 
-            _edadPredioController.text = predioData['Edad']; 
             _idpropietarioPredioController.text = predioData['IdPropietario'];
             _nombrepropietarioPredioController.text = predioData['NombrePropietario'];
             _telefonopropietarioPredioController.text =  predioData['TelefonoPropietario'];
             _correopropietarioPredioController.text = predioData['CorreoPropietario'];
+            _latitudPredioController.text = predioData['Latitud'];
+            _longitudPredioController.text = predioData['Longitud'];
+            _msnmPredioController.text =predioData['MSNM']; 
+            _profundidadSBPredioController.text = predioData['ProfundidadSB'];
+            _puntosPredioController.text = predioData['Puntos'];
+            _temperaturaPredioController.text =  predioData['Temperatura'];
+            _lotesPredioController.text = predioData['Lotes'].toString();
           },
         ),
+
         TextFormField(
           enabled: false, 
           controller: _idPredioController,
@@ -179,25 +197,15 @@ class SearchPredio extends StatelessWidget {
                 color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
           ),
         ),
-        TextFormField(
-          enabled: false, 
-          controller: _cultivoPredioController,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Cultivo',
-            labelStyle: TextStyle(
-                color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
-          ),
-        ),
         Row(
           children: [
             Expanded(
               child:TextFormField(
                 enabled: false, 
-                controller: _variedadPredioController,
+                controller: _msnmPredioController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Variedad',
+                  labelText: 'MSNM',
                   labelStyle: TextStyle(
                       color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                 ),
@@ -206,10 +214,22 @@ class SearchPredio extends StatelessWidget {
             Expanded(
               child:TextFormField(
                 enabled: false, 
-                controller: _edadPredioController,
+                controller: _temperaturaPredioController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Edad del cultivo',
+                  labelText: 'Temperatura °C',
+                  labelStyle: TextStyle(
+                      color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+            Expanded(
+              child:TextFormField(
+                enabled: false, 
+                controller: _lotesPredioController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Lotes',
                   labelStyle: TextStyle(
                       color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                 ),

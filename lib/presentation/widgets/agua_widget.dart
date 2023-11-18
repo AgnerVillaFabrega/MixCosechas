@@ -52,6 +52,13 @@ class _AguaWidgetState extends State<AguaWidget> {
   final TextEditingController _nombrepropietarioPredioController =TextEditingController();
   final TextEditingController _telefonopropietarioPredioController =TextEditingController();
   final TextEditingController _correopropietarioPredioController =TextEditingController();
+  final TextEditingController _latitudPredioController = TextEditingController();
+  final TextEditingController _longitudPredioController = TextEditingController();
+  final TextEditingController _msnmPredioController = TextEditingController();
+  final TextEditingController _profundidadSBPredioController = TextEditingController();
+  final TextEditingController _puntosPredioController = TextEditingController();
+  final TextEditingController _temperaturaPredioController = TextEditingController();
+  final TextEditingController _lotesPredioController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,15 +86,22 @@ class _AguaWidgetState extends State<AguaWidget> {
                       prediosCollection: prediosCollection,
                       idPredioController:_idPredioController,
                       corregimientoPredioController:_corregimientoPredioController,
-                      cultivoPredioController: _cultivoPredioController,
+                   //   cultivoPredioController: _cultivoPredioController,
                       municipioPredioController: _municipioPredioController,
-                      variedadPredioController: _variedadPredioController,
+                  //    variedadPredioController: _variedadPredioController,
                       dptoPredioController: _dptoPredioController,
-                      edadPredioController: _edadPredioController,
+                //      edadPredioController: _edadPredioController,
                       idpropietarioPredioController:_idpropietarioPredioController,
                       nombrepropietarioPredioController:_nombrepropietarioPredioController,
                       telefonopropietarioPredioController:_telefonopropietarioPredioController,
-                      correopropietarioPredioController:_correopropietarioPredioController),
+                      correopropietarioPredioController:_correopropietarioPredioController,
+                      latitudPredioController: _latitudPredioController,
+                      longitudPredioController: _longitudPredioController,
+                      msnmPredioController: _msnmPredioController,
+                      profundidadSBPredioController:_profundidadSBPredioController,
+                      puntosPredioController: _puntosPredioController,
+                      temperaturaPredioController:_temperaturaPredioController,
+                      lotesPredioController: _lotesPredioController),
                 ),
                 Step(
                   isActive: currentState >= 1,

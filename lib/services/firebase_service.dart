@@ -142,9 +142,13 @@ class ServiceFirebase {
         "CorregimientoVereda": predio.corregimientoVereda,
         "Departamento": predio.departamento,
         "Municipio": predio.municipio,
-        "Cultivo": predio.cultivo,
-        "Variedad": predio.variedad,
-        "Edad": predio.edad
+        "Latitud": predio.latitud,
+        "Longitud": predio.longitud,
+        "MSNM": predio.msnm,
+        "ProfundidadSB": predio.profundidadSB,
+        "Puntos": predio.puntos,
+        "Temperatura": predio.temperatura,
+        "Lotes": predio.lotes
       });
     } catch (e) {
       print("Error al agregar el cultivo: $e");
@@ -172,18 +176,22 @@ class ServiceFirebase {
   Future<void> addPruebaSuelo(PruebaSuelo pruebaSuelo) async {
     try {
       await db.collection('PruebaSuelo').add({
+        'IdPrueba': pruebaSuelo.idPrueba,
         'IdPredio': pruebaSuelo.idPredio,
         'NombrePredio': pruebaSuelo.nombrePredio,
         'Corregimiento': pruebaSuelo.corregimientoPredio,
-        'Cultivo': pruebaSuelo.cultivoPredio,
+        'Cultivo': pruebaSuelo.cultivo,
         'Municipio': pruebaSuelo.municipioPredio,
-        'Variedad': pruebaSuelo.variedadPredio,
+        'Variedad': pruebaSuelo.variedad,
         'Departamento': pruebaSuelo.dptoPredio,
-        'Edad': pruebaSuelo.edadPredio,
+        'Edad': pruebaSuelo.edad,
         'IdPropietario': pruebaSuelo.idPropietario,
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonoPropietario,
         'Correo': pruebaSuelo.correoPropietario,
+        'Lote': pruebaSuelo.lote,
+        'FechaTomaMuestra' : pruebaSuelo.fechaTomaMuestra,
+        'FechaRecibido' : pruebaSuelo.fechaRecibido,
         'Fecha' : pruebaSuelo.fechaPrueba,
         'Recomendaciones': pruebaSuelo.recomendaciones,
         'Presiembra': pruebaSuelo.presiembra,

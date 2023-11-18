@@ -54,9 +54,13 @@ List<Predio> conversiondelista(List registro){
         corregimientoVereda: registro[i]['CorregimientoVereda'], 
         departamento: registro[i]['Departamento'], 
         municipio: registro[i]['Municipio'], 
-        cultivo: registro[i]['Cultivo'],
-        variedad: registro[i]['Variedad'],
-        edad: registro[i]['Edad'],
+        latitud: registro[i]['Latitud'],
+        longitud: registro[i]['Longitud'],
+        msnm: registro[i]['MSNM'],
+        profundidadSB: registro[i]['ProfundidadSB'], 
+        puntos: registro[i]['Puntos'],
+        temperatura: registro[i]['Temperatura'],
+        lotes: registro[i]['Lotes'],
       )
     );
   }

@@ -42,9 +42,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _corregimientoVeredaController = TextEditingController();
   final TextEditingController _departamentoController = TextEditingController();
   final TextEditingController _municipioController = TextEditingController();
-  final TextEditingController _cultivoController = TextEditingController();
-  final TextEditingController _variedadController = TextEditingController();
-  final TextEditingController _edadController = TextEditingController();
+  final TextEditingController _latitudController = TextEditingController();
+  final TextEditingController _longitudController = TextEditingController();
+  final TextEditingController _msnmController = TextEditingController();
+  final TextEditingController _profundidadSBController = TextEditingController();
+  final TextEditingController _puntosController = TextEditingController();
+  final TextEditingController _temperaturaController = TextEditingController();
+  final TextEditingController _lotesController = TextEditingController();
+
   final ServiceFirebase _serviceFirebase = ServiceFirebase();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
@@ -230,10 +235,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
-                              controller: _cultivoController,
-                              keyboardType: TextInputType.name,
+                              controller: _latitudController,
+                              keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: 'Cultivo',
+                                labelText: 'Latitud',
                                 labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                               ),
                               validator: (String? value){
@@ -245,10 +250,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
-                              controller: _variedadController,
-                              keyboardType: TextInputType.name,
+                              controller: _longitudController,
+                              keyboardType: TextInputType.number,
                               decoration:const InputDecoration(
-                                labelText: 'Variedad',
+                                labelText: 'Longitud',
                                 labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                               ),
                               validator: (String? value){
@@ -259,33 +264,108 @@ class _RegisterPageState extends State<RegisterPage> {
                               }
                             ),
                             const SizedBox(height: 10),
-                            DropdownButtonFormField<String>(
-                              value: _edadController.text,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  _edadController.text = newValue!;
-                                });
-                              },
-                              decoration: const InputDecoration(
-                                labelText: 'Edad',
+                            TextFormField(
+                              controller: _msnmController,
+                              keyboardType: TextInputType.number,
+                              decoration:const InputDecoration(
+                                labelText: 'MSNM',
                                 labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                               ),
-                              items: [
-                                const DropdownMenuItem<String>(
-                                  value: '',
-                                  child: Text('Seleccione'),
-                                ),
-                                ...['Presiembra', 'Siembra'].map((role) {
-                                  return DropdownMenuItem<String>(value: role, child: Text(role));
-                                }).toList(),
-                              ],
-                              validator: (value) {
-                                if (value == null||value.isEmpty ||value == 'Seleccione') {
-                                  return 'Por favor, selecciona una edad';
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
                                 }
                                 return null;
-                              },
+                              }
                             ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _profundidadSBController,
+                              keyboardType: TextInputType.number,
+                              decoration:const InputDecoration(
+                                labelText: 'Profundidad Suelo Biotico',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _puntosController,
+                              keyboardType: TextInputType.number,
+                              decoration:const InputDecoration(
+                                labelText: 'Puntos',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _temperaturaController,
+                              keyboardType: TextInputType.number,
+                              decoration:const InputDecoration(
+                                labelText: 'Temperatura °C',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              controller: _lotesController,
+                              keyboardType: TextInputType.number,
+                              decoration:const InputDecoration(
+                                labelText: 'Numero de lotes',
+                                labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                              ),
+                              validator: (String? value){
+                                if (value ==null || value.isEmpty) {
+                                  return "Campo requerido";
+                                }
+                                return null;
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            // DropdownButtonFormField<String>(
+                            //   value: _edadController.text,
+                            //   onChanged: (String? newValue) {
+                            //     setState(() {
+                            //       _edadController.text = newValue!;
+                            //     });
+                            //   },
+                            //   decoration: const InputDecoration(
+                            //     labelText: 'Edad',
+                            //     labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                            //   ),
+                            //   items: [
+                            //     const DropdownMenuItem<String>(
+                            //       value: '',
+                            //       child: Text('Seleccione'),
+                            //     ),
+                            //     ...['Presiembra', 'Siembra'].map((role) {
+                            //       return DropdownMenuItem<String>(value: role, child: Text(role));
+                            //     }).toList(),
+                            //   ],
+                            //   validator: (value) {
+                            //     if (value == null||value.isEmpty ||value == 'Seleccione') {
+                            //       return 'Por favor, selecciona una edad';
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
                             const SizedBox(height: 20),
                             RegistrarseButtom(onTap: _handleRegistroPredio),
                           ],
@@ -326,15 +406,21 @@ class _RegisterPageState extends State<RegisterPage> {
           corregimientoVereda: _corregimientoVeredaController.text,
           departamento: _departamentoController.text,
           municipio: _municipioController.text,
-          cultivo: _cultivoController.text,
-          variedad: _variedadController.text,
-          edad: _edadController.text
+          latitud: _latitudController.text,
+          longitud: _longitudController.text,
+          msnm: _msnmController.text,
+          profundidadSB: _profundidadSBController.text,
+          puntos: _puntosController.text,
+          temperatura: _temperaturaController.text,
+          lotes: int.parse(_lotesController.text)
         );
         _serviceFirebase.addPredio(predio);
         QuickAlertDialog.showAlert(context, QuickAlertType.success,"Se registró correctamente el predio");
         
-        FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,_telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
-          _departamentoController,_municipioController,_cultivoController,_variedadController,_edadController 
+        FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,
+          _telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
+          _departamentoController,_municipioController,_latitudController,_longitudController,_msnmController,
+           _profundidadSBController,_puntosController,_temperaturaController,_lotesController
         ]);
         FocusScope.of(context).unfocus();
       }

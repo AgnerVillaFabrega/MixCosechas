@@ -24,8 +24,10 @@ class PredioProfileView extends StatelessWidget {
               Text(
                 predio.nombre,
                 style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
               ),
+              const SizedBox(height: 10),
+              Text('Id Predio: ${predio.id}'),
               const SizedBox(height: 10),
               Text('Propietario: ${predio.nombrePropietario}'),
               const SizedBox(height: 10),
@@ -35,11 +37,17 @@ class PredioProfileView extends StatelessWidget {
               const SizedBox(height: 10),
               Text('Corregimiento/Vereda: ${predio.corregimientoVereda}'),
               const SizedBox(height: 10),
-              Text('Cultivo: ${predio.cultivo}'),
+              Text('Latitud: ${predio.latitud}'),
               const SizedBox(height: 10),
-              Text('Variedad: ${predio.variedad}'),
+              Text('Longitud: ${predio.longitud}'),
               const SizedBox(height: 10),
-              Text('Edad del cultivo: ${predio.edad}'),
+              Text('MSNM: ${predio.msnm}'),
+              const SizedBox(height: 16),
+              Text('Profundidad Suelo Biotico: ${predio.profundidadSB}'),
+              const SizedBox(height: 16),
+              Text('Puntos: ${predio.puntos}'),
+              const SizedBox(height: 16),
+              Text('Temperatura: ${predio.temperatura}'),
               const SizedBox(height: 16),
               const Text(
                 "Historial de pruebas",
@@ -108,7 +116,7 @@ class PredioProfileView extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          pruebaSuelo.cultivoPredio,
+                                          pruebaSuelo.cultivo,
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
