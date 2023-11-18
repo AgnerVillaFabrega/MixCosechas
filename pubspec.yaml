@@ -26,6 +26,7 @@ dependencies:
   provider: ^6.0.5
   quickalert: ^1.0.2
   intl:
+  syncfusion_flutter_pdf:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
