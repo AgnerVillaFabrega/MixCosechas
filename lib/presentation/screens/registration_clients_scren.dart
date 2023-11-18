@@ -157,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               value: '',
                               child: Text('Seleccione'), // O cualquier otro texto que desees
                             ),
-                            ...['Analista', 'Agricultor'].map((role) {
+                            ...['Analista', 'Agricultor','Admin'].map((role) {
                               return DropdownMenuItem<String>(value: role, child: Text(role));
                             }).toList(),
                           ],
