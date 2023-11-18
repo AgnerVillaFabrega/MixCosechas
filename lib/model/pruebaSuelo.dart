@@ -1,10 +1,12 @@
 class PruebaSuelo {
   final String idPredio;
-  final String idPropietario;
   final String nombrePredio;
   final String corregimientoPredio;
   final String municipioPredio;
   final String dptoPredio;
+  
+
+  final String idPropietario;
   final String nombrepropietario;
   final String telefonoPropietario;
   final String correoPropietario;

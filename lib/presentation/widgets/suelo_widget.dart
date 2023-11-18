@@ -127,18 +127,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                     title: const Text('Información de la prueba'),
                     content: Column(
                       children: [
-                        // CalendarDatePicker2(
-                        //   config: CalendarDatePicker2Config(),
-                        //   value: _fechaTomaMuestraController,
-                        //   onValueChanged: (dates) =>
-                        //       _fechaTomaMuestraController = dates,
-                        // ),
-                        // CalendarDatePicker2(
-                        //   config: CalendarDatePicker2Config(),
-                        //   value: _fechaRecibidoController,
-                        //   onValueChanged: (dates) =>
-                        //       _fechaRecibidoController = dates,
-                        // ),
+                  
                         TextField(
                           controller: _fechaTomaMuestraController, //editing controller of this TextField
                           decoration:const InputDecoration( 

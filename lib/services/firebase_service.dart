@@ -76,7 +76,7 @@ class ServiceFirebase {
     return pruebaSistemaFoliar;
   }
 
-   Future<List<PruebaSuelo>> getPruebaSueloPorPredio(String idPredio) async {
+  Future<List<PruebaSuelo>> getPruebaSueloPorPredio(String idPredio) async {
     List<PruebaSuelo> pruebaSuelo = [];
     try {
       QuerySnapshot queryPruebaSuelo = await db
@@ -91,6 +91,23 @@ class ServiceFirebase {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaSuelo;
+  }
+
+  Future<List<PruebaAgua>> getPruebaAguaPorPredio(String idPredio) async {
+    List<PruebaAgua> pruebaAgua = [];
+    try {
+      QuerySnapshot queryPruebaAgua = await db
+      .collection('PruebaAgua')
+      .where('IdPredio', isEqualTo: idPredio)
+      .get();
+      queryPruebaAgua.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        pruebaAgua.add(PruebaAgua.fromMap(data));
+      });
+    } catch (e) {
+      print("Error al obtener la lista de Pruebas de Suelo: $e");
+    }
+    return pruebaAgua;
   }
 
   Future<Cliente?> consultarClientePorId(String clienteId) async {

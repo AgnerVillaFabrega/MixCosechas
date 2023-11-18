@@ -3,6 +3,7 @@ import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import 'package:mixcosechas_app/presentation/widgets/PDFs/pruebaSueloPDF.dart';
 import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_prueba.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
@@ -76,110 +77,108 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
     super.initState();
     _loadData();
   }
+
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pruebas'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          },
+        appBar: AppBar(
+          title: const Text('Pruebas'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+          actions: const [
+            IconAddPrueba(),
+          ],
         ),
-        actions: const [
-          IconAddPrueba(),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: const Color(0xFFCFCFCF)),
                     ),
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      _filterPredios(value);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Buscar',
-                      prefixIcon: Icon(Icons.search),
-                      border: InputBorder.none,
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) {
+                        _filterPredios(value);
+                      },
+                      decoration: const InputDecoration(
+                        hintText: 'Buscar',
+                        prefixIcon: Icon(Icons.search),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Filtrar por tipo de prueba',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Filtrar por tipo de prueba',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  
-                ),
-                const SizedBox(height: 8), 
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: const Color(0xFFCFCFCF)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: DropdownButtonHideUnderline(
-                          child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: DropdownButton<String>(
-                              value: _selectedMuestra,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  _selectedMuestra = newValue!;
-                                });
-                                _loadData();
-                              },
-                              items: _options
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                  const SizedBox(height: 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: const Color(0xFFCFCFCF)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<String>(
+                                value: _selectedMuestra,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    _selectedMuestra = newValue!;
+                                  });
+                                  _loadData();
+                                },
+                                items: _options.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Divider(),
-            const SizedBox(height: 10),
-            _isLoading
-                ? const IndicadorCircularProgress()
-                : Expanded(
-                    child: _buildListView(),
-                  ),
-          ],
-        ),
-      )
-    );
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              _isLoading
+                  ? const IndicadorCircularProgress()
+                  : Expanded(
+                      child: _buildListView(),
+                    ),
+            ],
+          ),
+        ));
   }
 
   Widget _buildListView() {
@@ -234,6 +233,8 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
               onTap: () {
                 // Acción al presionar el elemento
                 // Puedes abrir una pantalla de detalles o realizar alguna otra acción
+
+                createPruebaSueloPdf(filteredData[index]);
               },
             );
           },
@@ -241,9 +242,6 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
       ],
     );
   }
-
-
-
 
   void _filterPredios(String searchText) {
     setState(() {
@@ -268,5 +266,4 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
       }
     });
   }
-
 }
