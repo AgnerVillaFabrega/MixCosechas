@@ -10,14 +10,47 @@ import '../../../model/pruebaSuelo.dart';
 Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   PdfDocument document = PdfDocument();
   final page = document.pages.add();
-  //String pattern = 'yyyy-MM-dd';
 
-  page.graphics.drawString('RESULTADOS ANÁLISIS DE SUELO AGRICOLA',
-      PdfStandardFont(PdfFontFamily.timesRoman, 15),bounds: const Rect.fromLTWH(100, 0, 0, 0));
+   page.graphics.drawImage(
+    PdfBitmap(await _readImageData('LogoMixcosechas3.png')), 
+    const Rect.fromLTWH(20, 0, 60, 50)
+  );
+
+  // Definir el título
+  final String title = 'RESULTADOS ANÁLISIS DE SUELO AGRÍCOLA';
+
+  // Crear un elemento de texto con el título
+  final PdfTextElement textElement = PdfTextElement(
+    text: title,
+    font: PdfStandardFont(PdfFontFamily.timesRoman, 10),
+  );
+
+  // Medir el tamaño del texto para crear un cuadro
+  final PdfLayoutResult? result = textElement.draw(
+    page: page,
+    bounds: const Rect.fromLTWH(150, 40, 0, 0),
+  );
+
+  // Verificar si el resultado no es nulo antes de usarlo
+  if (result != null) {
+    // Crear un cuadro alrededor del título
+    page.graphics.drawRectangle(
+      brush: PdfSolidBrush(PdfColor(59, 89, 37)), 
+      pen: PdfPens.white,
+      bounds: Rect.fromPoints(
+        const Offset(140, 40),
+        Offset(160 + result.bounds.width, 40 + result.bounds.height),
+      ),
+    );
+  }
+   page.graphics.drawString('RESULTADOS ANÁLISIS DE SUELO AGRICOLA',
+       PdfStandardFont(PdfFontFamily.timesRoman, 10),
+      brush: PdfSolidBrush(PdfColor(255, 255, 255)),
+       bounds: const Rect.fromLTWH(150, 40, 0, 0));
 
   page.graphics.drawString(
-      'Informacion Cliente', PdfStandardFont(PdfFontFamily.timesRoman, 18),
-      bounds: const Rect.fromLTWH(0, 30, 0, 0));
+      'Informacion Cliente', PdfStandardFont(PdfFontFamily.timesRoman, 10),
+      bounds: const Rect.fromLTWH(0, 50, 0, 0));
 
   PdfGrid gridInformacionGeneral = PdfGrid();
 
@@ -98,15 +131,13 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
     }
   }
 
- 
-
 
   gridInformacionGeneral.draw(
-      page: page, bounds: const Rect.fromLTWH(0, 60, 0, 0));
+      page: page, bounds: const Rect.fromLTWH(0, 70, 0, 0));
   
   page.graphics.drawString(
-      'Pruebas de Laboratorio', PdfStandardFont(PdfFontFamily.timesRoman, 18),
-      bounds: const Rect.fromLTWH(0, 170, 0, 0));
+      'Pruebas de Laboratorio', PdfStandardFont(PdfFontFamily.timesRoman, 10),
+      bounds: const Rect.fromLTWH(0, 180, 0, 0));
 
   PdfGrid gridDatosPrueba = PdfGrid();
   
@@ -402,7 +433,6 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
     
     for (int cellIndex = 0; cellIndex < row.cells.count; cellIndex++) {
       PdfGridCell cell = row.cells[cellIndex];
-
       
       // Cambia el color de fondo de las celdas en la columna 1 excepto en las filas 1, 2, 11, 18
       if (cellIndex == 0 && ![0,1, 10, 17].contains(rowIndex)) {
@@ -414,18 +444,38 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
       }
 
-      // Pone los subtitulos en cursiva de la columna 0
+      // Pone color y subtitulos en cursiva de la columna 0
       if (cellIndex == 0 && [0,1, 10, 17].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
           font: PdfStandardFont(PdfFontFamily.helvetica, 6, style: PdfFontStyle.italic),
         );
+        if(cellIndex == 0 && [1, 10, 17].contains(rowIndex)){
+            cell.style = PdfGridCellStyle(
+            textBrush: PdfSolidBrush(PdfColor(55, 86, 58)),
+          );
+        }
       }
 
-      // Pone los subtitulos en cursiva de la columna 4
+      // Pone color y subtitulos en cursiva de la columna 4
       if (cellIndex == 4 && [0,1,2, 7, 8, 14, 15].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
           font: PdfStandardFont(PdfFontFamily.helvetica, 6, style: PdfFontStyle.italic),
         );
+        if(cellIndex == 4 && [2, 7, 8, 14, 15].contains(rowIndex)){
+            cell.style = PdfGridCellStyle(
+            textBrush: PdfSolidBrush(PdfColor(55, 86, 58))
+          );
+        }
+      }
+
+      if (cellIndex == 0) {
+        // Ajusta el ancho de la columna según tus necesidades
+        gridDatosPrueba.columns[cellIndex].width = 75;
+      }
+
+      if (cellIndex == 4) {
+        // Ajusta el ancho de la columna según tus necesidades
+        gridDatosPrueba.columns[cellIndex].width = 85;
       }
 
       if (cellIndex == 1 || cellIndex == 2 || cellIndex == 5|| cellIndex == 6) {
@@ -450,13 +500,13 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   gridDatosPrueba.draw(page: page, bounds: const Rect.fromLTWH(40, 200, 390, 0));
 
   page.graphics.drawString(
-    'Metodos Analiticos', PdfStandardFont(PdfFontFamily.timesRoman, 18),
-    bounds: const Rect.fromLTWH(0, 570, 0, 0)
+    'Metodos Analiticos', PdfStandardFont(PdfFontFamily.timesRoman, 10),
+    bounds: const Rect.fromLTWH(0, 580, 0, 0)
   );
   
   page.graphics.drawImage(
-    PdfBitmap(await _readImageData('Test Colorimetro2.png')), 
-    const Rect.fromLTWH(40, 600, 0, 0)
+    PdfBitmap(await _readImageData('Test Colorimetro.png')), 
+    const Rect.fromLTWH(40, 600, 400, 150)
   );
 
   List<int> bytes = await document.save();
