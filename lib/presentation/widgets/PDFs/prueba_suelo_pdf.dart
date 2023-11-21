@@ -11,13 +11,59 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   PdfDocument document = PdfDocument();
   final page = document.pages.add();
 
-   page.graphics.drawImage(
-    PdfBitmap(await _readImageData('LogoMixcosechas3.png')), 
-    const Rect.fromLTWH(20, 0, 60, 50)
+  page.graphics.drawImage(
+      PdfBitmap(await _readImageData('LogoMixcosechas3.png')),
+      const Rect.fromLTWH(0, 0, 60, 50));
+
+   page.graphics.drawRectangle(
+    bounds: const Rect.fromLTWH(0, 0, 60, 50),
+    pen: PdfPens.black,
   );
 
+  page.graphics.drawImage(
+      PdfBitmap(await _readImageData('LogoUnidax3.png')),
+      const Rect.fromLTWH(455, 5, 60, 40));
+
+  page.graphics.drawRectangle(
+    bounds: const Rect.fromLTWH(455, 0, 60, 50),
+    pen: PdfPens.black,
+  );
+
+  PdfGrid gridEncabezado = PdfGrid();
+
+  gridEncabezado.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 5, bottom: 0),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridEncabezado.columns.add(count: 2);
+
+  PdfGridRow rowEncabezado = gridEncabezado.rows.add();
+  rowEncabezado.cells[0].value ='                PROCESO: Análisis de Suelo Agricola';
+  rowEncabezado.cells[1].value ='                CODIGO: FIRAS-01';
+
+  rowEncabezado = gridEncabezado.rows.add();
+  rowEncabezado.cells[0].value ='       \t\t FECHA DE ACTUALIZACIÓN: 20/05/2023';
+  rowEncabezado.cells[1].value ='                VERSIÓN: 002';
+
+  for (int cellIndex = 0; cellIndex < 2; cellIndex++) {
+    
+    if (cellIndex == 1) {
+      // Ajusta el ancho de la columna y alto de la fila  según tus necesidades
+      gridEncabezado.columns[cellIndex].width = 145;
+      gridEncabezado.rows[cellIndex].height = 25;
+    }
+
+    if (cellIndex == 0) {
+      // Ajusta el ancho de la columna y alto de la fila según tus necesidades
+      gridEncabezado.columns[cellIndex].width = 250;
+      gridEncabezado.rows[cellIndex].height = 25;
+    }
+  }
+
+  gridEncabezado.draw(page: page, bounds: const Rect.fromLTWH(60, 0, 400, 0));
+
   // Definir el título
-  final String title = 'RESULTADOS ANÁLISIS DE SUELO AGRÍCOLA';
+  const String title = 'RESULTADOS ANÁLISIS DE SUELO AGRÍCOLA';
 
   // Crear un elemento de texto con el título
   final PdfTextElement textElement = PdfTextElement(
@@ -28,29 +74,67 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   // Medir el tamaño del texto para crear un cuadro
   final PdfLayoutResult? result = textElement.draw(
     page: page,
-    bounds: const Rect.fromLTWH(150, 40, 0, 0),
+    bounds: const Rect.fromLTWH(150, 70, 0, 0),
   );
 
   // Verificar si el resultado no es nulo antes de usarlo
   if (result != null) {
     // Crear un cuadro alrededor del título
     page.graphics.drawRectangle(
-      brush: PdfSolidBrush(PdfColor(59, 89, 37)), 
+      brush: PdfSolidBrush(PdfColor(59, 89, 37)),
       pen: PdfPens.white,
       bounds: Rect.fromPoints(
-        const Offset(140, 40),
-        Offset(160 + result.bounds.width, 40 + result.bounds.height),
+        const Offset(0, 70),
+        Offset(300 + result.bounds.width, 70 + result.bounds.height),
       ),
     );
   }
-   page.graphics.drawString('RESULTADOS ANÁLISIS DE SUELO AGRICOLA',
-       PdfStandardFont(PdfFontFamily.timesRoman, 10),
+  page.graphics.drawString('RESULTADOS ANÁLISIS DE SUELO AGRICOLA',
+      PdfStandardFont(PdfFontFamily.timesRoman, 10),
       brush: PdfSolidBrush(PdfColor(255, 255, 255)),
-       bounds: const Rect.fromLTWH(150, 40, 0, 0));
+      bounds: const Rect.fromLTWH(150, 70, 0, 0));
 
-  page.graphics.drawString(
-      'Informacion Cliente', PdfStandardFont(PdfFontFamily.timesRoman, 10),
-      bounds: const Rect.fromLTWH(0, 50, 0, 0));
+  PdfGrid gridInformacionCliente = PdfGrid();
+
+  gridInformacionCliente.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 0, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridInformacionCliente.columns.add(count: 6);
+
+  PdfGridRow rowInformacionCliente = gridInformacionCliente.rows.add();
+  rowInformacionCliente.cells[0].value = 'Informacion Cliente';
+  rowInformacionCliente.cells[1].value = ' ';
+  rowInformacionCliente.cells[2].value = '                      Código:';
+  rowInformacionCliente.cells[3].value = pruebaSuelo.idPrueba.toString();
+  rowInformacionCliente.cells[4].value = ' ';
+  rowInformacionCliente.cells[5].value = 'Lote No. ${pruebaSuelo.lote}';
+
+  for (int cellIndex = 0; cellIndex < 6; cellIndex++) {
+    PdfGridCell cell = rowInformacionCliente.cells[cellIndex];
+    if (cellIndex == 0 || cellIndex == 2 || cellIndex == 3 || cellIndex == 5) {
+      cell.style = PdfGridCellStyle(
+        textBrush: PdfSolidBrush(PdfColor(255, 255, 255)),
+      );
+      cell.style.backgroundBrush = PdfSolidBrush(PdfColor(59, 89, 37));
+      cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 9,
+          style: PdfFontStyle.bold);
+    }
+    cell.style.borders.all = PdfPen(
+      dashStyle: PdfDashStyle.custom,
+      PdfColor(255, 255, 255), // Cambia el color a blanco
+    );
+
+    if (cellIndex == 3) {
+      cell.style.borders.left = PdfPen(
+        dashStyle: PdfDashStyle.custom,
+        PdfColor(59, 89, 37), // Cambia el color a blanco
+      );
+    }
+  }
+
+  gridInformacionCliente.draw(
+      page: page, bounds: const Rect.fromLTWH(0, 85, 0, 0));
 
   PdfGrid gridInformacionGeneral = PdfGrid();
 
@@ -94,11 +178,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Latitud:';
-  row.cells[1].value = '0';  //predio.latitud;
+  row.cells[1].value = '0'; //predio.latitud;
   row.cells[2].value = 'Longitud:';
-  row.cells[3].value = '0';  //predio.longitud;
+  row.cells[3].value = '0'; //predio.longitud;
   row.cells[4].value = 'MSNM:';
-  row.cells[5].value = '0';  //predio.msnm;
+  row.cells[5].value = '0'; //predio.msnm;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Cultivo:';
@@ -110,13 +194,15 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Profundidad Suelo Biotico:';
-  row.cells[1].value = '0';  //predio.profundidadSB;
+  row.cells[1].value = '0'; //predio.profundidadSB;
   row.cells[2].value = 'Puntos:';
-  row.cells[3].value = '0';  //predio.puntos;
+  row.cells[3].value = '0'; //predio.puntos;
   row.cells[4].value = 'Temperatura:';
-  row.cells[5].value = '0';  //predio.temperatura;
+  row.cells[5].value = '0'; //predio.temperatura;
 
-  for (int rowIndex = 0; rowIndex < gridInformacionGeneral.rows.count; rowIndex++) {
+  for (int rowIndex = 0;
+      rowIndex < gridInformacionGeneral.rows.count;
+      rowIndex++) {
     PdfGridRow row = gridInformacionGeneral.rows[rowIndex];
     for (int cellIndex = 0; cellIndex < row.cells.count; cellIndex++) {
       PdfGridCell cell = row.cells[cellIndex];
@@ -124,32 +210,64 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
         dashStyle: PdfDashStyle.custom,
         PdfColor(255, 255, 255), // Cambia el color a blanco
       );
-      if (cellIndex == 0 || cellIndex == 4 || ((cellIndex ==2 && rowIndex!=0) && (cellIndex ==2 && rowIndex!=1)&& (cellIndex ==2 && rowIndex!=2))) {
+      if (cellIndex == 0 ||
+          cellIndex == 4 ||
+          ((cellIndex == 2 && rowIndex != 0) &&
+              (cellIndex == 2 && rowIndex != 1) &&
+              (cellIndex == 2 && rowIndex != 2))) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
+        cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
+            style: PdfFontStyle.bold);
       }
-      
     }
   }
 
-
   gridInformacionGeneral.draw(
-      page: page, bounds: const Rect.fromLTWH(0, 70, 0, 0));
-  
-  page.graphics.drawString(
-      'Pruebas de Laboratorio', PdfStandardFont(PdfFontFamily.timesRoman, 10),
-      bounds: const Rect.fromLTWH(0, 180, 0, 0));
+      page: page, bounds: const Rect.fromLTWH(0, 110, 0, 0));
+
+  PdfGrid gridPruebasdeLaboratorio = PdfGrid();
+
+  gridPruebasdeLaboratorio.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridPruebasdeLaboratorio.columns.add(count: 5);
+
+  PdfGridRow rowPruebasdeLaboratorio = gridPruebasdeLaboratorio.rows.add();
+  rowPruebasdeLaboratorio.cells[0].value = 'Pruebas de Laboratorio';
+  rowPruebasdeLaboratorio.cells[1].value = ' ';
+  rowPruebasdeLaboratorio.cells[2].value = ' ';
+  rowPruebasdeLaboratorio.cells[3].value = ' ';
+  rowPruebasdeLaboratorio.cells[4].value = ' ';
+
+  for (int cellIndex = 0; cellIndex < 5; cellIndex++) {
+    PdfGridCell cell = rowPruebasdeLaboratorio.cells[cellIndex];
+    if (cellIndex == 0) {
+      cell.style = PdfGridCellStyle(
+        textBrush: PdfSolidBrush(PdfColor(255, 255, 255)),
+      );
+      cell.style.backgroundBrush = PdfSolidBrush(PdfColor(59, 89, 37));
+      cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 9,
+          style: PdfFontStyle.bold);
+    }
+    cell.style.borders.all = PdfPen(
+      dashStyle: PdfDashStyle.custom,
+      PdfColor(255, 255, 255), // Cambia el color a blanco
+    );
+  }
+
+  gridPruebasdeLaboratorio.draw(
+      page: page, bounds: const Rect.fromLTWH(0, 220, 0, 0));
+  ;
 
   PdfGrid gridDatosPrueba = PdfGrid();
-  
 
   gridDatosPrueba.style = PdfGridStyle(
       cellPadding: PdfPaddings(left: 2, right: 2, top: 2, bottom: 2),
       font: PdfStandardFont(PdfFontFamily.timesRoman, 6));
   gridDatosPrueba.style.cellSpacing = 0;
 
-  
- List<PdfGridRow> listaRows = [];
-
+  List<PdfGridRow> listaRows = [];
 
   gridDatosPrueba.columns.add(count: 8);
   PdfGridRow rowDatosPrueba0 = gridDatosPrueba.rows.add();
@@ -166,7 +284,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   PdfGridRow rowDatosPrueba1 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba1);
-  
+
   rowDatosPrueba1.cells[0].value = 'MACRONUTRIENTES';
   rowDatosPrueba1.cells[1].value = ' ';
   rowDatosPrueba1.cells[2].value = ' ';
@@ -339,7 +457,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba15.cells[1].value = 'ppm';
   rowDatosPrueba15.cells[2].value = pruebaSuelo.cl.toString();
   rowDatosPrueba15.cells[3].value = pruebaSuelo.clInterpretacion;
-  rowDatosPrueba15.cells[4].value = ' ';
+  rowDatosPrueba15.cells[4].value = 'BASES INTERCAMBIABLES';
   rowDatosPrueba15.cells[5].value = ' ';
   rowDatosPrueba15.cells[6].value = ' ';
   rowDatosPrueba15.cells[7].value = ' ';
@@ -351,20 +469,20 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba16.cells[1].value = 'T Color';
   rowDatosPrueba16.cells[2].value = pruebaSuelo.al.toString();
   rowDatosPrueba16.cells[3].value = pruebaSuelo.alInterpretacion;
-  rowDatosPrueba16.cells[4].value = ' ';
-  rowDatosPrueba16.cells[5].value = ' ';
+  rowDatosPrueba16.cells[4].value = 'Bases Totales';
+  rowDatosPrueba16.cells[5].value = 'Und';
   rowDatosPrueba16.cells[6].value = ' ';
   rowDatosPrueba16.cells[7].value = ' ';
 
   PdfGridRow rowDatosPrueba17 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba17);
 
-  rowDatosPrueba17.cells[0].value = 'Suelo Fisico';
+  rowDatosPrueba17.cells[0].value = 'SUELO FÍSICO';
   rowDatosPrueba17.cells[1].value = ' ';
   rowDatosPrueba17.cells[2].value = ' ';
   rowDatosPrueba17.cells[3].value = ' ';
-  rowDatosPrueba17.cells[4].value = ' ';
-  rowDatosPrueba17.cells[5].value = ' ';
+  rowDatosPrueba17.cells[4].value = 'Saturación de Al';
+  rowDatosPrueba17.cells[5].value = '%';
   rowDatosPrueba17.cells[6].value = ' ';
   rowDatosPrueba17.cells[7].value = ' ';
 
@@ -375,8 +493,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba18.cells[1].value = '%';
   rowDatosPrueba18.cells[2].value = pruebaSuelo.arcilla.toString();
   rowDatosPrueba18.cells[3].value = 'NA';
-  rowDatosPrueba18.cells[4].value = ' ';
-  rowDatosPrueba18.cells[5].value = ' ';
+  rowDatosPrueba18.cells[4].value = 'Saturacion de K';
+  rowDatosPrueba18.cells[5].value = '%';
   rowDatosPrueba18.cells[6].value = ' ';
   rowDatosPrueba18.cells[7].value = ' ';
 
@@ -387,8 +505,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba19.cells[1].value = '%';
   rowDatosPrueba19.cells[2].value = pruebaSuelo.limo.toString();
   rowDatosPrueba19.cells[3].value = 'NA';
-  rowDatosPrueba19.cells[4].value = ' ';
-  rowDatosPrueba19.cells[5].value = ' ';
+  rowDatosPrueba19.cells[4].value = 'Saturación de Ca';
+  rowDatosPrueba19.cells[5].value = '%';
   rowDatosPrueba19.cells[6].value = ' ';
   rowDatosPrueba19.cells[7].value = ' ';
 
@@ -399,8 +517,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba20.cells[0].value = 'Arena';
   rowDatosPrueba20.cells[2].value = pruebaSuelo.arena.toString();
   rowDatosPrueba20.cells[3].value = 'NA';
-  rowDatosPrueba20.cells[4].value = ' ';
-  rowDatosPrueba20.cells[5].value = ' ';
+  rowDatosPrueba20.cells[4].value = 'Saturación de Mg';
+  rowDatosPrueba20.cells[5].value = '%';
   rowDatosPrueba20.cells[6].value = ' ';
   rowDatosPrueba20.cells[7].value = ' ';
 
@@ -411,8 +529,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba21.cells[1].value = '%';
   rowDatosPrueba21.cells[2].value = '100%';
   rowDatosPrueba21.cells[3].value = pruebaSuelo.textura;
-  rowDatosPrueba21.cells[4].value = ' ';
-  rowDatosPrueba21.cells[5].value = ' ';
+  rowDatosPrueba21.cells[4].value = 'Saturación BT';
+  rowDatosPrueba21.cells[5].value = '%';
   rowDatosPrueba21.cells[6].value = ' ';
   rowDatosPrueba21.cells[7].value = ' ';
 
@@ -423,54 +541,66 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba22.cells[1].value = 'T Color';
   rowDatosPrueba22.cells[2].value = pruebaSuelo.humus.toString();
   rowDatosPrueba22.cells[3].value = pruebaSuelo.humusInterpretacion;
-  rowDatosPrueba22.cells[4].value = ' ';
-  rowDatosPrueba22.cells[5].value = ' ';
+  rowDatosPrueba22.cells[4].value = 'Humedad';
+  rowDatosPrueba22.cells[5].value = '%';
   rowDatosPrueba22.cells[6].value = ' ';
   rowDatosPrueba22.cells[7].value = ' ';
 
   for (int rowIndex = 0; rowIndex < listaRows.length; rowIndex++) {
     PdfGridRow row = listaRows[rowIndex];
-    
+
     for (int cellIndex = 0; cellIndex < row.cells.count; cellIndex++) {
       PdfGridCell cell = row.cells[cellIndex];
-      
+
+      if (rowIndex == 0) {
+        cell.style = PdfGridCellStyle(
+          font: PdfStandardFont(PdfFontFamily.timesRoman, 6,
+              style: PdfFontStyle.bold),
+        );
+      }
+
       // Cambia el color de fondo de las celdas en la columna 1 excepto en las filas 1, 2, 11, 18
-      if (cellIndex == 0 && ![0,1, 10, 17].contains(rowIndex)) {
+      if (cellIndex == 0 && ![0, 1, 10, 17].contains(rowIndex)) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
+        cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
+            style: PdfFontStyle.bold);
       }
 
       // Cambia el color de fondo de las celdas en la columna 5 excepto en las filas 3, 8, 9, 15, 16
-      if (cellIndex == 4 && ![0,1,2, 7, 8, 14, 15].contains(rowIndex)) {
+      if (cellIndex == 4 && ![0, 1, 2, 7, 8, 14, 15].contains(rowIndex)) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
+        cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
+            style: PdfFontStyle.bold);
       }
 
       // Pone color y subtitulos en cursiva de la columna 0
-      if (cellIndex == 0 && [0,1, 10, 17].contains(rowIndex)) {
+      if (cellIndex == 0 && [1, 10, 17].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
-          font: PdfStandardFont(PdfFontFamily.helvetica, 6, style: PdfFontStyle.italic),
+          font: PdfStandardFont(PdfFontFamily.helvetica, 6,
+              style: PdfFontStyle.italic),
         );
-        if(cellIndex == 0 && [1, 10, 17].contains(rowIndex)){
-            cell.style = PdfGridCellStyle(
+        if (cellIndex == 0 && [1, 10, 17].contains(rowIndex)) {
+          cell.style = PdfGridCellStyle(
             textBrush: PdfSolidBrush(PdfColor(55, 86, 58)),
           );
         }
       }
 
       // Pone color y subtitulos en cursiva de la columna 4
-      if (cellIndex == 4 && [0,1,2, 7, 8, 14, 15].contains(rowIndex)) {
+      if (cellIndex == 4 && [0, 1, 2, 7, 8, 14, 15].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
-          font: PdfStandardFont(PdfFontFamily.helvetica, 6, style: PdfFontStyle.italic),
+          font: PdfStandardFont(PdfFontFamily.helvetica, 6,
+              style: PdfFontStyle.italic),
         );
-        if(cellIndex == 4 && [2, 7, 8, 14, 15].contains(rowIndex)){
-            cell.style = PdfGridCellStyle(
-            textBrush: PdfSolidBrush(PdfColor(55, 86, 58))
-          );
+        if (cellIndex == 4 && [2, 7, 8, 14, 15].contains(rowIndex)) {
+          cell.style =
+              PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(55, 86, 58)));
         }
       }
 
       if (cellIndex == 0) {
         // Ajusta el ancho de la columna según tus necesidades
-        gridDatosPrueba.columns[cellIndex].width = 75;
+        gridDatosPrueba.columns[cellIndex].width = 95;
       }
 
       if (cellIndex == 4) {
@@ -478,7 +608,10 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
         gridDatosPrueba.columns[cellIndex].width = 85;
       }
 
-      if (cellIndex == 1 || cellIndex == 2 || cellIndex == 5|| cellIndex == 6) {
+      if (cellIndex == 1 ||
+          cellIndex == 2 ||
+          cellIndex == 5 ||
+          cellIndex == 6) {
         // Ajusta el ancho de la columna según tus necesidades
         gridDatosPrueba.columns[cellIndex].width = 30;
       }
@@ -492,22 +625,63 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
         dashStyle: PdfDashStyle.custom,
         PdfColor(255, 255, 255), // Cambia el color a blanco
       );
-
     }
   }
 
-  //DEBO CAMBIAR LA UBICACION
-  gridDatosPrueba.draw(page: page, bounds: const Rect.fromLTWH(40, 200, 390, 0));
+  gridDatosPrueba.draw(page: page, bounds: const Rect.fromLTWH(0, 240, 390, 0));
 
-  page.graphics.drawString(
-    'Metodos Analiticos', PdfStandardFont(PdfFontFamily.timesRoman, 10),
-    bounds: const Rect.fromLTWH(0, 580, 0, 0)
-  );
-  
+  PdfGrid gridNota = PdfGrid();
+
+  gridNota.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridNota.columns.add(count: 1);
+
+  PdfGridRow rowNota = gridNota.rows.add();
+  rowNota.cells[0].value =
+      'NOTA DATOS RESULTANTES: Los bajos niveles de fosforo y potasio, están directamenterelacionados al crecimiento de la planta y calidad de la cosecha, adecuada disponibilidad de micronutrientes,disponibilidad de calcio y magnesio óptimo y alto indica adecuado grado nutricional del suelo, no se requiere encalar';
+
+  gridNota.draw(page: page, bounds: const Rect.fromLTWH(0, 590, 0, 0));
+
+  PdfGrid gridMetodosAnaliticos = PdfGrid();
+
+  gridMetodosAnaliticos.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 0, bottom: 0),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridMetodosAnaliticos.columns.add(count: 6);
+
+  PdfGridRow rowMetodosAnaliticos = gridMetodosAnaliticos.rows.add();
+  rowMetodosAnaliticos.cells[0].value = 'Métodos Analíticos';
+  rowMetodosAnaliticos.cells[1].value = ' ';
+  rowMetodosAnaliticos.cells[2].value = ' ';
+  rowMetodosAnaliticos.cells[3].value = ' ';
+  rowMetodosAnaliticos.cells[4].value = ' ';
+  rowMetodosAnaliticos.cells[5].value = ' ';
+
+  for (int cellIndex = 0; cellIndex < 6; cellIndex++) {
+    PdfGridCell cell = rowMetodosAnaliticos.cells[cellIndex];
+    if (cellIndex == 0) {
+      cell.style = PdfGridCellStyle(
+        textBrush: PdfSolidBrush(PdfColor(255, 255, 255)),
+      );
+      cell.style.backgroundBrush = PdfSolidBrush(PdfColor(59, 89, 37));
+      cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 9,
+          style: PdfFontStyle.bold);
+    }
+    cell.style.borders.all = PdfPen(
+      dashStyle: PdfDashStyle.custom,
+      PdfColor(255, 255, 255), // Cambia el color a blanco
+    );
+  }
+
+  gridMetodosAnaliticos.draw(
+      page: page, bounds: const Rect.fromLTWH(0, 640, 0, 0));
+
   page.graphics.drawImage(
-    PdfBitmap(await _readImageData('Test Colorimetro.png')), 
-    const Rect.fromLTWH(40, 600, 400, 150)
-  );
+      PdfBitmap(await _readImageData('Test Colorimetro.png')),
+      const Rect.fromLTWH(80, 660, 300, 100));
 
   List<int> bytes = await document.save();
   document.dispose();
@@ -517,7 +691,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 class FileSaveHelper {
   static Future<void> saveAndLaunchFile(
       List<int> bytes, String fileName) async {
-    final String dir = (await getExternalStorageDirectory())!.path ;
+    final String dir = (await getExternalStorageDirectory())!.path;
     final String path = '$dir/$fileName';
     final File file = File(path);
 
@@ -530,6 +704,3 @@ Future<Uint8List> _readImageData(String name) async {
   final data = await rootBundle.load('assets/images/$name');
   return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 }
-
-
-
