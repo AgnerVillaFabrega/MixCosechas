@@ -2,12 +2,12 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/services.dart' show Rect, rootBundle;
+import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-import '../../../model/pruebaSuelo.dart';
 
-Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
+Future<void> createPruebaSueloPdf(PruebaAgua pruebaAgua) async {
   PdfDocument document = PdfDocument();
   final page = document.pages.add();
 
@@ -38,8 +38,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   gridEncabezado.columns.add(count: 2);
 
   PdfGridRow rowEncabezado = gridEncabezado.rows.add();
-  rowEncabezado.cells[0].value ='                PROCESO: Análisis de Suelo Agricola';
-  rowEncabezado.cells[1].value ='                CODIGO: FIRAS-01';
+  rowEncabezado.cells[0].value ='                PROCESO: Análisis de Agua de uso Agricola';
+  rowEncabezado.cells[1].value ='                CODIGO: FIRAA-01';
 
   rowEncabezado = gridEncabezado.rows.add();
   rowEncabezado.cells[0].value ='       \t\t FECHA DE ACTUALIZACIÓN: 20/05/2023';
@@ -63,7 +63,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   gridEncabezado.draw(page: page, bounds: const Rect.fromLTWH(60, 0, 400, 0));
 
   // Definir el título
-  const String title = 'RESULTADOS ANÁLISIS DE SUELO AGRÍCOLA';
+  const String title = 'RESULTADOS ANÁLISIS DE AGUA DE USO AGRÍCOLA';
 
   // Crear un elemento de texto con el título
   final PdfTextElement textElement = PdfTextElement(
@@ -89,7 +89,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
       ),
     );
   }
-  page.graphics.drawString('RESULTADOS ANÁLISIS DE SUELO AGRICOLA',
+  page.graphics.drawString('RESULTADOS ANÁLISIS DE AGUA DE USO AGRICOLA',
       PdfStandardFont(PdfFontFamily.timesRoman, 10),
       brush: PdfSolidBrush(PdfColor(255, 255, 255)),
       bounds: const Rect.fromLTWH(150, 70, 0, 0));
@@ -106,9 +106,9 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowInformacionCliente.cells[0].value = 'Informacion Cliente';
   rowInformacionCliente.cells[1].value = ' ';
   rowInformacionCliente.cells[2].value = '                      Código:';
-  rowInformacionCliente.cells[3].value = pruebaSuelo.idPrueba.toString();
+  rowInformacionCliente.cells[3].value = pruebaAgua.idPrueba.toString();
   rowInformacionCliente.cells[4].value = ' ';
-  rowInformacionCliente.cells[5].value = 'Lote No. ${pruebaSuelo.lote}';
+  rowInformacionCliente.cells[5].value = 'Lote No. ${pruebaAgua.lote}';
 
   for (int cellIndex = 0; cellIndex < 6; cellIndex++) {
     PdfGridCell cell = rowInformacionCliente.cells[cellIndex];
@@ -146,59 +146,59 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   PdfGridRow row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Nombre:';
-  row.cells[1].value = pruebaSuelo.nombrepropietario.toString();
+  row.cells[1].value = pruebaAgua.nombrepropietario.toString();
   row.cells[2].value = ' ';
   row.cells[3].value = ' ';
   row.cells[4].value = 'Fecha T. Muestra:';
-  row.cells[5].value = pruebaSuelo.fechaTomaMuestra;
+  row.cells[5].value = pruebaAgua.fechaTomaMuestra;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Contacto:';
-  row.cells[1].value = pruebaSuelo.telefonoPropietario;
+  row.cells[1].value = pruebaAgua.telefonopropietario;
   row.cells[2].value = ' ';
   row.cells[3].value = ' ';
   row.cells[4].value = 'Fecha Recibido:';
-  row.cells[5].value = pruebaSuelo.fechaRecibido;
+  row.cells[5].value = pruebaAgua.fechaRecibido;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Nombre Predio:';
-  row.cells[1].value = pruebaSuelo.nombrePredio;
+  row.cells[1].value = pruebaAgua.nombrePredio;
   row.cells[2].value = ' ';
   row.cells[3].value = ' ';
   row.cells[4].value = 'Fecha Analisis:';
-  row.cells[5].value = pruebaSuelo.fechaPrueba.toString();
+  row.cells[5].value = pruebaAgua.fechaPrueba.toString();
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Corregimiento/Vereda:';
-  row.cells[1].value = pruebaSuelo.corregimientoPredio;
+  row.cells[1].value = pruebaAgua.corregimientoPredio;
   row.cells[2].value = 'Municipio:';
-  row.cells[3].value = pruebaSuelo.municipioPredio;
+  row.cells[3].value = pruebaAgua.municipioPredio;
   row.cells[4].value = 'Departamento:';
-  row.cells[5].value = pruebaSuelo.dptoPredio;
+  row.cells[5].value = pruebaAgua.dptoPredio;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Latitud:';
-  row.cells[1].value = pruebaSuelo.latitud; 
+  row.cells[1].value = pruebaAgua.latitud; 
   row.cells[2].value = 'Longitud:';
-  row.cells[3].value = pruebaSuelo.longitud; 
+  row.cells[3].value = pruebaAgua.longitud; 
   row.cells[4].value = 'MSNM:';
-  row.cells[5].value = pruebaSuelo.msnm;
+  row.cells[5].value = pruebaAgua.msnm;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Cultivo:';
-  row.cells[1].value = pruebaSuelo.cultivo;
+  row.cells[1].value = pruebaAgua.cultivo;
   row.cells[2].value = 'Variedad:';
-  row.cells[3].value = pruebaSuelo.variedad;
+  row.cells[3].value = pruebaAgua.variedad;
   row.cells[4].value = 'Edad:';
-  row.cells[5].value = pruebaSuelo.edad;
+  row.cells[5].value = pruebaAgua.edad;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Profundidad Suelo Biotico:';
-  row.cells[1].value = pruebaSuelo.profundidadSB;
+  row.cells[1].value = pruebaAgua.profundidadSB;
   row.cells[2].value = 'Puntos:';
-  row.cells[3].value = pruebaSuelo.puntos;
+  row.cells[3].value = pruebaAgua.puntos;
   row.cells[4].value = 'Temperatura:';
-  row.cells[5].value = pruebaSuelo.temperatura;
+  row.cells[5].value = pruebaAgua.temperatura;
 
   for (int rowIndex = 0;
       rowIndex < gridInformacionGeneral.rows.count;
@@ -289,7 +289,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba1.cells[1].value = ' ';
   rowDatosPrueba1.cells[2].value = ' ';
   rowDatosPrueba1.cells[3].value = ' ';
-  rowDatosPrueba1.cells[4].value = ' ';
+  rowDatosPrueba1.cells[4].value = 'MICRONUTRIENTES';
   rowDatosPrueba1.cells[5].value = ' ';
   rowDatosPrueba1.cells[6].value = ' ';
   rowDatosPrueba1.cells[7].value = ' ';
@@ -299,252 +299,97 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba2.cells[0].value = 'Nitrogeno Amoniacal NH4+';
   rowDatosPrueba2.cells[1].value = 'ppm';
-  rowDatosPrueba2.cells[2].value = pruebaSuelo.n.toString();
-  rowDatosPrueba2.cells[3].value = pruebaSuelo.nInterpretacion;
-  rowDatosPrueba2.cells[4].value = 'ANALISIS TRANSVERSALES';
-  rowDatosPrueba2.cells[5].value = ' ';
-  rowDatosPrueba2.cells[6].value = ' ';
-  rowDatosPrueba2.cells[7].value = ' ';
+  rowDatosPrueba2.cells[2].value = pruebaAgua.nh4.toString();
+  rowDatosPrueba2.cells[3].value = pruebaAgua.nh4Interpretacion;
+  rowDatosPrueba2.cells[4].value = 'Hierro - Fe';
+  rowDatosPrueba2.cells[5].value = 'ppm';
+  rowDatosPrueba2.cells[6].value = pruebaAgua.fe.toString();
+  rowDatosPrueba2.cells[7].value = pruebaAgua.feInterpretacion;
 
   PdfGridRow rowDatosPrueba3 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba3);
 
   rowDatosPrueba3.cells[0].value = 'Nitritos NO2-N';
   rowDatosPrueba3.cells[1].value = 'ppm';
-  rowDatosPrueba3.cells[2].value = pruebaSuelo.no2.toString();
-  rowDatosPrueba3.cells[3].value = pruebaSuelo.no2Interpretacion;
-  rowDatosPrueba3.cells[4].value = 'Acidez Ph';
+  rowDatosPrueba3.cells[2].value = pruebaAgua.no2.toString();
+  rowDatosPrueba3.cells[3].value = pruebaAgua.no2Interpretacion;
+  rowDatosPrueba3.cells[4].value = 'Manganeso - Mn';
   rowDatosPrueba3.cells[5].value = 'ppm';
-  rowDatosPrueba3.cells[6].value = pruebaSuelo.ph.toString();
-  rowDatosPrueba3.cells[7].value = pruebaSuelo.phInterpretacion;
+  rowDatosPrueba3.cells[6].value = pruebaAgua.mn.toString();
+  rowDatosPrueba3.cells[7].value = pruebaAgua.mnInterpretacion;
 
   PdfGridRow rowDatosPrueba4 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba4);
 
   rowDatosPrueba4.cells[0].value = 'Nitratos NO3-N';
   rowDatosPrueba4.cells[1].value = 'ppm';
-  rowDatosPrueba4.cells[2].value = pruebaSuelo.no3.toString();
-  rowDatosPrueba4.cells[3].value = pruebaSuelo.no3Interpretacion;
-  rowDatosPrueba4.cells[4].value = 'C.E';
-  rowDatosPrueba4.cells[5].value = 'microS/cm';
-  rowDatosPrueba4.cells[6].value = pruebaSuelo.ce.toString();
-  rowDatosPrueba4.cells[7].value = pruebaSuelo.ceInterpretacion;
+  rowDatosPrueba4.cells[2].value = pruebaAgua.no3.toString();
+  rowDatosPrueba4.cells[3].value = pruebaAgua.no3Interpretacion;
+  rowDatosPrueba4.cells[4].value = 'Cobre - Cu';
+  rowDatosPrueba4.cells[5].value = 'ppm';
+  rowDatosPrueba4.cells[6].value = pruebaAgua.cu.toString();
+  rowDatosPrueba4.cells[7].value = pruebaAgua.cuInterpretacion;
 
   PdfGridRow rowDatosPrueba5 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba5);
 
   rowDatosPrueba5.cells[0].value = 'Fosforo P';
   rowDatosPrueba5.cells[1].value = 'ppm';
-  rowDatosPrueba5.cells[2].value = pruebaSuelo.p.toString();
-  rowDatosPrueba5.cells[3].value = pruebaSuelo.pInterpretacion;
-  rowDatosPrueba5.cells[4].value = 'Sales Disueltas';
+  rowDatosPrueba5.cells[2].value = pruebaAgua.p.toString();
+  rowDatosPrueba5.cells[3].value = pruebaAgua.pInterpretacion;
+  rowDatosPrueba5.cells[4].value = 'Cloruro - Cl';
   rowDatosPrueba5.cells[5].value = 'ppm';
-  rowDatosPrueba5.cells[6].value = pruebaSuelo.salesDisueltas.toString();
-  rowDatosPrueba5.cells[7].value = pruebaSuelo.salesDisueltasInterpretacion;
+  rowDatosPrueba5.cells[6].value = pruebaAgua.cl.toString();
+  rowDatosPrueba5.cells[7].value = pruebaAgua.clInterpretacion;
 
   PdfGridRow rowDatosPrueba6 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba6);
 
   rowDatosPrueba6.cells[0].value = 'Potasio K';
   rowDatosPrueba6.cells[1].value = 'ppm';
-  rowDatosPrueba6.cells[2].value = pruebaSuelo.k.toString();
-  rowDatosPrueba6.cells[3].value = pruebaSuelo.kInterpretacion;
-  rowDatosPrueba6.cells[4].value = 'C.I.C.E';
-  rowDatosPrueba6.cells[5].value = 'meq/100g';
-  rowDatosPrueba6.cells[6].value = pruebaSuelo.cice.toString();
-  rowDatosPrueba6.cells[7].value = pruebaSuelo.ciceInterpretacion;
+  rowDatosPrueba6.cells[2].value = pruebaAgua.k.toString();
+  rowDatosPrueba6.cells[3].value = pruebaAgua.kInterpretacion;
+  rowDatosPrueba6.cells[4].value = 'ANALISIS TRANSVERSALES';
+  rowDatosPrueba6.cells[5].value = ' ';
+  rowDatosPrueba6.cells[6].value = ' ';
+  rowDatosPrueba6.cells[7].value = ' ';
 
   PdfGridRow rowDatosPrueba7 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba7);
 
   rowDatosPrueba7.cells[0].value = 'Calcio Ca';
   rowDatosPrueba7.cells[1].value = 'ppm';
-  rowDatosPrueba7.cells[2].value = pruebaSuelo.ca.toString();
-  rowDatosPrueba7.cells[3].value = pruebaSuelo.caInterpretacion;
-  rowDatosPrueba7.cells[4].value = ' ';
-  rowDatosPrueba7.cells[5].value = ' ';
-  rowDatosPrueba7.cells[6].value = ' ';
-  rowDatosPrueba7.cells[7].value = ' ';
+  rowDatosPrueba7.cells[2].value = pruebaAgua.ca.toString();
+  rowDatosPrueba7.cells[3].value = pruebaAgua.caInterpretacion;
+  rowDatosPrueba7.cells[4].value = 'Acidez - pH';
+  rowDatosPrueba7.cells[5].value = 'ppm';
+  rowDatosPrueba7.cells[6].value = pruebaAgua.ph.toString();
+  rowDatosPrueba7.cells[7].value = pruebaAgua.phInterpretacion;
 
   PdfGridRow rowDatosPrueba8 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba8);
 
   rowDatosPrueba8.cells[0].value = 'Magnesio Mg';
   rowDatosPrueba8.cells[1].value = 'ppm';
-  rowDatosPrueba8.cells[2].value = pruebaSuelo.mg.toString();
-  rowDatosPrueba8.cells[3].value = pruebaSuelo.mgInterpretacion;
-  rowDatosPrueba8.cells[4].value = 'RELACIONES CATIONICAS';
-  rowDatosPrueba8.cells[5].value = ' ';
-  rowDatosPrueba8.cells[6].value = ' ';
-  rowDatosPrueba8.cells[7].value = ' ';
+  rowDatosPrueba8.cells[2].value = pruebaAgua.mg.toString();
+  rowDatosPrueba8.cells[3].value = pruebaAgua.mgInterpretacion;
+  rowDatosPrueba8.cells[4].value = 'C.E';
+  rowDatosPrueba8.cells[5].value = 'microS/cm';
+  rowDatosPrueba8.cells[6].value = pruebaAgua.ce.toString();
+  rowDatosPrueba8.cells[7].value = pruebaAgua.ceInterpretacion;
 
   PdfGridRow rowDatosPrueba9 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba9);
 
   rowDatosPrueba9.cells[0].value = 'Sulfato Azufre SO4';
   rowDatosPrueba9.cells[1].value = 'ppm';
-  rowDatosPrueba9.cells[2].value = pruebaSuelo.so4.toString();
-  rowDatosPrueba9.cells[3].value = pruebaSuelo.so4Interpretacion;
-  rowDatosPrueba9.cells[4].value = 'Ca/Mg';
-  rowDatosPrueba9.cells[5].value = 'Und';
-  rowDatosPrueba9.cells[6].value = pruebaSuelo.camg.toStringAsFixed(2);
-  rowDatosPrueba9.cells[7].value = pruebaSuelo.camgInterpretacion;
+  rowDatosPrueba9.cells[2].value = pruebaAgua.so4.toString();
+  rowDatosPrueba9.cells[3].value = pruebaAgua.so4Interpretacion;
+  rowDatosPrueba9.cells[4].value = 'Sales Disueltas';
+  rowDatosPrueba9.cells[5].value = 'ppm';
+  rowDatosPrueba9.cells[6].value = pruebaAgua.salesDisueltas.toStringAsFixed(2);
+  rowDatosPrueba9.cells[7].value = pruebaAgua.salesDisueltasInterpretacion;
 
-  PdfGridRow rowDatosPrueba10 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba10);
-
-  rowDatosPrueba10.cells[0].value = 'MICRONURIENTES';
-  rowDatosPrueba10.cells[1].value = ' ';
-  rowDatosPrueba10.cells[2].value = ' ';
-  rowDatosPrueba10.cells[3].value = ' ';
-  rowDatosPrueba10.cells[4].value = 'Mg/K';
-  rowDatosPrueba10.cells[5].value = 'Und';
-  rowDatosPrueba10.cells[6].value = pruebaSuelo.mgk.toStringAsFixed(2);
-  rowDatosPrueba10.cells[7].value = pruebaSuelo.mgkInterpretacion;
-
-  PdfGridRow rowDatosPrueba11 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba11);
-
-  rowDatosPrueba11.cells[0].value = 'Hierro Ferrico Fe';
-  rowDatosPrueba11.cells[1].value = 'ppm';
-  rowDatosPrueba11.cells[2].value = pruebaSuelo.fe.toString();
-  rowDatosPrueba11.cells[3].value = pruebaSuelo.feInterpretacion;
-  rowDatosPrueba11.cells[4].value = 'Ca/K';
-  rowDatosPrueba11.cells[5].value = 'Und';
-  rowDatosPrueba11.cells[6].value = pruebaSuelo.cak.toStringAsFixed(2);
-  rowDatosPrueba11.cells[7].value = pruebaSuelo.cakInterpretacion;
-
-  PdfGridRow rowDatosPrueba12 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba12);
-
-  rowDatosPrueba12.cells[0].value = 'Manganeso Mn';
-  rowDatosPrueba12.cells[1].value = 'ppm';
-  rowDatosPrueba12.cells[2].value = pruebaSuelo.mn.toString();
-  rowDatosPrueba12.cells[3].value = pruebaSuelo.mnInterpretacion;
-  rowDatosPrueba12.cells[4].value = 'Ca+Mg/K';
-  rowDatosPrueba12.cells[5].value = 'Und';
-  rowDatosPrueba12.cells[6].value = pruebaSuelo.camgk.toStringAsFixed(2);
-  rowDatosPrueba12.cells[7].value = pruebaSuelo.camgkInterpretacion;
-
-  PdfGridRow rowDatosPrueba13 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba13);
-
-  rowDatosPrueba13.cells[0].value = 'Zinc Zn';
-  rowDatosPrueba13.cells[1].value = 'ppm';
-  rowDatosPrueba13.cells[2].value = pruebaSuelo.zn.toString();
-  rowDatosPrueba13.cells[3].value = pruebaSuelo.znInterpretacion;
-  rowDatosPrueba13.cells[4].value = 'Ca+Mg+K/Al';
-  rowDatosPrueba13.cells[5].value = 'Und';
-  rowDatosPrueba13.cells[6].value = pruebaSuelo.camgkal.toString();
-  rowDatosPrueba13.cells[7].value = pruebaSuelo.camgkalInterpretacion;
-
-  PdfGridRow rowDatosPrueba14 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba14);
-
-  rowDatosPrueba14.cells[0].value = 'Cobre Cu';
-  rowDatosPrueba14.cells[1].value = 'ppm';
-  rowDatosPrueba14.cells[2].value = pruebaSuelo.cu.toString();
-  rowDatosPrueba14.cells[3].value = pruebaSuelo.cuInterpretacion;
-  rowDatosPrueba14.cells[4].value = 'BASES INTERCAMBIABLES';
-  rowDatosPrueba14.cells[5].value = ' ';
-  rowDatosPrueba14.cells[6].value = ' ';
-  rowDatosPrueba14.cells[7].value = ' ';
-
-  PdfGridRow rowDatosPrueba15 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba15);
-
-  rowDatosPrueba15.cells[0].value = 'Cloruro Cl';
-  rowDatosPrueba15.cells[1].value = 'ppm';
-  rowDatosPrueba15.cells[2].value = pruebaSuelo.cl.toString();
-  rowDatosPrueba15.cells[3].value = pruebaSuelo.clInterpretacion;
-  rowDatosPrueba15.cells[4].value = 'Bases Totales';
-  rowDatosPrueba15.cells[5].value = 'Und';
-  rowDatosPrueba15.cells[6].value = pruebaSuelo.basesTotales.toString();
-  rowDatosPrueba15.cells[7].value = pruebaSuelo.basesTotalesInterpretacion;
-
-  PdfGridRow rowDatosPrueba16 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba16);
-
-  rowDatosPrueba16.cells[0].value = 'Aluminio Al';
-  rowDatosPrueba16.cells[1].value = 'T Color';
-  rowDatosPrueba16.cells[2].value = pruebaSuelo.al.toString();
-  rowDatosPrueba16.cells[3].value = pruebaSuelo.alInterpretacion;
-  rowDatosPrueba16.cells[4].value = 'Saturacion Na';
-  rowDatosPrueba16.cells[5].value = '%';
-  rowDatosPrueba16.cells[6].value = pruebaSuelo.naSaturacion.toString();
-  rowDatosPrueba16.cells[7].value = pruebaSuelo.naSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba17 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba17);
-
-  rowDatosPrueba17.cells[0].value = 'SUELO FÍSICO';
-  rowDatosPrueba17.cells[1].value = ' ';
-  rowDatosPrueba17.cells[2].value = ' ';
-  rowDatosPrueba17.cells[3].value = ' ';
-  rowDatosPrueba17.cells[4].value = 'Saturación de Al';
-  rowDatosPrueba17.cells[5].value = '%';
-  rowDatosPrueba17.cells[6].value = pruebaSuelo.alSaturacion.toString();
-  rowDatosPrueba17.cells[7].value = pruebaSuelo.alSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba18 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba18);
-
-  rowDatosPrueba18.cells[0].value = 'Arcilla';
-  rowDatosPrueba18.cells[1].value = '%';
-  rowDatosPrueba18.cells[2].value = pruebaSuelo.arcilla.toString();
-  rowDatosPrueba18.cells[3].value = 'NA';
-  rowDatosPrueba18.cells[4].value = 'Saturacion de K';
-  rowDatosPrueba18.cells[5].value = '%';
-  rowDatosPrueba18.cells[6].value = pruebaSuelo.kSaturacion.toString();
-  rowDatosPrueba18.cells[7].value = pruebaSuelo.kSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba19 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba19);
-
-  rowDatosPrueba19.cells[0].value = 'Limo';
-  rowDatosPrueba19.cells[1].value = '%';
-  rowDatosPrueba19.cells[2].value = pruebaSuelo.limo.toString();
-  rowDatosPrueba19.cells[3].value = 'NA';
-  rowDatosPrueba19.cells[4].value = 'Saturación de Ca';
-  rowDatosPrueba19.cells[5].value = '%';
-  rowDatosPrueba19.cells[6].value = pruebaSuelo.caSaturacion.toString();
-  rowDatosPrueba19.cells[7].value = pruebaSuelo.caSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba20 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba20);
-
-  rowDatosPrueba20.cells[1].value = '%';
-  rowDatosPrueba20.cells[0].value = 'Arena';
-  rowDatosPrueba20.cells[2].value = pruebaSuelo.arena.toString();
-  rowDatosPrueba20.cells[3].value = 'NA';
-  rowDatosPrueba20.cells[4].value = 'Saturación de Mg';
-  rowDatosPrueba20.cells[5].value = '%';
-  rowDatosPrueba20.cells[6].value = pruebaSuelo.mgSaturacion.toString();
-  rowDatosPrueba20.cells[7].value = pruebaSuelo.mgSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba21 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba21);
-
-  rowDatosPrueba21.cells[0].value = 'Textura';
-  rowDatosPrueba21.cells[1].value = '%';
-  rowDatosPrueba21.cells[2].value = '100%';
-  rowDatosPrueba21.cells[3].value = pruebaSuelo.textura;
-  rowDatosPrueba21.cells[4].value = 'Saturación BT';
-  rowDatosPrueba21.cells[5].value = '%';
-  rowDatosPrueba21.cells[6].value = pruebaSuelo.basesTotalesSaturacion.toString();
-  rowDatosPrueba21.cells[7].value = pruebaSuelo.basesTotalesSaturacionInterpretacion;
-
-  PdfGridRow rowDatosPrueba22 = gridDatosPrueba.rows.add();
-  listaRows.add(rowDatosPrueba22);
-
-  rowDatosPrueba22.cells[0].value = 'Humus';
-  rowDatosPrueba22.cells[1].value = 'T Color';
-  rowDatosPrueba22.cells[2].value = pruebaSuelo.humus.toString();
-  rowDatosPrueba22.cells[3].value = pruebaSuelo.humusInterpretacion;
-  rowDatosPrueba22.cells[4].value = 'Humedad';
-  rowDatosPrueba22.cells[5].value = '%';
-  rowDatosPrueba22.cells[6].value = ' ';
-  rowDatosPrueba22.cells[7].value = ' ';
 
   for (int rowIndex = 0; rowIndex < listaRows.length; rowIndex++) {
     PdfGridRow row = listaRows[rowIndex];
@@ -645,48 +490,10 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   PdfGridRow rowNota = gridNota.rows.add();
   rowNota.cells[0].value =
-      'NOTA DATOS RESULTANTES: Los bajos niveles de fosforo y potasio, están directamenterelacionados al crecimiento de la planta y calidad de la cosecha, adecuada disponibilidad de micronutrientes,disponibilidad de calcio y magnesio óptimo y alto indica adecuado grado nutricional del suelo, no se requiere encalar';
+      'NOTA DATOS RESULTANTES: En la interpretación de resultados existen las siguientes (SR) Sin Riesgo, (CR) Con Riesgo, (P) Peligro.';
 
   gridNota.draw(page: page, bounds: const Rect.fromLTWH(0, 590, 0, 0));
 
-  PdfGrid gridMetodosAnaliticos = PdfGrid();
-
-  gridMetodosAnaliticos.style = PdfGridStyle(
-      cellPadding: PdfPaddings(left: 5, right: 2, top: 0, bottom: 0),
-      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
-
-  gridMetodosAnaliticos.columns.add(count: 6);
-
-  PdfGridRow rowMetodosAnaliticos = gridMetodosAnaliticos.rows.add();
-  rowMetodosAnaliticos.cells[0].value = 'Métodos Analíticos';
-  rowMetodosAnaliticos.cells[1].value = ' ';
-  rowMetodosAnaliticos.cells[2].value = ' ';
-  rowMetodosAnaliticos.cells[3].value = ' ';
-  rowMetodosAnaliticos.cells[4].value = ' ';
-  rowMetodosAnaliticos.cells[5].value = ' ';
-
-  for (int cellIndex = 0; cellIndex < 6; cellIndex++) {
-    PdfGridCell cell = rowMetodosAnaliticos.cells[cellIndex];
-    if (cellIndex == 0) {
-      cell.style = PdfGridCellStyle(
-        textBrush: PdfSolidBrush(PdfColor(255, 255, 255)),
-      );
-      cell.style.backgroundBrush = PdfSolidBrush(PdfColor(59, 89, 37));
-      cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 9,
-          style: PdfFontStyle.bold);
-    }
-    cell.style.borders.all = PdfPen(
-      dashStyle: PdfDashStyle.custom,
-      PdfColor(255, 255, 255), // Cambia el color a blanco
-    );
-  }
-
-  gridMetodosAnaliticos.draw(
-      page: page, bounds: const Rect.fromLTWH(0, 640, 0, 0));
-
-  page.graphics.drawImage(
-      PdfBitmap(await _readImageData('Test Colorimetro.png')),
-      const Rect.fromLTWH(80, 660, 300, 100));
 
   List<int> bytes = await document.save();
   document.dispose();
@@ -709,5 +516,3 @@ Future<Uint8List> _readImageData(String name) async {
   final data = await rootBundle.load('assets/images/$name');
   return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 }
-
-
