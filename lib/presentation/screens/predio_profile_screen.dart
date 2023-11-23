@@ -49,6 +49,8 @@ class PredioProfileView extends StatelessWidget {
               const SizedBox(height: 16),
               Text('Temperatura: ${predio.temperatura}'),
               const SizedBox(height: 16),
+              Text('Temperatura: ${predio.lotes}'),
+              const SizedBox(height: 16),
 
               const Text(
                 "Historial de pruebas",

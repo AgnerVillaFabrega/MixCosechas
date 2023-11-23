@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
+import 'package:mixcosechas_app/presentation/widgets/input_variables.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
+import 'package:mixcosechas_app/presentation/widgets/pruebas/next_step/show_agua_inter.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
-import 'package:mixcosechas_app/presentation/widgets/show_agua_inter.dart';
+import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:quickalert/models/quickalert_type.dart';
-import '../../services/firebase_service.dart';
-import 'input_variables.dart';
 
 class AguaWidget extends StatefulWidget {
   const AguaWidget({
@@ -144,26 +146,20 @@ class _AguaWidgetState extends State<AguaWidget> {
                               lastDate: DateTime(2101));
 
                           if (pickedDate != null) {
-                            print(
-                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                                DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(
-                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-
+                            String formattedDate =DateFormat('yyyy-MM-dd').format(pickedDate);
                             setState(() {
                               _fechaTomaMuestraController.text =
                                   formattedDate; //set output date to TextField value.
                             });
                           } else {
-                            print("Fecha no seleccionada");
+                            QuickAlertDialog.showAlert(
+                                context, QuickAlertType.error, 
+                                "Fecha no seleccionada");
                           }
                         },
                       ),
                       TextField(
-                        controller:
-                            _fechaRecibidoController, //editing controller of this TextField
+                        controller: _fechaRecibidoController,
                         decoration: const InputDecoration(
                             icon:
                                 Icon(Icons.calendar_today), //icon of text field
@@ -171,13 +167,13 @@ class _AguaWidgetState extends State<AguaWidget> {
                                 "Fecha Muestra Recibida" //label text of field
                             ),
                         readOnly:
-                            true, //set it true, so that user will not able to edit text
+                            true,
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(
-                                  2000), //DateTime.now() - not to allow to choose before today.
+                                  2000), 
                               lastDate: DateTime(2101));
 
                           if (pickedDate != null) {
@@ -186,19 +182,44 @@ class _AguaWidgetState extends State<AguaWidget> {
 
                             setState(() {
                               _fechaRecibidoController.text =
-                                  formattedDate; //set output date to TextField value.
+                                  formattedDate;
                             });
                           } else {
-                            print("Fecha no seleccionada");
+                            QuickAlertDialog.showAlert(
+                                context, QuickAlertType.error, 
+                                "Fecha no seleccionada");
                           }
                         },
                       ),
-                      ImputVariable(
-                          nombreVariable: 'Cultivo',
-                          controller: _cultivoController),
-                      ImputVariable(
-                          nombreVariable: 'Variedad',
-                          controller: _variedadController),
+                      TextFormField(
+                          controller: _cultivoController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Cultivo',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+                        TextFormField(
+                          controller: _variedadController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Variedad',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+
                       ImputVariable(
                           nombreVariable: 'Edad', controller: _edadController),
                       ImputVariable(
@@ -319,7 +340,6 @@ class _AguaWidgetState extends State<AguaWidget> {
   }
 
   void _handleRegistroAgua() async {
-    print('hola');
     if (_idPredioController.text.isNotEmpty &&
         _nombrePredioController.text.isNotEmpty &&
         _corregimientoPredioController.text.isNotEmpty &&

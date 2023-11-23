@@ -6,9 +6,9 @@ class Predio{
 
   final String id;
   final String nombre;
-  final String corregimientoVereda;
   final String departamento;
   final String municipio;
+  final String corregimientoVereda;
   final String latitud;
   final String longitud;
   final String msnm;
@@ -16,10 +16,7 @@ class Predio{
   final String puntos;
   final String temperatura;
   final int lotes;
-  
 
-
-  
   Predio({
     required this.id, 
     required this.idPropietario, 
@@ -56,7 +53,7 @@ class Predio{
       profundidadSB: map['ProfundidadSB'],
       puntos: map['Puntos'],
       temperatura: map['Temperatura'],
-      lotes: int.parse(map['Lotes'])
+      lotes: map['Lotes']
     );
   }
 }

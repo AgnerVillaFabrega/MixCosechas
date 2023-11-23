@@ -13,7 +13,7 @@ class IconAddClientes extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
+          MaterialPageRoute(builder: (context) => const RegistrationClientScreen(isFirstTime: false,)),
         );
       },
     );

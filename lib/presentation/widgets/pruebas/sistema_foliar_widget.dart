@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/presentation/widgets/input_variables.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
+import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:quickalert/quickalert.dart';
-
-import '../../services/firebase_service.dart';
-import 'messages/quickalert_msg.dart';
 
 class SistemaFoliarWidget extends StatefulWidget {
   const SistemaFoliarWidget({
@@ -112,16 +113,16 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
                       children: [
                   
                         TextField(
-                          controller: _fechaTomaMuestraController, //editing controller of this TextField
+                          controller: _fechaTomaMuestraController, 
                           decoration:const InputDecoration( 
-                            icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Fecha Toma de Muestra" //label text of field
+                            icon: Icon(Icons.calendar_today), 
+                            labelText: "Fecha Toma de Muestra" 
                           ),
-                          readOnly: true,  //set it true, so that user will not able to edit text
+                          readOnly: true,  
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context, initialDate: DateTime.now(),
-                                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                firstDate: DateTime(2000),
                                 lastDate: DateTime(2101)
                             );
                             
@@ -130,51 +131,74 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
                                 String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
 
                                 setState(() {
-                                  _fechaTomaMuestraController.text = formattedDate; //set output date to TextField value. 
+                                  _fechaTomaMuestraController.text = formattedDate; 
                                 });
                             }else{
-                                print("Fecha no seleccionada");
+                              QuickAlertDialog.showAlert(
+                                context, QuickAlertType.error, 
+                                "Fecha no seleccionada");
                             }
                           },
                         ),
                         TextField(
-                          controller: _fechaRecibidoController, //editing controller of this TextField
+                          controller: _fechaRecibidoController, 
                           decoration:const InputDecoration( 
-                            icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Fecha Muestra Recibida" //label text of field
+                            icon: Icon(Icons.calendar_today), 
+                            labelText: "Fecha Muestra Recibida"
                           ),
-                          readOnly: true,  //set it true, so that user will not able to edit text
+                          readOnly: true,  
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context, initialDate: DateTime.now(),
-                                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                firstDate: DateTime(2000), 
                                 lastDate: DateTime(2101)
                             );
                             
                             if(pickedDate != null ){
-                                print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
                                 String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
-                                print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                                  //you can implement different kind of Date Format here according to your requirement
-
                                 setState(() {
-                                  _fechaRecibidoController.text = formattedDate; //set output date to TextField value. 
+                                  _fechaRecibidoController.text = formattedDate;
                                 });
                             }else{
-                                print("Fecha no seleccionada");
+                              QuickAlertDialog.showAlert(
+                                context, QuickAlertType.error, 
+                                "Fecha no seleccionada");
                             }
                           },
                         ),
+                        TextFormField(
+                          controller: _cultivoController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Cultivo',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+                        TextFormField(
+                          controller: _variedadController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Variedad',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+
                         ImputVariable(
-                            nombreVariable: 'Cultivo',
-                            controller: _cultivoController),
+                          nombreVariable: 'Edad', controller: _edadController),
                         ImputVariable(
-                            nombreVariable: 'Variedad',
-                            controller: _variedadController),
-                        ImputVariable(
-                            nombreVariable: 'Edad', controller: _edadController),
-                        ImputVariable(
-                            nombreVariable: 'Lote', controller: _loteController),
+                          nombreVariable: 'Lote', controller: _loteController),
                       ],
                     ),
                   ),

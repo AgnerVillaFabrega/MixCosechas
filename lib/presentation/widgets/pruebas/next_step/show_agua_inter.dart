@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
+import 'package:mixcosechas_app/presentation/screens/registration_analisis_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:mixcosechas_app/theme/limpiarCampos.dart';
 
-import '../../theme/limpiarCampos.dart';
-import '../screens/registration_analisis_screen.dart';
 
 class ShowAgua extends StatelessWidget {
   ShowAgua({

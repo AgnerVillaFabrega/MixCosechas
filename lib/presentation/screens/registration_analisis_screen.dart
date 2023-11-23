@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/screens/view_pruebas_screen.dart';
-import 'package:mixcosechas_app/presentation/widgets/sistema_foliar_widget.dart';
-import '../widgets/agua_widget.dart';
-import '../widgets/suelo_widget.dart';
+import 'package:mixcosechas_app/presentation/widgets/pruebas/agua_widget.dart';
+import 'package:mixcosechas_app/presentation/widgets/pruebas/sistema_foliar_widget.dart';
+import 'package:mixcosechas_app/presentation/widgets/pruebas/suelo_widget.dart';
+
 
 int _index = 0;
 List<Widget> _opciones = <Widget>[

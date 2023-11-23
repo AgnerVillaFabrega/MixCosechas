@@ -23,65 +23,65 @@ class UserProfileView extends StatelessWidget {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-  pinned: false,
-  expandedHeight: 250.0,
-  flexibleSpace: FlexibleSpaceBar(
-    background: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFFFFFFF), Color(0xFF19AA89)],
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          if (usuario.rol == 'Admin')  const ImgAdmin(radio: 55,),
-          if(usuario.rol == 'Agricultor') const ImgAgricultor(radio: 55),
-          if(usuario.rol == 'Analista') const ImgAnalista(radio: 55),
-          const SizedBox(height: 10),
-          Text(
-            usuario.nombre,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          Text(
-            usuario.rol,
-            style: const TextStyle(fontSize: 16, color: Colors.white),
-          ),
-        ],
-      ),
-    ),
-    stretchModes: const [StretchMode.zoomBackground],
-  ),
-  actions: [
-    PopupMenuButton<String>(
-      onSelected: (value) {
-        if (value == 'editar') {
-          // Agregar lógica para editar el perfil aquí
-        } else if (value == 'eliminar') {
-          // Agregar lógica para eliminar el perfil aquí
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'eliminar',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Eliminar'),
-          ),
-        ),
-      ],
-    ),
-  ],
-),
+                pinned: false,
+                expandedHeight: 250.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFFFFFFFF), Color(0xFF19AA89)],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if (usuario.rol == 'Admin')  const ImgAdmin(radio: 55,),
+                        if(usuario.rol == 'Agricultor') const ImgAgricultor(radio: 55),
+                        if(usuario.rol == 'Analista') const ImgAnalista(radio: 55),
+                        const SizedBox(height: 10),
+                        Text(
+                          usuario.nombre,
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        Text(
+                          usuario.rol,
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                  stretchModes: const [StretchMode.zoomBackground],
+                ),
+                actions: [
+                  PopupMenuButton<String>(
+                    onSelected: (value) {
+                      if (value == 'editar') {
+                        // Agregar lógica para editar el perfil aquí
+                      } else if (value == 'eliminar') {
+                        // Agregar lógica para eliminar el perfil aquí
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                      const PopupMenuItem<String>(
+                        value: 'editar',
+                        child: ListTile(
+                          leading: Icon(Icons.edit),
+                          title: Text('Editar'),
+                        ),
+                      ),
+                      const PopupMenuItem<String>(
+                        value: 'eliminar',
+                        child: ListTile(
+                          leading: Icon(Icons.delete),
+                          title: Text('Eliminar'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               SliverPersistentHeader(
                 delegate: MySliverPersistentHeaderDelegate(
                   const TabBar(
@@ -180,7 +180,7 @@ class UserProfileView extends StatelessWidget {
                     List<Predio> predios = snapshot.data as List<Predio>;
                     if (predios.isEmpty){
                       return const Card(
-                        elevation: 2,
+                        elevation: 1,
                         child: Padding(
                           padding: EdgeInsets.all(7), // Aumenta el espacio de relleno
                           child: ListTile(

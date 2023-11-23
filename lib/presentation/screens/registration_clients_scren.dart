@@ -9,16 +9,18 @@ import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:quickalert/quickalert.dart';
 
 class RegistrationClientScreen extends StatelessWidget {
-  const RegistrationClientScreen({super.key});
+  final bool isFirstTime;
+  const RegistrationClientScreen({super.key, required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
-    return const RegisterPage();
+    return RegisterPage(isFirstTime: isFirstTime);
   }
 }
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final bool isFirstTime;
+  const RegisterPage({super.key, required this.isFirstTime});
   
   @override
   // ignore: library_private_types_in_public_api
@@ -26,6 +28,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  
   bool _isObscurePassword = true;
   bool _isObscureConfirmPassword = true;
   final TextEditingController _nombreController = TextEditingController();
@@ -42,7 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: const Text('Registrarte'),
       ),
       body: Center(
         child: Padding(
@@ -142,31 +144,45 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 10),
                         DropdownButtonFormField<String>(
-                          value: _rolController.text,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _rolController.text = newValue!;
-                            });
-                          },
+                          value: widget.isFirstTime ? 'Agricultor' : _rolController.text,
+                          onChanged: widget.isFirstTime
+                              ? null
+                              : (String? newValue) {
+                                  setState(() {
+                                    _rolController.text = newValue!;
+                                  });
+                                },
                           decoration: const InputDecoration(
                             labelText: 'Rol',
-                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                            labelStyle: TextStyle(
+                              color: Color(0xFF19AA89),
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           items: [
-                            const DropdownMenuItem<String>(
-                              value: '',
-                              child: Text('Seleccione'), // O cualquier otro texto que desees
-                            ),
-                            ...['Analista', 'Agricultor','Admin'].map((role) {
-                              return DropdownMenuItem<String>(value: role, child: Text(role));
+                            if (!widget.isFirstTime)
+                              const DropdownMenuItem<String>(
+                                value: '',
+                                child: Text('Seleccione'),
+                              ),
+                            ...['Analista', 'Agricultor', 'Admin'].map((role) {
+                              return DropdownMenuItem<String>(
+                                  value: role, child: Text(role));
                             }).toList(),
                           ],
                           validator: (value) {
-                            if (value == null||value.isEmpty ||value == 'Seleccione') {
+                            if (value == null || value.isEmpty || value == 'Seleccione') {
                               return 'Por favor, selecciona un rol';
                             }
                             return null;
                           },
+                          onTap: () {
+                            if (widget.isFirstTime) {
+                              FocusScope.of(context).unfocus();
+                            }
+                          },
+                          isExpanded: true, // Para asegurarse de que el DropdownButtonFormField tiene suficiente espacio para mostrar todos los elementos
+                          icon: widget.isFirstTime ? null : const Icon(Icons.arrow_drop_down),
                         ),
                         const SizedBox(height: 10),
                         TextFormField(

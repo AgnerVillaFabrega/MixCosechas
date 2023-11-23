@@ -237,7 +237,7 @@ class _RegistrarseTextButtom extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RegistrationClientScreen()),
+          MaterialPageRoute(builder: (context) => const RegistrationClientScreen(isFirstTime: true,)),
         );
       },
       child: const Text('Aun no estas registrado? Registrarse', style: TextStyle(color: Color(0XFF19AA89), fontWeight: FontWeight.w600)),
