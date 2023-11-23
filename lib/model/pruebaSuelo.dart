@@ -4,7 +4,13 @@ class PruebaSuelo {
   final String corregimientoPredio;
   final String municipioPredio;
   final String dptoPredio;
-  
+  final String latitud;
+  final String longitud;
+  final String msnm;
+  final String profundidadSB;
+  final String puntos;
+  final String temperatura;
+  final int lotes;
 
   final String idPropietario;
   final String nombrepropietario;
@@ -12,7 +18,7 @@ class PruebaSuelo {
   final String correoPropietario;
 
   final String idPrueba;
-  String? fechaPrueba ='${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String edad;
@@ -48,9 +54,18 @@ class PruebaSuelo {
   final double cice;
 
   late double camg;
-  late double camgk;
-  late double cak;
   late double mgk;
+  late double cak;
+  late double camgk;
+  late double camgkal;
+
+  late double basesTotales;
+  late double alSaturacion;
+  late double kSaturacion;
+  late double caSaturacion;
+  late double mgSaturacion;
+  late double naSaturacion;
+  late double basesTotalesSaturacion;
 
   final double arcilla;
   final double limo;
@@ -118,6 +133,14 @@ class PruebaSuelo {
     'Ca+Mg/K',
     'Ca/K',
     'Mg/K',
+    'Ca+Mg+K/Al'
+    'Bases Totales',
+    'Saturacion Na',
+    'Saturación  Al',
+    'Saturacion  K',
+    'Saturación  Ca',
+    'Saturación  Mg',
+    'Saturación BT',
     'Arcilla',
     'Limo',
     'Arena',
@@ -151,6 +174,14 @@ class PruebaSuelo {
     camgk,
     cak,
     mgk,
+    camgkal,
+    basesTotales,
+    naSaturacion,
+    alSaturacion,
+    kSaturacion,
+    caSaturacion,
+    mgSaturacion,
+    basesTotalesSaturacion,
     arcilla,
     limo,
     arena,
@@ -184,6 +215,14 @@ class PruebaSuelo {
     camgkInterpretacion,
     cakInterpretacion,
     mgkInterpretacion,
+    camgkalInterpretacion,
+    basesTotalesInterpretacion,
+    naSaturacionInterpretacion,
+    alSaturacionInterpretacion,
+    kSaturacionInterpretacion,
+    caSaturacionInterpretacion,
+    mgSaturacionInterpretacion,
+    basesTotalesSaturacionInterpretacion,
     'NA',
     'NA',
     'NA',
@@ -218,64 +257,84 @@ class PruebaSuelo {
   late String camgkInterpretacion;
   late String cakInterpretacion;
   late String mgkInterpretacion;
+  late String camgkalInterpretacion;
+
+  late String basesTotalesInterpretacion;
+  late String alSaturacionInterpretacion;
+  late String kSaturacionInterpretacion;
+  late String caSaturacionInterpretacion;
+  late String mgSaturacionInterpretacion;
+  late String naSaturacionInterpretacion;
+  late String basesTotalesSaturacionInterpretacion;
 
   late String humusInterpretacion;
 
   PruebaSuelo(
-    {
-    required this.idPrueba,
-    required this.idPredio,
-    required this.idPropietario,
-    required this.nombrePredio,
-    required this.corregimientoPredio,
-    required this.cultivo,
-    required this.municipioPredio,
-    required this.variedad,
-    required this.dptoPredio,
-    required this.edad,
-    required this.nombrepropietario,
-    required this.telefonoPropietario,
-    required this.correoPropietario,
-    required this.lote,
-    required this.fechaTomaMuestra,
-    required this.fechaRecibido,
-    required this.recomendaciones,
-    required this.presiembra,
-    required this.siembra,
-    required this.mantenimiento,
-    required this.n,
-    required this.nh4,
-    required this.no2,
-    required this.no3,
-    required this.p,
-    required this.k,
-    required this.ca,
-    required this.mg,
-    required this.s,
-    required this.so4,
-    required this.fe,
-    required this.mn,
-    required this.cu,
-    required this.al,
-    required this.cl,
-    required this.zn,
-    required this.na,
-    required this.ph,
-    required this.ce,
-    required this.salesDisueltas,
-    required this.cice,
-    required this.arcilla,
-    required this.limo,
-    required this.arena,
-    required this.humus,
-    fechaPrueba}) {
-    // double d = (Ca / Mg);
-    // String inString = d.toStringAsFixed(3); // '2.35'
-    // CaMg = double.parse(inString);
+      {required this.idPrueba,
+      required this.idPredio,
+      required this.idPropietario,
+      required this.nombrePredio,
+      required this.corregimientoPredio,
+      required this.municipioPredio,
+      required this.dptoPredio,
+      required this.latitud,
+      required this.longitud,
+      required this.msnm,
+      required this.profundidadSB,
+      required this.puntos,
+      required this.temperatura,
+      required this.lotes,
+      required this.cultivo,
+      required this.variedad,
+      required this.edad,
+      required this.nombrepropietario,
+      required this.telefonoPropietario,
+      required this.correoPropietario,
+      required this.lote,
+      required this.fechaTomaMuestra,
+      required this.fechaRecibido,
+      required this.recomendaciones,
+      required this.presiembra,
+      required this.siembra,
+      required this.mantenimiento,
+      required this.n,
+      required this.nh4,
+      required this.no2,
+      required this.no3,
+      required this.p,
+      required this.k,
+      required this.ca,
+      required this.mg,
+      required this.s,
+      required this.so4,
+      required this.fe,
+      required this.mn,
+      required this.cu,
+      required this.al,
+      required this.cl,
+      required this.zn,
+      required this.na,
+      required this.ph,
+      required this.ce,
+      required this.salesDisueltas,
+      required this.cice,
+      required this.arcilla,
+      required this.limo,
+      required this.arena,
+      required this.humus,
+      fechaPrueba}) {
     camg = (ca / mg);
     camgk = (ca + mg / k);
     cak = ca / k;
     mgk = mg / k;
+    camgkal = ca + mg + k / al;
+    basesTotales = k + ca + mg + na;
+    alSaturacion = al / cice * 100;
+    kSaturacion = k / cice * 100;
+    caSaturacion = ca / cice * 100;
+    mgSaturacion = mg / cice * 100;
+    naSaturacion = na / cice * 100;
+    basesTotalesSaturacion = basesTotales / cice * 100;
     nInterpretacion = nInterpretar(n);
     nh4Interpretacion = nh4Interpretar(nh4);
     no2Interpretacion = no2Interpretar(no2);
@@ -303,6 +362,15 @@ class PruebaSuelo {
     camgkInterpretacion = camgkInterpretar(camgk);
     cakInterpretacion = cakInterpretar(cak);
     mgkInterpretacion = mgkInterpretar(mgk);
+    camgkalInterpretacion = camgkalInterpretar(camgkal);
+
+    basesTotalesInterpretacion = basesTotalesInterpretar(basesTotales);
+    alSaturacionInterpretacion = alSaturacionInterpretar(alSaturacion);
+    kSaturacionInterpretacion = kSaturacionInterpretar(kSaturacion);
+    caSaturacionInterpretacion = caSaturacionInterpretar(caSaturacion);
+    mgSaturacionInterpretacion = mgSaturacionInterpretar(mgSaturacion);
+    naSaturacionInterpretacion = naSaturacionInterpretar(naSaturacion);
+    basesTotalesSaturacionInterpretacion = basesTotalesSaturacionInterpretar(basesTotalesSaturacion);
 
     humusInterpretacion = interpretarHumus(humus);
 
@@ -573,6 +641,84 @@ class PruebaSuelo {
     }
   }
 
+  String camgkalInterpretar(double valor) {
+    if (valor < 1) {
+      return "Encalar - Criterio General";
+    } else {
+      return "No hay toxicidad de Al";
+    }
+  }
+
+  String basesTotalesInterpretar(double valor) {
+    if (valor < 5) {
+      return "Bajo";
+    } else if (valor >= 5 && valor <= 10) {
+      return "Medio";
+    } else {
+      return "Alto";
+    }
+  }
+
+  String alSaturacionInterpretar(double valor) {
+    if (valor < 15) {
+      return "Bajo - Normal";
+    } else if (valor >= 15 && valor <= 30) {
+      return "Medio - Toxico para plantas suceptibles";
+    } else if (valor >= 31 && valor <= 60) {
+      return "Alto - Toxico para plantas tolerantes";
+    } else {
+      return "Peligro - Toxico para la mayoria de plantas";
+    }
+  }
+
+  String kSaturacionInterpretar(double valor) {
+    if (valor < 2) {
+      return "Bajo ";
+    } else if (valor >= 2 && valor <= 3) {
+      return "Medio ";
+    } else {
+      return "Alto";
+    }
+  }
+
+  String caSaturacionInterpretar(double valor) {
+    if (valor < 30) {
+      return "Bajo ";
+    } else if (valor >= 30 && valor <= 40) {
+      return "Medio ";
+    } else {
+      return "Alto";
+    }
+  }
+
+  String mgSaturacionInterpretar(double valor) {
+    if (valor < 15) {
+      return "Bajo ";
+    } else if (valor >= 15 && valor <= 20) {
+      return "Medio ";
+    } else {
+      return "Alto";
+    }
+  }
+
+  String naSaturacionInterpretar(double valor) {
+    if (valor < 15) {
+      return "Bajo - Normal ";
+    } else {
+      return "Alto - Sodico";
+    }
+  }
+
+  String basesTotalesSaturacionInterpretar(double valor) {
+    if (valor < 50) {
+      return "Bajo - Suelo Acido";
+    } else if (valor >= 50 && valor <= 90) {
+      return "Medio - Suelo Medio";
+    } else {
+      return "Alto - Suelo Saturado en Bases";
+    }
+  }
+
 //ARREGLAR INTERPRETACION HUMUS
   String interpretarHumus(double valor) {
     if (valor < 2) {
@@ -657,51 +803,58 @@ class PruebaSuelo {
     Map<String, dynamic> humusData = map['Humus'][0];
 
     return PruebaSuelo(
-    idPrueba: map['IdPrueba'],
-    idPredio: map['IdPredio'],
-    idPropietario: map['IdPropietario'],
-    nombrePredio: map['NombrePredio'],
-    corregimientoPredio: map['Corregimiento'],
-    cultivo: map['Cultivo'],
-    municipioPredio: map['Municipio'],
-    variedad: map['Variedad'],
-    dptoPredio: map['Departamento'],
-    edad: map['Edad'],
-    nombrepropietario: map['NombrePropietario'],
-    telefonoPropietario: map['Telefono'],
-    correoPropietario: map['Correo'],
-    lote: map['Lote'],
-    fechaTomaMuestra: map['FechaTomaMuestra'],
-    fechaRecibido: map['FechaRecibido'],
-    fechaPrueba: map['Fecha'],
-    recomendaciones: map['Recomendaciones'],
-    presiembra: map['Presiembra'],
-    siembra: map['Siembra'],
-    mantenimiento: map['Mantenimiento'],
-    n: double.parse(nData['valor'].toString()),
-    nh4: double.parse(nh4Data['valor'].toString()),
-    no2: double.parse(no2Data['valor'].toString()),
-    no3: double.parse(no3Data['valor'].toString()),
-    p: double.parse(pData['valor'].toString()),
-    k: double.parse(kData['valor'].toString()),
-    ca: double.parse(caData['valor'].toString()),
-    s: double.parse(sData['valor'].toString()),
-    mg: double.parse(mgData['valor'].toString()),
-    so4: double.parse(so4Data['valor'].toString()),
-    fe: double.parse(feData['valor'].toString()),
-    mn: double.parse(mnData['valor'].toString()),
-    cu: double.parse(cuData['valor'].toString()),
-    al: double.parse(alData['valor'].toString()),
-    cl: double.parse(clData['valor'].toString()),
-    zn: double.parse(znData['valor'].toString()),
-    na: double.parse(naData['valor'].toString()),
-    ph: double.parse(phData['valor'].toString()),
-    ce: double.parse(ceData['valor'].toString()),
-    salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
-    cice: double.parse(ciceData['valor'].toString()),
-    arcilla: double.parse(map['Arcilla'].toString()),
-    limo: double.parse(map['Limo'].toString()),
-    arena: double.parse(map['Arena'].toString()),
-    humus: double.parse(humusData['valor'].toString()));
+        idPrueba: map['IdPrueba'],
+        idPredio: map['IdPredio'],
+        idPropietario: map['IdPropietario'],
+        nombrePredio: map['NombrePredio'],
+        corregimientoPredio: map['Corregimiento'],
+        municipioPredio: map['Municipio'],
+        dptoPredio: map['Departamento'],
+        latitud: map['Latitud'],
+        longitud: map['Longitud'],
+        msnm: map['MSNM'],
+        profundidadSB: map['ProfundidadSB'],
+        puntos: map['Puntos'],
+        temperatura: map['Temperatura'],
+        lotes: map['Lotes'],
+        cultivo: map['Cultivo'],
+        variedad: map['Variedad'],
+        edad: map['Edad'],
+        nombrepropietario: map['NombrePropietario'],
+        telefonoPropietario: map['Telefono'],
+        correoPropietario: map['Correo'],
+        lote: map['Lote'],
+        fechaTomaMuestra: map['FechaTomaMuestra'],
+        fechaRecibido: map['FechaRecibido'],
+        fechaPrueba: map['Fecha'],
+        recomendaciones: map['Recomendaciones'],
+        presiembra: map['Presiembra'],
+        siembra: map['Siembra'],
+        mantenimiento: map['Mantenimiento'],
+        n: double.parse(nData['valor'].toString()),
+        nh4: double.parse(nh4Data['valor'].toString()),
+        no2: double.parse(no2Data['valor'].toString()),
+        no3: double.parse(no3Data['valor'].toString()),
+        p: double.parse(pData['valor'].toString()),
+        k: double.parse(kData['valor'].toString()),
+        ca: double.parse(caData['valor'].toString()),
+        s: double.parse(sData['valor'].toString()),
+        mg: double.parse(mgData['valor'].toString()),
+        so4: double.parse(so4Data['valor'].toString()),
+        fe: double.parse(feData['valor'].toString()),
+        mn: double.parse(mnData['valor'].toString()),
+        cu: double.parse(cuData['valor'].toString()),
+        al: double.parse(alData['valor'].toString()),
+        cl: double.parse(clData['valor'].toString()),
+        zn: double.parse(znData['valor'].toString()),
+        na: double.parse(naData['valor'].toString()),
+        ph: double.parse(phData['valor'].toString()),
+        ce: double.parse(ceData['valor'].toString()),
+        salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
+        cice: double.parse(ciceData['valor'].toString()),
+        arcilla: double.parse(map['Arcilla'].toString()),
+        limo: double.parse(map['Limo'].toString()),
+        arena: double.parse(map['Arena'].toString()),
+        humus: double.parse(humusData['valor'].toString()));
   }
 }

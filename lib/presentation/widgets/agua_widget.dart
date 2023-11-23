@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/presentation/widgets/btm_continuar.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:mixcosechas_app/presentation/widgets/show_agua_inter.dart';
 import 'package:quickalert/models/quickalert_type.dart';
+import '../../services/firebase_service.dart';
 import 'input_variables.dart';
 
 class AguaWidget extends StatefulWidget {
@@ -20,6 +24,15 @@ class AguaWidget extends StatefulWidget {
 class _AguaWidgetState extends State<AguaWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final TextEditingController _fechaTomaMuestraController =TextEditingController();
+  final TextEditingController _fechaRecibidoController =TextEditingController();
+
+  final TextEditingController _loteController = TextEditingController();
+  final TextEditingController _cultivoController = TextEditingController();
+  final TextEditingController _variedadController = TextEditingController();
+  final TextEditingController _edadController = TextEditingController();
+
   final TextEditingController _nh4Controller = TextEditingController();
   final TextEditingController _no2Controller = TextEditingController();
   final TextEditingController _no3Controller = TextEditingController();
@@ -38,26 +51,26 @@ class _AguaWidgetState extends State<AguaWidget> {
   final TextEditingController _fuenteaguaController = TextEditingController();
 
   //*INFORMACION DEL PREDIO */
+  final ServiceFirebase _serviceFirebase = ServiceFirebase();
   final TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection =FirebaseFirestore.instance.collection('Predios');
 
-  final TextEditingController _idPredioController =TextEditingController();
+  final TextEditingController _idPredioController = TextEditingController();
   final TextEditingController _corregimientoPredioController =TextEditingController();
-  final TextEditingController _cultivoPredioController =TextEditingController();
   final TextEditingController _municipioPredioController =TextEditingController();
-  final TextEditingController _variedadPredioController =TextEditingController();
   final TextEditingController _dptoPredioController = TextEditingController();
-  final TextEditingController _edadPredioController = TextEditingController();
+
   final TextEditingController _idpropietarioPredioController =TextEditingController();
   final TextEditingController _nombrepropietarioPredioController =TextEditingController();
   final TextEditingController _telefonopropietarioPredioController =TextEditingController();
   final TextEditingController _correopropietarioPredioController =TextEditingController();
-  final TextEditingController _latitudPredioController = TextEditingController();
-  final TextEditingController _longitudPredioController = TextEditingController();
+
+  final TextEditingController _latitudPredioController =TextEditingController();
+  final TextEditingController _longitudPredioController =TextEditingController();
   final TextEditingController _msnmPredioController = TextEditingController();
-  final TextEditingController _profundidadSBPredioController = TextEditingController();
+  final TextEditingController _profundidadSBPredioController =TextEditingController();
   final TextEditingController _puntosPredioController = TextEditingController();
-  final TextEditingController _temperaturaPredioController = TextEditingController();
+  final TextEditingController _temperaturaPredioController =TextEditingController();
   final TextEditingController _lotesPredioController = TextEditingController();
 
   @override
@@ -84,27 +97,117 @@ class _AguaWidgetState extends State<AguaWidget> {
                   content: SearchPredio(
                       predioFilterController: _nombrePredioController,
                       prediosCollection: prediosCollection,
-                      idPredioController:_idPredioController,
-                      corregimientoPredioController:_corregimientoPredioController,
-                   //   cultivoPredioController: _cultivoPredioController,
+                      idPredioController: _idPredioController,
+                      corregimientoPredioController:
+                          _corregimientoPredioController,
                       municipioPredioController: _municipioPredioController,
-                  //    variedadPredioController: _variedadPredioController,
                       dptoPredioController: _dptoPredioController,
-                //      edadPredioController: _edadPredioController,
-                      idpropietarioPredioController:_idpropietarioPredioController,
-                      nombrepropietarioPredioController:_nombrepropietarioPredioController,
-                      telefonopropietarioPredioController:_telefonopropietarioPredioController,
-                      correopropietarioPredioController:_correopropietarioPredioController,
+                      idpropietarioPredioController:
+                          _idpropietarioPredioController,
+                      nombrepropietarioPredioController:
+                          _nombrepropietarioPredioController,
+                      telefonopropietarioPredioController:
+                          _telefonopropietarioPredioController,
+                      correopropietarioPredioController:
+                          _correopropietarioPredioController,
                       latitudPredioController: _latitudPredioController,
                       longitudPredioController: _longitudPredioController,
                       msnmPredioController: _msnmPredioController,
-                      profundidadSBPredioController:_profundidadSBPredioController,
+                      profundidadSBPredioController:
+                          _profundidadSBPredioController,
                       puntosPredioController: _puntosPredioController,
-                      temperaturaPredioController:_temperaturaPredioController,
+                      temperaturaPredioController: _temperaturaPredioController,
                       lotesPredioController: _lotesPredioController),
                 ),
                 Step(
                   isActive: currentState >= 1,
+                  title: const Text('Información de la prueba'),
+                  content: Column(
+                    children: [
+                      TextField(
+                        controller:
+                            _fechaTomaMuestraController, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            icon:
+                                Icon(Icons.calendar_today), //icon of text field
+                            labelText:
+                                "Fecha Toma de Muestra" //label text of field
+                            ),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(
+                                  2000), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              _fechaTomaMuestraController.text =
+                                  formattedDate; //set output date to TextField value.
+                            });
+                          } else {
+                            print("Fecha no seleccionada");
+                          }
+                        },
+                      ),
+                      TextField(
+                        controller:
+                            _fechaRecibidoController, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            icon:
+                                Icon(Icons.calendar_today), //icon of text field
+                            labelText:
+                                "Fecha Muestra Recibida" //label text of field
+                            ),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(
+                                  2000), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                            setState(() {
+                              _fechaRecibidoController.text =
+                                  formattedDate; //set output date to TextField value.
+                            });
+                          } else {
+                            print("Fecha no seleccionada");
+                          }
+                        },
+                      ),
+                      ImputVariable(
+                          nombreVariable: 'Cultivo',
+                          controller: _cultivoController),
+                      ImputVariable(
+                          nombreVariable: 'Variedad',
+                          controller: _variedadController),
+                      ImputVariable(
+                          nombreVariable: 'Edad', controller: _edadController),
+                      ImputVariable(
+                          nombreVariable: 'Lote', controller: _loteController),
+                    ],
+                  ),
+                ),
+                Step(
+                  isActive: currentState >= 2,
                   title: const Text('Macronutrientes'),
                   content: Column(
                     children: [
@@ -180,7 +283,7 @@ class _AguaWidgetState extends State<AguaWidget> {
                   ),
                 ),
                 Step(
-                    isActive: currentState >= 2,
+                    isActive: currentState >= 3,
                     title: const Text('Micronutrientes'),
                     content: Column(
                       children: [
@@ -211,75 +314,106 @@ class _AguaWidgetState extends State<AguaWidget> {
             )));
   }
 
-  void _handleRegistroAgua() {
+  int generateUniqueID() {
+    return Random().nextInt(1000000);
+  }
+
+  void _handleRegistroAgua() async {
+    print('hola');
     if (_idPredioController.text.isNotEmpty &&
-      _nombrePredioController.text.isNotEmpty &&
-      _corregimientoPredioController.text.isNotEmpty &&
-      _cultivoPredioController.text.isNotEmpty &&
-      _municipioPredioController.text.isNotEmpty &&
-      _variedadPredioController.text.isNotEmpty &&
-      _dptoPredioController.text.isNotEmpty &&
-      _edadPredioController.text.isNotEmpty &&
-      _idpropietarioPredioController.text.isNotEmpty &&
-      _nombrepropietarioPredioController.text.isNotEmpty &&
-      _telefonopropietarioPredioController.text.isNotEmpty &&
-      _correopropietarioPredioController.text.isNotEmpty) {
+        _nombrePredioController.text.isNotEmpty &&
+        _corregimientoPredioController.text.isNotEmpty &&
+        _municipioPredioController.text.isNotEmpty &&
+        _dptoPredioController.text.isNotEmpty &&
+        _latitudPredioController.text.isNotEmpty &&
+        _longitudPredioController.text.isNotEmpty &&
+        _msnmPredioController.text.isNotEmpty &&
+        _profundidadSBPredioController.text.isNotEmpty &&
+        _puntosPredioController.text.isNotEmpty &&
+        _temperaturaPredioController.text.isNotEmpty &&
+        _lotesPredioController.text.isNotEmpty &&
+        _idpropietarioPredioController.text.isNotEmpty &&
+        _nombrepropietarioPredioController.text.isNotEmpty &&
+        _telefonopropietarioPredioController.text.isNotEmpty &&
+        _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
+
+        int idPrueba = generateUniqueID(); // Genera un ID único
+        bool isUnique =
+            await _serviceFirebase.isIDUniquePruebaAgua(idPrueba.toString());
+        while (!isUnique) {
+          idPrueba = generateUniqueID();
+          isUnique =
+              await _serviceFirebase.isIDUniquePruebaAgua(idPrueba.toString());
+        }
+
         PruebaAgua pruebaAgua = PruebaAgua(
-          idPredio: _idPredioController.text,
-          nombrePredio: _nombrePredioController.text,
-          corregimientoPredio: _corregimientoPredioController.text,
-          cultivoPredio: _cultivoPredioController.text,
-          municipioPredio: _municipioPredioController.text,
-          variedadPredio: _variedadPredioController.text,
-          dptoPredio: _dptoPredioController.text,
-          edadPredio: _edadPredioController.text,
-          idPropietario: _idpropietarioPredioController.text,
-          nombrepropietario: _nombrepropietarioPredioController.text,
-          telefonopropietario: _telefonopropietarioPredioController.text,
-          correopropietario: _correopropietarioPredioController.text,
-          interpretacion: '',
-          recomendaciones: '',
-          restricciones: '',
-          //N: double.parse(_nController.text),
-          nh4: double.parse(_nh4Controller.text),
-          no2: double.parse(_no2Controller.text),
-          no3: double.parse(_no3Controller.text),
-          p: double.parse(_pController.text),
-          k: double.parse(_kController.text),
-          ca: double.parse(_caController.text),
-          mg: double.parse(_mgController.text),
-          so4: double.parse(_so4Controller.text),
-          fe: double.parse(_feController.text),
-          mn: double.parse(_mnController.text),
-          cu: double.parse(_cuController.text),
-          cl: double.parse(_clController.text),
-          ph: double.parse(_phController.text),
-          ce: double.parse(_ceController.text),
-          salesDisueltas: double.parse(_salesdisueltasController.text),
-          tipoAgua:  _fuenteaguaController.text
-        );
+            idPrueba: idPrueba.toString(),
+            idPredio: _idPredioController.text,
+            nombrePredio: _nombrePredioController.text,
+            corregimientoPredio: _corregimientoPredioController.text,
+            municipioPredio: _municipioPredioController.text,
+            dptoPredio: _dptoPredioController.text,
+            latitud: _latitudPredioController.text,
+            longitud: _longitudPredioController.text,
+            msnm: _msnmPredioController.text,
+            profundidadSB: _profundidadSBPredioController.text,
+            puntos: _puntosPredioController.text,
+            temperatura: _temperaturaPredioController.text,
+            lotes: int.parse(_lotesPredioController.text),
+            cultivo: _cultivoController.text,
+            variedad: _variedadController.text,
+            edad: _edadController.text,
+            idPropietario: _idpropietarioPredioController.text,
+            nombrepropietario: _nombrepropietarioPredioController.text,
+            telefonopropietario: _telefonopropietarioPredioController.text,
+            correopropietario: _correopropietarioPredioController.text,
+            lote: _loteController.text,
+            fechaRecibido: _fechaRecibidoController.text,
+            fechaTomaMuestra: _fechaTomaMuestraController.text,
+            interpretacion: '',
+            recomendaciones: '',
+            restricciones: '',
+            //N: double.parse(_nController.text),
+            nh4: double.parse(_nh4Controller.text),
+            no2: double.parse(_no2Controller.text),
+            no3: double.parse(_no3Controller.text),
+            p: double.parse(_pController.text),
+            k: double.parse(_kController.text),
+            ca: double.parse(_caController.text),
+            mg: double.parse(_mgController.text),
+            so4: double.parse(_so4Controller.text),
+            fe: double.parse(_feController.text),
+            mn: double.parse(_mnController.text),
+            cu: double.parse(_cuController.text),
+            cl: double.parse(_clController.text),
+            ph: double.parse(_phController.text),
+            ce: double.parse(_ceController.text),
+            salesDisueltas: double.parse(_salesdisueltasController.text),
+            tipoAgua: _fuenteaguaController.text);
 
         final List<String> nombreCompuestos = pruebaAgua.nombreCompuestos;
         final List<double> valorCompuestos = pruebaAgua.valorCompuestos;
-        final List<String> interpretacionCompuestos = pruebaAgua.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos =
+            pruebaAgua.interpretacionCompuestos;
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ShowAgua(
-              pruebaagua:pruebaAgua,
-              nombreCompuestos: nombreCompuestos,
-              valorCompuestos: valorCompuestos,
-              interpretacionCompuestos: interpretacionCompuestos)
-            ),
+              builder: (context) => ShowAgua(
+                  pruebaagua: pruebaAgua,
+                  nombreCompuestos: nombreCompuestos,
+                  valorCompuestos: valorCompuestos,
+                  interpretacionCompuestos: interpretacionCompuestos)),
         );
       } else {
-        QuickAlertDialog.showAlert(context, QuickAlertType.error,"Debes llenar todos los campos");
+        QuickAlertDialog.showAlert(
+            context, QuickAlertType.error, "Debes llenar todos los campos");
       }
     } else {
-      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un predio");
+      QuickAlertDialog.showAlert(
+          context, QuickAlertType.warning, "Debes elegir un predio");
     }
   }
 }

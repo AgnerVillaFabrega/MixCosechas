@@ -14,9 +14,33 @@ class ServiceFirebase {
 
   Future<bool> isIDUnique(String id) async {
     QuerySnapshot query = await FirebaseFirestore.instance
-      .collection('predios')
-      .where('id', isEqualTo: id)
-      .get();
+        .collection('Predios')
+        .where('id', isEqualTo: id)
+        .get();
+    return query.docs.isEmpty;
+  }
+
+  Future<bool> isIDUniquePruebaSuelo(String id) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('PruebaSuelo')
+        .where('id', isEqualTo: id)
+        .get();
+    return query.docs.isEmpty;
+  }
+
+  Future<bool> isIDUniquePruebaAgua(String id) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('PruebaAgua')
+        .where('id', isEqualTo: id)
+        .get();
+    return query.docs.isEmpty;
+  }
+
+  Future<bool> isIDUniquePruebaSistemaFoliar(String id) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection('PruebaAgua')
+        .where('id', isEqualTo: id)
+        .get();
     return query.docs.isEmpty;
   }
 
@@ -65,7 +89,8 @@ class ServiceFirebase {
   Future<List<PruebaSistemaFoliar>> getPruebaSistemaFoliar() async {
     List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
     try {
-      QuerySnapshot queryPruebaAgua = await db.collection('PruebaSistemaFoliar').get();
+      QuerySnapshot queryPruebaAgua =
+          await db.collection('PruebaSistemaFoliar').get();
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));
@@ -80,9 +105,9 @@ class ServiceFirebase {
     List<PruebaSuelo> pruebaSuelo = [];
     try {
       QuerySnapshot queryPruebaSuelo = await db
-      .collection('PruebaSuelo')
-      .where('IdPredio', isEqualTo: idPredio)
-      .get();
+          .collection('PruebaSuelo')
+          .where('IdPredio', isEqualTo: idPredio)
+          .get();
       queryPruebaSuelo.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaSuelo.add(PruebaSuelo.fromMap(data));
@@ -97,9 +122,9 @@ class ServiceFirebase {
     List<PruebaAgua> pruebaAgua = [];
     try {
       QuerySnapshot queryPruebaAgua = await db
-      .collection('PruebaAgua')
-      .where('IdPredio', isEqualTo: idPredio)
-      .get();
+          .collection('PruebaAgua')
+          .where('IdPredio', isEqualTo: idPredio)
+          .get();
       queryPruebaAgua.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
         pruebaAgua.add(PruebaAgua.fromMap(data));
@@ -108,6 +133,23 @@ class ServiceFirebase {
       print("Error al obtener la lista de Pruebas de Suelo: $e");
     }
     return pruebaAgua;
+  }
+  
+  Future<List<PruebaSistemaFoliar>> getPruebaSistemaFoliarPorPredio(String idPredio) async {
+    List<PruebaSistemaFoliar> pruebaSistemaFoliar = [];
+    try {
+      QuerySnapshot queryPruebaSistemaFoliar = await db
+          .collection('PruebaSistemaFoliar')
+          .where('IdPredio', isEqualTo: idPredio)
+          .get();
+      queryPruebaSistemaFoliar.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        pruebaSistemaFoliar.add(PruebaSistemaFoliar.fromMap(data));
+      });
+    } catch (e) {
+      print("Error al obtener la lista de Pruebas de Suelo: $e");
+    }
+    return pruebaSistemaFoliar;
   }
 
   Future<Cliente?> consultarClientePorId(String clienteId) async {
@@ -177,12 +219,12 @@ class ServiceFirebase {
 
     try {
       QuerySnapshot queryPredios = await db
-        .collection('Predios')
-        .where('IdPropietario', isEqualTo: idPropietario)
-        .get();
-        predios = queryPredios.docs
-        .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
+          .collection('Predios')
+          .where('IdPropietario', isEqualTo: idPropietario)
+          .get();
+      predios = queryPredios.docs
+          .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       print("Error al obtener la lista de predios: $e");
     }
@@ -197,19 +239,26 @@ class ServiceFirebase {
         'IdPredio': pruebaSuelo.idPredio,
         'NombrePredio': pruebaSuelo.nombrePredio,
         'Corregimiento': pruebaSuelo.corregimientoPredio,
-        'Cultivo': pruebaSuelo.cultivo,
         'Municipio': pruebaSuelo.municipioPredio,
-        'Variedad': pruebaSuelo.variedad,
         'Departamento': pruebaSuelo.dptoPredio,
+        'Latitud': pruebaSuelo.latitud,
+        'Longitud': pruebaSuelo.longitud,
+        'MSNM': pruebaSuelo.msnm,
+        'ProfundidadSB': pruebaSuelo.profundidadSB,
+        'Puntos': pruebaSuelo.puntos,
+        'Temperatura': pruebaSuelo.temperatura,
+        'Lotes': pruebaSuelo.lotes,
+        'Cultivo': pruebaSuelo.cultivo,
+        'Variedad': pruebaSuelo.variedad,
         'Edad': pruebaSuelo.edad,
         'IdPropietario': pruebaSuelo.idPropietario,
         'NombrePropietario': pruebaSuelo.nombrepropietario,
         'Telefono': pruebaSuelo.telefonoPropietario,
         'Correo': pruebaSuelo.correoPropietario,
         'Lote': pruebaSuelo.lote,
-        'FechaTomaMuestra' : pruebaSuelo.fechaTomaMuestra,
-        'FechaRecibido' : pruebaSuelo.fechaRecibido,
-        'Fecha' : pruebaSuelo.fechaPrueba,
+        'FechaTomaMuestra': pruebaSuelo.fechaTomaMuestra,
+        'FechaRecibido': pruebaSuelo.fechaRecibido,
+        'Fecha': pruebaSuelo.fechaPrueba,
         'Recomendaciones': pruebaSuelo.recomendaciones,
         'Presiembra': pruebaSuelo.presiembra,
         'Siembra': pruebaSuelo.siembra,
@@ -383,24 +432,34 @@ class ServiceFirebase {
   Future<void> addPruebaAgua(PruebaAgua pruebaAgua) async {
     try {
       await db.collection('PruebaAgua').add({
+        'IdPrueba': pruebaAgua.idPrueba,
         'IdPredio': pruebaAgua.idPredio,
         'NombrePredio': pruebaAgua.nombrePredio,
         'Corregimiento': pruebaAgua.corregimientoPredio,
-        'Cultivo': pruebaAgua.cultivoPredio,
-        'Municipio': pruebaAgua.municipioPredio,
-        'Variedad': pruebaAgua.variedadPredio,
         'Departamento': pruebaAgua.dptoPredio,
-        'Edad': pruebaAgua.edadPredio,
+        'Municipio': pruebaAgua.municipioPredio,
+        'Latitud': pruebaAgua.latitud,
+        'Longitud': pruebaAgua.longitud,
+        'MSNM': pruebaAgua.msnm,
+        'ProfundidadSB': pruebaAgua.profundidadSB,
+        'Puntos': pruebaAgua.puntos,
+        'Temperatura': pruebaAgua.temperatura,
+        'Lotes': pruebaAgua.lotes,
+        'Cultivo': pruebaAgua.cultivo,
+        'Variedad': pruebaAgua.variedad,
+        'Edad': pruebaAgua.edad,
+        'Lote': pruebaAgua.lote,
+        'FechaTomaMuestra': pruebaAgua.fechaTomaMuestra,
+        'FechaRecibido': pruebaAgua.fechaRecibido,
         'Idpropietario': pruebaAgua.idPropietario,
         'Nombrepropietario': pruebaAgua.nombrepropietario,
         'Telefono': pruebaAgua.telefonopropietario,
         'Correo': pruebaAgua.correopropietario,
-        'Fecha' : pruebaAgua.fechaPrueba,
+        'Fecha': pruebaAgua.fechaPrueba,
         'Interpretacion': pruebaAgua.interpretacion,
         'Recomendaciones': pruebaAgua.recomendaciones,
         'Restricciones': pruebaAgua.restricciones,
         'TipoAgua': pruebaAgua.tipoAgua,
-
 
         // 'Nitrato de Nitrógeno - N': [
         //   {
@@ -498,18 +557,6 @@ class ServiceFirebase {
             'interpretacion': pruebaAgua.salesDisueltasInterpretacion,
           }
         ],
-        // 'C.I.C.E':[
-        //   {
-        //     'valor': 65,//pruebaSuelo.CICE,
-        //     'interpretacion': 'Por definir' //pruebaSuelo.CICE_Interpretacion,
-        //   }
-        // ],
-        // 'Ca/Mg':[
-        //   {
-        //     'valor': pruebaAgua.CaMg,
-        //     'interpretacion': pruebaAgua.CaMg_Interpretacion,
-        //   }
-        // ],
       });
     } catch (e) {
       print("Error al agregar la prueba: $e");
@@ -520,18 +567,29 @@ class ServiceFirebase {
       PruebaSistemaFoliar pruebaSistemaFoliar) async {
     try {
       await db.collection('PruebaSistemaFoliar').add({
+        'IdPrueba': pruebaSistemaFoliar.idPrueba,
         'IdPredio': pruebaSistemaFoliar.idPredio,
         'NombrePredio': pruebaSistemaFoliar.nombrePredio,
         'Corregimiento': pruebaSistemaFoliar.corregimientoPredio,
-        'Cultivo': pruebaSistemaFoliar.cultivoPredio,
+        'Latitud': pruebaSistemaFoliar.latitud,
+        'Longitud': pruebaSistemaFoliar.longitud,
+        'MSNM': pruebaSistemaFoliar.msnm,
+        'ProfundidadSB': pruebaSistemaFoliar.profundidadSB,
+        'Puntos': pruebaSistemaFoliar.puntos,
+        'Temperatura': pruebaSistemaFoliar.temperatura,
+        'Lotes': pruebaSistemaFoliar.lotes,
+        'Cultivo': pruebaSistemaFoliar.cultivo,
         'Municipio': pruebaSistemaFoliar.municipioPredio,
-        'Variedad': pruebaSistemaFoliar.variedadPredio,
+        'Variedad': pruebaSistemaFoliar.variedad,
         'Departamento': pruebaSistemaFoliar.dptoPredio,
-        'Edad': pruebaSistemaFoliar.edadPredio,
+        'Edad': pruebaSistemaFoliar.edad,
         'Idpropietario': pruebaSistemaFoliar.idPropietario,
         'Nombrepropietario': pruebaSistemaFoliar.nombrepropietario,
         'Telefono': pruebaSistemaFoliar.telefonopropietario,
         'Correo': pruebaSistemaFoliar.correopropietario,
+        'Lote': pruebaSistemaFoliar.lote,
+        'FechaTomaMuestra': pruebaSistemaFoliar.fechaTomaMuestra,
+        'FechaRecibido': pruebaSistemaFoliar.fechaRecibido,
         'Fecha': pruebaSistemaFoliar.fechaPrueba,
         'Calcio - Ca': pruebaSistemaFoliar.ca,
         'Magnesio - Mg': pruebaSistemaFoliar.mg,

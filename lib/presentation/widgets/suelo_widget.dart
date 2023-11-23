@@ -24,8 +24,8 @@ class _SueloWidgetState extends State<SueloWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  TextEditingController _fechaTomaMuestraController = TextEditingController();
-  TextEditingController _fechaRecibidoController = TextEditingController();
+  final TextEditingController _fechaTomaMuestraController = TextEditingController();
+  final TextEditingController _fechaRecibidoController = TextEditingController();
 
   final TextEditingController _loteController = TextEditingController();
   final TextEditingController _cultivoController = TextEditingController();
@@ -67,10 +67,12 @@ class _SueloWidgetState extends State<SueloWidget> {
   final TextEditingController _corregimientoPredioController = TextEditingController();
   final TextEditingController _municipioPredioController = TextEditingController();
   final TextEditingController _dptoPredioController = TextEditingController();
+
   final TextEditingController _idpropietarioPredioController = TextEditingController();
   final TextEditingController _nombrepropietarioPredioController = TextEditingController();
   final TextEditingController _telefonopropietarioPredioController = TextEditingController();
   final TextEditingController _correopropietarioPredioController = TextEditingController();
+
 
   final TextEditingController _latitudPredioController = TextEditingController();
   final TextEditingController _longitudPredioController = TextEditingController();
@@ -336,75 +338,90 @@ class _SueloWidgetState extends State<SueloWidget> {
     if (_idPredioController.text.isNotEmpty &&
         _nombrePredioController.text.isNotEmpty &&
         _corregimientoPredioController.text.isNotEmpty &&
-        _cultivoController.text.isNotEmpty &&
         _municipioPredioController.text.isNotEmpty &&
-        _variedadController.text.isNotEmpty &&
         _dptoPredioController.text.isNotEmpty &&
+        _latitudPredioController.text.isNotEmpty &&
+        _longitudPredioController.text.isNotEmpty &&
+        _msnmPredioController.text.isNotEmpty &&
+        _profundidadSBPredioController.text.isNotEmpty &&
+        _puntosPredioController.text.isNotEmpty &&
+        _temperaturaPredioController.text.isNotEmpty &&
+        _lotesPredioController.text.isNotEmpty &&
+        _cultivoController.text.isNotEmpty &&
+        _variedadController.text.isNotEmpty &&
         _edadController.text.isNotEmpty &&
         _idpropietarioPredioController.text.isNotEmpty &&
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&
         _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
+        
         int idPrueba = generateUniqueID(); // Genera un ID único
-        bool isUnique = await _serviceFirebase.isIDUnique(idPrueba.toString());
+        bool isUnique = await _serviceFirebase.isIDUniquePruebaSuelo(idPrueba.toString());
         while (!isUnique) {
           idPrueba = generateUniqueID();
-          isUnique = await _serviceFirebase.isIDUnique(idPrueba.toString());
+          isUnique = await _serviceFirebase.isIDUniquePruebaSuelo(idPrueba.toString());
         }
 
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaSuelo pruebaSuelo = PruebaSuelo(
-            idPrueba: idPrueba.toString(),
-            idPredio: _idPredioController.text,
-            nombrePredio: _nombrePredioController.text,
-            corregimientoPredio: _corregimientoPredioController.text,
-            cultivo: _cultivoController.text,
-            municipioPredio: _municipioPredioController.text,
-            variedad: _variedadController.text,
-            dptoPredio: _dptoPredioController.text,
-            edad: _edadController.text,
-            recomendaciones: "",
-            presiembra: "",
-            siembra: "",
-            mantenimiento: "",
-            idPropietario: _idpropietarioPredioController.text,
-            nombrepropietario: _nombrepropietarioPredioController.text,
-            telefonoPropietario: _telefonopropietarioPredioController.text,
-            correoPropietario: _correopropietarioPredioController.text,
-            lote: _loteController.text,
-            fechaRecibido: _fechaRecibidoController.text,
-            fechaTomaMuestra: _fechaTomaMuestraController.text,
-            n: double.parse(_nController.text),
-            nh4: double.parse(_nh4Controller.text),
-            no2: double.parse(_no2Controller.text),
-            no3: double.parse(_no3Controller.text),
-            p: double.parse(_pController.text),
-            k: double.parse(_kController.text),
-            ca: double.parse(_caController.text),
-            mg: double.parse(_mgController.text),
-            s: double.parse(_sController.text),
-            so4: double.parse(_so4Controller.text),
-            fe: double.parse(_feController.text),
-            mn: double.parse(_mnController.text),
-            cu: double.parse(_cuController.text),
-            al: double.parse(_alController.text),
-            cl: double.parse(_clController.text),
-            zn: double.parse(_znController.text),
-            na: double.parse(_naController.text),
-            ph: double.parse(_phController.text),
-            ce: double.parse(_ceController.text),
-            salesDisueltas: double.parse(_salesdisueltasController.text),
-            cice: double.parse(_ciceController.text),
-            arcilla: double.parse(_arcillaController.text),
-            limo: double.parse(_limoController.text),
-            arena: double.parse(_arenaController.text),
-            humus: double.parse(_humusController.text));
+          idPrueba: idPrueba.toString(),
+          idPredio: _idPredioController.text,
+          nombrePredio: _nombrePredioController.text,
+          corregimientoPredio: _corregimientoPredioController.text,
+          municipioPredio: _municipioPredioController.text,
+          dptoPredio: _dptoPredioController.text,
+          latitud: _latitudPredioController.text,
+          longitud: _longitudPredioController.text,
+          msnm: _msnmPredioController.text,
+          profundidadSB: _profundidadSBPredioController.text,
+          puntos: _puntosPredioController.text,
+          temperatura: _temperaturaPredioController.text,
+          lotes: int.parse(_lotesPredioController.text),
+          cultivo: _cultivoController.text,
+          variedad: _variedadController.text,
+          edad: _edadController.text,
+          recomendaciones: "",
+          presiembra: "",
+          siembra: "",
+          mantenimiento: "",
+          idPropietario: _idpropietarioPredioController.text,
+          nombrepropietario: _nombrepropietarioPredioController.text,
+          telefonoPropietario: _telefonopropietarioPredioController.text,
+          correoPropietario: _correopropietarioPredioController.text,
+          lote: _loteController.text,
+          fechaRecibido: _fechaRecibidoController.text,
+          fechaTomaMuestra: _fechaTomaMuestraController.text,
+          n: double.parse(_nController.text),
+          nh4: double.parse(_nh4Controller.text),
+          no2: double.parse(_no2Controller.text),
+          no3: double.parse(_no3Controller.text),
+          p: double.parse(_pController.text),
+          k: double.parse(_kController.text),
+          ca: double.parse(_caController.text),
+          mg: double.parse(_mgController.text),
+          s: double.parse(_sController.text),
+          so4: double.parse(_so4Controller.text),
+          fe: double.parse(_feController.text),
+          mn: double.parse(_mnController.text),
+          cu: double.parse(_cuController.text),
+          al: double.parse(_alController.text),
+          cl: double.parse(_clController.text),
+          zn: double.parse(_znController.text),
+          na: double.parse(_naController.text),
+          ph: double.parse(_phController.text),
+          ce: double.parse(_ceController.text),
+          salesDisueltas: double.parse(_salesdisueltasController.text),
+          cice: double.parse(_ciceController.text),
+          arcilla: double.parse(_arcillaController.text),
+          limo: double.parse(_limoController.text),
+          arena: double.parse(_arenaController.text),
+          humus: double.parse(_humusController.text)
+        );
 
         final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
-        final List<String> interpretacionCompuestos =
-            pruebaSuelo.interpretacionCompuestos;
+        final List<String> interpretacionCompuestos = pruebaSuelo.interpretacionCompuestos;
 
         Navigator.push(
           context,

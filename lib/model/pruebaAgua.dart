@@ -2,16 +2,29 @@ class PruebaAgua {
   final String idPredio;
   final String nombrePredio;
   final String corregimientoPredio;
-  final String cultivoPredio;
   final String municipioPredio;
-  final String variedadPredio;
   final String dptoPredio;
-  final String edadPredio;
+  final String latitud;
+  final String longitud;
+  final String msnm;
+  final String profundidadSB;
+  final String puntos;
+  final String temperatura;
+  final int lotes;
+
   final String idPropietario;
   final String nombrepropietario;
   final String telefonopropietario;
   final String correopropietario;
-  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+
+  final String idPrueba;
+  String? fechaPrueba ='${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  final String fechaTomaMuestra;
+  final String fechaRecibido;
+  final String cultivo;
+  final String variedad;
+  final String edad;
+  final String lote;
 
   late String interpretacion;
   late String recomendaciones;
@@ -49,16 +62,7 @@ class PruebaAgua {
     'Mg',
     'SO4',
   ];
-  late List<double> valorgraficaCompuestos = [
-    nh4,
-    no2,
-    no3,
-    p,
-    k,
-    ca,
-    mg,
-    so4
-  ];
+  late List<double> valorgraficaCompuestos = [nh4, no2, no3, p, k, ca, mg, so4];
   final List<String> graficaCompuestos2 = [
     'Fe',
     'Mn',
@@ -68,10 +72,17 @@ class PruebaAgua {
     'C.E',
     'Sales',
   ];
-  late List<double> valorgraficaCompuestos2 = [fe, mn, cu, cl, ph,ce, salesDisueltas];
+  late List<double> valorgraficaCompuestos2 = [
+    fe,
+    mn,
+    cu,
+    cl,
+    ph,
+    ce,
+    salesDisueltas
+  ];
 
   final List<String> nombreCompuestos = [
-    
     'Nitrógeno - NH4+',
     'Nitritos - NO2-',
     'Nitratos - NO3-',
@@ -153,46 +164,51 @@ class PruebaAgua {
 
   //late String CaMg_Interpretacion;
 
-  PruebaAgua({
-    required this.idPredio,
-    required this.nombrePredio,
-    required this.corregimientoPredio,
-    required this.cultivoPredio,
-    required this.municipioPredio,
-    required this.variedadPredio,
-    required this.dptoPredio,
-    required this.edadPredio,
-    required this.idPropietario,
-    required this.nombrepropietario,
-    required this.telefonopropietario,
-    required this.correopropietario,
-    required this.interpretacion,
-    required this.recomendaciones,
-    required this.restricciones,
-
-    //required this.N,
-    required this.nh4,
-    required this.no2,
-    required this.no3,
-    required this.p,
-    required this.k,
-    required this.ca,
-    required this.mg,
-    required this.so4,
-    required this.fe,
-    required this.mn,
-    required this.cu,
-    required this.cl,
-    required this.ph,
-    required this.ce,
-    required this.salesDisueltas,
-    required this.tipoAgua,
-    fechaPrueba
-  }) {
-    //double d = (Ca / Mg);
-    //String inString = d.toStringAsFixed(3); // '2.35'
-    //CaMg = double.parse(inString);
-    //N_Interpretacion = interpretar_n(N);
+  PruebaAgua(
+      {required this.idPrueba,
+      required this.idPredio,
+      required this.nombrePredio,
+      required this.corregimientoPredio,
+      required this.municipioPredio,
+      required this.dptoPredio,
+      required this.latitud,
+      required this.longitud,
+      required this.msnm,
+      required this.profundidadSB,
+      required this.puntos,
+      required this.temperatura,
+      required this.lotes,
+      required this.cultivo,
+      required this.variedad,
+      required this.edad,
+      required this.lote,
+      required this.idPropietario,
+      required this.nombrepropietario,
+      required this.telefonopropietario,
+      required this.correopropietario,
+      required this.fechaTomaMuestra,
+      required this.fechaRecibido,
+      required this.interpretacion,
+      required this.recomendaciones,
+      required this.restricciones,
+      //required this.N,
+      required this.nh4,
+      required this.no2,
+      required this.no3,
+      required this.p,
+      required this.k,
+      required this.ca,
+      required this.mg,
+      required this.so4,
+      required this.fe,
+      required this.mn,
+      required this.cu,
+      required this.cl,
+      required this.ph,
+      required this.ce,
+      required this.salesDisueltas,
+      required this.tipoAgua,
+      fechaPrueba}) {
     nh4Interpretacion = nh4Interpretar(nh4);
     no2Interpretacion = no2Interpretar(no2);
     no3Interpretacion = no3Interpretar(no3);
@@ -402,11 +418,11 @@ class PruebaAgua {
     Map<String, dynamic> caData = map['Calcio - Ca'][0];
     Map<String, dynamic> mgData = map['Magnesio - Mg'][0];
     Map<String, dynamic> so4Data = map['Sulfato - SO4'][0];
-    
+
     Map<String, dynamic> mnData = map['Manganeso - Mn'][0];
     Map<String, dynamic> cuData = map['Cobre - Cu'][0];
     Map<String, dynamic> feData = map['Hierro Férrico - Fe'][0];
-    
+
     //Map<String, dynamic> Al_Data = map['Aluminio - Al'][0];
     Map<String, dynamic> clData = map['Cloruro - Cl'][0];
     // Map<String, dynamic> Zn_Data = map['Zinc - Zn'][0];
@@ -415,22 +431,32 @@ class PruebaAgua {
     Map<String, dynamic> phData = map['Ph'][0];
     Map<String, dynamic> ceData = map['C.E'][0];
     Map<String, dynamic> salesDisueltasData = map['Sales Disueltas'][0];
-    
-    
+
     return PruebaAgua(
+      idPrueba: map['IdPrueba'],
       idPredio: map['IdPredio'],
       nombrePredio: map['NombrePredio'],
       corregimientoPredio: map['Corregimiento'],
-      cultivoPredio: map['Cultivo'],
       municipioPredio: map['Municipio'],
-      variedadPredio: map['Variedad'],
       dptoPredio: map['Departamento'],
-      edadPredio: map['Edad'],
+      latitud: map['Latitud'],
+      longitud: map['Longitud'],
+      msnm: map['MSNM'],
+      profundidadSB: map['ProfundidadSB'],
+      puntos: map['Puntos'],
+      temperatura: map['Temperatura'],
+      lotes: map['Lotes'],
+      cultivo: map['Cultivo'],
+      variedad: map['Variedad'],
+      edad: map['Edad'],
       idPropietario: map['Idpropietario'],
       nombrepropietario: map['Nombrepropietario'],
       telefonopropietario: map['Telefono'],
       correopropietario: map['Correo'],
-      fechaPrueba : map ['Fecha'],
+      lote: map['Lote'],
+      fechaTomaMuestra: map['FechaTomaMuestra'],
+      fechaRecibido: map['FechaRecibido'],
+      fechaPrueba: map['Fecha'],
       interpretacion: map['Interpretacion'],
       recomendaciones: map['Recomendaciones'],
       restricciones: map['Restricciones'],
@@ -451,7 +477,6 @@ class PruebaAgua {
       ph: double.parse(phData['valor'].toString()),
       ce: double.parse(ceData['valor'].toString()),
       salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
-      tipoAgua: map['TipoAgua']
-    );
+      tipoAgua: map['TipoAgua']);
   }
 }

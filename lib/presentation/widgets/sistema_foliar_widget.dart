@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
+import 'package:mixcosechas_app/presentation/widgets/input_variables.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -20,6 +24,15 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
   int currentState = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ServiceFirebase _serviceFirebase = ServiceFirebase();
+
+  final TextEditingController _fechaTomaMuestraController = TextEditingController();
+  final TextEditingController _fechaRecibidoController = TextEditingController();
+
+  final TextEditingController _loteController = TextEditingController();
+  final TextEditingController _cultivoController = TextEditingController();
+  final TextEditingController _variedadController = TextEditingController();
+  final TextEditingController _edadController = TextEditingController();
+
   final TextEditingController _caController = TextEditingController();
   final TextEditingController _mgController = TextEditingController();
   final TextEditingController _naController = TextEditingController();
@@ -36,23 +49,20 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
   final TextEditingController _nombrePredioController = TextEditingController();
   CollectionReference prediosCollection =FirebaseFirestore.instance.collection('Predios');
 
-  final TextEditingController _idPredioController =TextEditingController();
+  final TextEditingController _idPredioController = TextEditingController();
   final TextEditingController _corregimientoPredioController =TextEditingController();
-  final TextEditingController _cultivoPredioController =TextEditingController();
   final TextEditingController _municipioPredioController =TextEditingController();
-  final TextEditingController _variedadPredioController =TextEditingController();
   final TextEditingController _dptoPredioController = TextEditingController();
-  final TextEditingController _edadPredioController = TextEditingController();
   final TextEditingController _idpropietarioPredioController =TextEditingController();
   final TextEditingController _nombrepropietarioPredioController =TextEditingController();
   final TextEditingController _telefonopropietarioPredioController =TextEditingController();
   final TextEditingController _correopropietarioPredioController =TextEditingController();
-  final TextEditingController _latitudPredioController = TextEditingController();
-  final TextEditingController _longitudPredioController = TextEditingController();
+  final TextEditingController _latitudPredioController =TextEditingController();
+  final TextEditingController _longitudPredioController =TextEditingController();
   final TextEditingController _msnmPredioController = TextEditingController();
-  final TextEditingController _profundidadSBPredioController = TextEditingController();
+  final TextEditingController _profundidadSBPredioController =TextEditingController();
   final TextEditingController _puntosPredioController = TextEditingController();
-  final TextEditingController _temperaturaPredioController = TextEditingController();
+  final TextEditingController _temperaturaPredioController =TextEditingController();
   final TextEditingController _lotesPredioController = TextEditingController();
 
   @override
@@ -77,29 +87,99 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
                   isActive: currentState >= 0,
                   title: const Text('Informacion del predio'),
                   content: SearchPredio(
-                      predioFilterController: _nombrePredioController,
-                      prediosCollection: prediosCollection,
-                      idPredioController:_idPredioController,
-                      corregimientoPredioController:_corregimientoPredioController,
-                     // cultivoPredioController: _cultivoPredioController,
-                      municipioPredioController: _municipioPredioController,
-                    //  variedadPredioController: _variedadPredioController,
-                      dptoPredioController: _dptoPredioController,
-                    //  edadPredioController: _edadPredioController,
-                      idpropietarioPredioController:_idpropietarioPredioController,
-                      nombrepropietarioPredioController:_nombrepropietarioPredioController,
-                      telefonopropietarioPredioController:_telefonopropietarioPredioController,
-                      correopropietarioPredioController:_correopropietarioPredioController,
-                      latitudPredioController: _latitudPredioController,
-                      longitudPredioController: _longitudPredioController,
-                      msnmPredioController: _msnmPredioController,
-                      profundidadSBPredioController:_profundidadSBPredioController,
-                      puntosPredioController: _puntosPredioController,
-                      temperaturaPredioController:_temperaturaPredioController,
-                      lotesPredioController: _lotesPredioController),
+                    predioFilterController: _nombrePredioController,
+                    prediosCollection: prediosCollection,
+                    idPredioController: _idPredioController,
+                    corregimientoPredioController:_corregimientoPredioController,
+                    municipioPredioController: _municipioPredioController,
+                    dptoPredioController: _dptoPredioController,
+                    idpropietarioPredioController:_idpropietarioPredioController,
+                    nombrepropietarioPredioController:_nombrepropietarioPredioController,
+                    telefonopropietarioPredioController:_telefonopropietarioPredioController,
+                    correopropietarioPredioController:_correopropietarioPredioController,
+                    latitudPredioController: _latitudPredioController,
+                    longitudPredioController: _longitudPredioController,
+                    msnmPredioController: _msnmPredioController,
+                    profundidadSBPredioController:_profundidadSBPredioController,
+                    puntosPredioController: _puntosPredioController,
+                    temperaturaPredioController: _temperaturaPredioController,
+                    lotesPredioController: _lotesPredioController),
                 ),
                 Step(
-                  isActive: currentState >= 1,
+                    isActive: currentState >= 1,
+                    title: const Text('Información de la prueba'),
+                    content: Column(
+                      children: [
+                  
+                        TextField(
+                          controller: _fechaTomaMuestraController, //editing controller of this TextField
+                          decoration:const InputDecoration( 
+                            icon: Icon(Icons.calendar_today), //icon of text field
+                            labelText: "Fecha Toma de Muestra" //label text of field
+                          ),
+                          readOnly: true,  //set it true, so that user will not able to edit text
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context, initialDate: DateTime.now(),
+                                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2101)
+                            );
+                            
+                            if(pickedDate != null ){
+                                
+                                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
+
+                                setState(() {
+                                  _fechaTomaMuestraController.text = formattedDate; //set output date to TextField value. 
+                                });
+                            }else{
+                                print("Fecha no seleccionada");
+                            }
+                          },
+                        ),
+                        TextField(
+                          controller: _fechaRecibidoController, //editing controller of this TextField
+                          decoration:const InputDecoration( 
+                            icon: Icon(Icons.calendar_today), //icon of text field
+                            labelText: "Fecha Muestra Recibida" //label text of field
+                          ),
+                          readOnly: true,  //set it true, so that user will not able to edit text
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context, initialDate: DateTime.now(),
+                                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2101)
+                            );
+                            
+                            if(pickedDate != null ){
+                                print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
+                                print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                  //you can implement different kind of Date Format here according to your requirement
+
+                                setState(() {
+                                  _fechaRecibidoController.text = formattedDate; //set output date to TextField value. 
+                                });
+                            }else{
+                                print("Fecha no seleccionada");
+                            }
+                          },
+                        ),
+                        ImputVariable(
+                            nombreVariable: 'Cultivo',
+                            controller: _cultivoController),
+                        ImputVariable(
+                            nombreVariable: 'Variedad',
+                            controller: _variedadController),
+                        ImputVariable(
+                            nombreVariable: 'Edad', controller: _edadController),
+                        ImputVariable(
+                            nombreVariable: 'Lote', controller: _loteController),
+                      ],
+                    ),
+                  ),
+                Step(
+                  isActive: currentState >= 2,
                   title: const Text('Macronutrientes'),
                   content: Column(
                     children: [
@@ -305,7 +385,7 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
                   ),
                 ),
                 Step(
-                    isActive: currentState >= 2,
+                    isActive: currentState >= 3,
                     title: const Text('Micronutrientes'),
                     content: Column(
                       children: [
@@ -482,34 +562,63 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
             )));
   }
 
-  void _handleRegistroAgua() {
+  int generateUniqueID() {
+    return Random().nextInt(1000000);
+  }
+
+  void _handleRegistroAgua() async{
     if (_idPredioController.text.isNotEmpty &&
-      _nombrePredioController.text.isNotEmpty &&
-      _corregimientoPredioController.text.isNotEmpty &&
-      _cultivoPredioController.text.isNotEmpty &&
-      _municipioPredioController.text.isNotEmpty &&
-      _variedadPredioController.text.isNotEmpty &&
-      _dptoPredioController.text.isNotEmpty &&
-      _edadPredioController.text.isNotEmpty &&
-      _idpropietarioPredioController.text.isNotEmpty &&
-      _nombrepropietarioPredioController.text.isNotEmpty &&
-      _telefonopropietarioPredioController.text.isNotEmpty &&
-      _correopropietarioPredioController.text.isNotEmpty) {
+        _nombrePredioController.text.isNotEmpty &&
+        _corregimientoPredioController.text.isNotEmpty &&
+        _municipioPredioController.text.isNotEmpty &&
+        _dptoPredioController.text.isNotEmpty &&
+        _latitudPredioController.text.isNotEmpty &&
+        _longitudPredioController.text.isNotEmpty &&
+        _msnmPredioController.text.isNotEmpty &&
+        _profundidadSBPredioController.text.isNotEmpty &&
+        _puntosPredioController.text.isNotEmpty &&
+        _temperaturaPredioController.text.isNotEmpty &&
+        _lotesPredioController.text.isNotEmpty &&
+        _cultivoController.text.isNotEmpty &&
+        _variedadController.text.isNotEmpty &&
+        _edadController.text.isNotEmpty &&
+        _idpropietarioPredioController.text.isNotEmpty &&
+        _nombrepropietarioPredioController.text.isNotEmpty &&
+        _telefonopropietarioPredioController.text.isNotEmpty &&
+        _correopropietarioPredioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
+
+        int idPrueba = generateUniqueID(); // Genera un ID único
+        bool isUnique = await _serviceFirebase.isIDUniquePruebaSistemaFoliar(idPrueba.toString());
+        while (!isUnique) {
+          idPrueba = generateUniqueID();
+          isUnique = await _serviceFirebase.isIDUniquePruebaSistemaFoliar(idPrueba.toString());
+        }
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
         PruebaSistemaFoliar pruebaSistemaFoliar = PruebaSistemaFoliar(
+          idPrueba: idPrueba.toString(),
           idPredio: _idPredioController.text,
           nombrePredio: _nombrePredioController.text,
           corregimientoPredio: _corregimientoPredioController.text,
-          cultivoPredio: _cultivoPredioController.text,
           municipioPredio: _municipioPredioController.text,
-          variedadPredio: _variedadPredioController.text,
           dptoPredio: _dptoPredioController.text,
-          edadPredio: _edadPredioController.text,
+          latitud: _latitudPredioController.text,
+          longitud: _longitudPredioController.text,
+          msnm: _msnmPredioController.text,
+          profundidadSB: _profundidadSBPredioController.text,
+          puntos: _puntosPredioController.text,
+          temperatura: _temperaturaPredioController.text,
+          lotes: int.parse(_lotesPredioController.text),
+          cultivo: _cultivoController.text,
+          variedad: _variedadController.text,
+          edad: _edadController.text,
           idPropietario: _idpropietarioPredioController.text,
           nombrepropietario: _nombrepropietarioPredioController.text,
           telefonopropietario: _telefonopropietarioPredioController.text,
           correopropietario: _correopropietarioPredioController.text,
+          lote: _loteController.text,
+          fechaRecibido: _fechaRecibidoController.text,
+          fechaTomaMuestra: _fechaTomaMuestraController.text,
           ca: _caController.text,
           mg: _mgController.text,
           na: _naController.text,
@@ -524,20 +633,29 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
         );
 
         _serviceFirebase.addPruebaSistemaFoliar(pruebaSistemaFoliar);
-        
+
         QuickAlertDialog.showAlert(context, QuickAlertType.success,"Se registró la prueba correctamente");
+
         _idPredioController.text = '';
         _nombrePredioController.text = '';
         _corregimientoPredioController.text = '';
-        _cultivoPredioController.text = '';
+        _cultivoController.text = '';
         _municipioPredioController.text = '';
-        _variedadPredioController.text = '';
+        _variedadController.text = '';
         _dptoPredioController.text = '';
-        _edadPredioController.text = '';
+        _edadController.text = '';
         _idpropietarioPredioController.text = '';
         _nombrepropietarioPredioController.text = '';
         _telefonopropietarioPredioController.text = '';
         _correopropietarioPredioController.text = '';
+        _latitudPredioController.text = '';
+        _longitudPredioController.text = '';
+        _msnmPredioController.text = '';
+        _profundidadSBPredioController.text = '';
+        _puntosPredioController.text = '';
+        _temperaturaPredioController.text = '';
+        _lotesPredioController.text = '';
+        
 
         _caController.text = '';
         _mgController.text = '';
@@ -552,10 +670,10 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
         _bController.text = '';
         FocusScope.of(context).unfocus();
       } else {
-        QuickAlertDialog.showAlert(context, QuickAlertType.error,"Debes llenar todos los campos");
+        QuickAlertDialog.showAlert(context, QuickAlertType.error, "Debes llenar todos los campos");
       }
     } else {
-      QuickAlertDialog.showAlert(context, QuickAlertType.warning,"Debes elegir un predio");
+      QuickAlertDialog.showAlert(context, QuickAlertType.warning, "Debes elegir un predio");
     }
   }
 }

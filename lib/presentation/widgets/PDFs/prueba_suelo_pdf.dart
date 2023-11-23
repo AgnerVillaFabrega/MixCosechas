@@ -178,11 +178,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Latitud:';
-  row.cells[1].value = '0'; //predio.latitud;
+  row.cells[1].value = pruebaSuelo.latitud; 
   row.cells[2].value = 'Longitud:';
-  row.cells[3].value = '0'; //predio.longitud;
+  row.cells[3].value = pruebaSuelo.longitud; 
   row.cells[4].value = 'MSNM:';
-  row.cells[5].value = '0'; //predio.msnm;
+  row.cells[5].value = pruebaSuelo.msnm;
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Cultivo:';
@@ -194,11 +194,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   row = gridInformacionGeneral.rows.add();
   row.cells[0].value = 'Profundidad Suelo Biotico:';
-  row.cells[1].value = '0'; //predio.profundidadSB;
+  row.cells[1].value = pruebaSuelo.profundidadSB;
   row.cells[2].value = 'Puntos:';
-  row.cells[3].value = '0'; //predio.puntos;
+  row.cells[3].value = pruebaSuelo.puntos;
   row.cells[4].value = 'Temperatura:';
-  row.cells[5].value = '0'; //predio.temperatura;
+  row.cells[5].value = pruebaSuelo.temperatura;
 
   for (int rowIndex = 0;
       rowIndex < gridInformacionGeneral.rows.count;
@@ -433,10 +433,10 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba13.cells[1].value = 'ppm';
   rowDatosPrueba13.cells[2].value = pruebaSuelo.zn.toString();
   rowDatosPrueba13.cells[3].value = pruebaSuelo.znInterpretacion;
-  rowDatosPrueba13.cells[4].value = ' ';
-  rowDatosPrueba13.cells[5].value = ' ';
-  rowDatosPrueba13.cells[6].value = ' ';
-  rowDatosPrueba13.cells[7].value = ' ';
+  rowDatosPrueba13.cells[4].value = 'Ca+Mg+K/Al';
+  rowDatosPrueba13.cells[5].value = 'Und';
+  rowDatosPrueba13.cells[6].value = pruebaSuelo.camgkal.toString();
+  rowDatosPrueba13.cells[7].value = pruebaSuelo.camgkalInterpretacion;
 
   PdfGridRow rowDatosPrueba14 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba14);
@@ -445,7 +445,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba14.cells[1].value = 'ppm';
   rowDatosPrueba14.cells[2].value = pruebaSuelo.cu.toString();
   rowDatosPrueba14.cells[3].value = pruebaSuelo.cuInterpretacion;
-  rowDatosPrueba14.cells[4].value = ' ';
+  rowDatosPrueba14.cells[4].value = 'BASES INTERCAMBIABLES';
   rowDatosPrueba14.cells[5].value = ' ';
   rowDatosPrueba14.cells[6].value = ' ';
   rowDatosPrueba14.cells[7].value = ' ';
@@ -457,10 +457,10 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba15.cells[1].value = 'ppm';
   rowDatosPrueba15.cells[2].value = pruebaSuelo.cl.toString();
   rowDatosPrueba15.cells[3].value = pruebaSuelo.clInterpretacion;
-  rowDatosPrueba15.cells[4].value = 'BASES INTERCAMBIABLES';
-  rowDatosPrueba15.cells[5].value = ' ';
-  rowDatosPrueba15.cells[6].value = ' ';
-  rowDatosPrueba15.cells[7].value = ' ';
+  rowDatosPrueba15.cells[4].value = 'Bases Totales';
+  rowDatosPrueba15.cells[5].value = 'Und';
+  rowDatosPrueba15.cells[6].value = pruebaSuelo.basesTotales.toString();
+  rowDatosPrueba15.cells[7].value = pruebaSuelo.basesTotalesInterpretacion;
 
   PdfGridRow rowDatosPrueba16 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba16);
@@ -469,10 +469,10 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba16.cells[1].value = 'T Color';
   rowDatosPrueba16.cells[2].value = pruebaSuelo.al.toString();
   rowDatosPrueba16.cells[3].value = pruebaSuelo.alInterpretacion;
-  rowDatosPrueba16.cells[4].value = 'Bases Totales';
-  rowDatosPrueba16.cells[5].value = 'Und';
-  rowDatosPrueba16.cells[6].value = ' ';
-  rowDatosPrueba16.cells[7].value = ' ';
+  rowDatosPrueba16.cells[4].value = 'Saturacion Na';
+  rowDatosPrueba16.cells[5].value = '%';
+  rowDatosPrueba16.cells[6].value = pruebaSuelo.naSaturacion.toString();
+  rowDatosPrueba16.cells[7].value = pruebaSuelo.naSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba17 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba17);
@@ -483,8 +483,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba17.cells[3].value = ' ';
   rowDatosPrueba17.cells[4].value = 'Saturación de Al';
   rowDatosPrueba17.cells[5].value = '%';
-  rowDatosPrueba17.cells[6].value = ' ';
-  rowDatosPrueba17.cells[7].value = ' ';
+  rowDatosPrueba17.cells[6].value = pruebaSuelo.alSaturacion.toString();
+  rowDatosPrueba17.cells[7].value = pruebaSuelo.alSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba18 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba18);
@@ -495,8 +495,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba18.cells[3].value = 'NA';
   rowDatosPrueba18.cells[4].value = 'Saturacion de K';
   rowDatosPrueba18.cells[5].value = '%';
-  rowDatosPrueba18.cells[6].value = ' ';
-  rowDatosPrueba18.cells[7].value = ' ';
+  rowDatosPrueba18.cells[6].value = pruebaSuelo.kSaturacion.toString();
+  rowDatosPrueba18.cells[7].value = pruebaSuelo.kSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba19 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba19);
@@ -507,8 +507,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba19.cells[3].value = 'NA';
   rowDatosPrueba19.cells[4].value = 'Saturación de Ca';
   rowDatosPrueba19.cells[5].value = '%';
-  rowDatosPrueba19.cells[6].value = ' ';
-  rowDatosPrueba19.cells[7].value = ' ';
+  rowDatosPrueba19.cells[6].value = pruebaSuelo.caSaturacion.toString();
+  rowDatosPrueba19.cells[7].value = pruebaSuelo.caSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba20 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba20);
@@ -519,8 +519,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba20.cells[3].value = 'NA';
   rowDatosPrueba20.cells[4].value = 'Saturación de Mg';
   rowDatosPrueba20.cells[5].value = '%';
-  rowDatosPrueba20.cells[6].value = ' ';
-  rowDatosPrueba20.cells[7].value = ' ';
+  rowDatosPrueba20.cells[6].value = pruebaSuelo.mgSaturacion.toString();
+  rowDatosPrueba20.cells[7].value = pruebaSuelo.mgSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba21 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba21);
@@ -531,8 +531,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba21.cells[3].value = pruebaSuelo.textura;
   rowDatosPrueba21.cells[4].value = 'Saturación BT';
   rowDatosPrueba21.cells[5].value = '%';
-  rowDatosPrueba21.cells[6].value = ' ';
-  rowDatosPrueba21.cells[7].value = ' ';
+  rowDatosPrueba21.cells[6].value = pruebaSuelo.basesTotalesSaturacion.toString();
+  rowDatosPrueba21.cells[7].value = pruebaSuelo.basesTotalesSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba22 = gridDatosPrueba.rows.add();
   listaRows.add(rowDatosPrueba22);
@@ -566,8 +566,8 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
             style: PdfFontStyle.bold);
       }
 
-      // Cambia el color de fondo de las celdas en la columna 5 excepto en las filas 3, 8, 9, 15, 16
-      if (cellIndex == 4 && ![0, 1, 2, 7, 8, 14, 15].contains(rowIndex)) {
+      // Cambia el color de fondo de las celdas en la columna 4 excepto en las filas 3, 8, 9, 15, 16
+      if (cellIndex == 4 && ![0, 1, 2, 7, 8, 14].contains(rowIndex)) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
         cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
             style: PdfFontStyle.bold);
@@ -587,7 +587,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
       }
 
       // Pone color y subtitulos en cursiva de la columna 4
-      if (cellIndex == 4 && [0, 1, 2, 7, 8, 14, 15].contains(rowIndex)) {
+      if (cellIndex == 4 && [0, 1, 2, 7, 8, 14].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
           font: PdfStandardFont(PdfFontFamily.helvetica, 6,
               style: PdfFontStyle.italic),
@@ -618,7 +618,12 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
       if (cellIndex == 3 || cellIndex == 7) {
         // Ajusta el ancho de la columna según tus necesidades
-        gridDatosPrueba.columns[cellIndex].width = 50;
+        gridDatosPrueba.columns[cellIndex].width = 100;
+      }
+
+      if (cellIndex == 7) {
+        // Ajusta el ancho de la columna según tus necesidades
+        gridDatosPrueba.columns[cellIndex].width = 120;
       }
 
       cell.style.borders.all = PdfPen(
