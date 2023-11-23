@@ -163,6 +163,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                             icon: Icon(Icons.calendar_today), //icon of text field
                             labelText: "Fecha Muestra Recibida" //label text of field
                           ),
+                          
                           readOnly: true,  //set it true, so that user will not able to edit text
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
@@ -182,6 +183,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                                 "Fecha no seleccionada");
                             }
                           },
+                        
                         ),
                         TextFormField(
                           controller: _cultivoController,
@@ -212,7 +214,20 @@ class _SueloWidgetState extends State<SueloWidget> {
                           }
                         ),
 
-                        ImputVariable(nombreVariable: 'Edad', controller: _edadController),
+                        TextFormField(
+                          controller: _edadController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Edad',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
                         TextFormField(
                           controller: _loteController,
                           keyboardType: TextInputType.number,
@@ -223,6 +238,9 @@ class _SueloWidgetState extends State<SueloWidget> {
                           validator: (String? value){
                             if (value ==null || value.isEmpty) {
                               return "Campo requerido";
+                            }else if(int.parse(value) > int.parse(_lotesPredioController.text)){
+                              return "Lote excede el numero de lotes del predio";
+                              
                             }
                             return null;
                           }
@@ -377,9 +395,9 @@ class _SueloWidgetState extends State<SueloWidget> {
         _puntosPredioController.text.isNotEmpty &&
         _temperaturaPredioController.text.isNotEmpty &&
         _lotesPredioController.text.isNotEmpty &&
-        _cultivoController.text.isNotEmpty &&
-        _variedadController.text.isNotEmpty &&
-        _edadController.text.isNotEmpty &&
+       // _cultivoController.text.isNotEmpty &&
+       // _variedadController.text.isNotEmpty &&
+       // _edadController.text.isNotEmpty &&
         _idpropietarioPredioController.text.isNotEmpty && 
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&

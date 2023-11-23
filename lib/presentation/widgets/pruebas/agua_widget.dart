@@ -219,11 +219,37 @@ class _AguaWidgetState extends State<AguaWidget> {
                             return null;
                           }
                         ),
-
-                      ImputVariable(
-                          nombreVariable: 'Edad', controller: _edadController),
-                      ImputVariable(
-                          nombreVariable: 'Lote', controller: _loteController),
+                      TextFormField( 
+                          controller: _edadController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: 'Edad',
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }
+                            return null;
+                          }
+                        ),
+                      TextFormField(
+                          controller: _loteController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: "Lote_",
+                            labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
+                          ),
+                          validator: (String? value){
+                            if (value ==null || value.isEmpty) {
+                              return "Campo requerido";
+                            }else if(int.parse(value) > int.parse(_lotesPredioController.text)){
+                              return "El lote excede el numero de lotes del predio";
+                              
+                            }
+                            return null;
+                          }
+                        ),
                     ],
                   ),
                 ),
