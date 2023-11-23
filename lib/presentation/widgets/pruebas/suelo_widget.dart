@@ -380,7 +380,7 @@ class _SueloWidgetState extends State<SueloWidget> {
         _cultivoController.text.isNotEmpty &&
         _variedadController.text.isNotEmpty &&
         _edadController.text.isNotEmpty &&
-        _idpropietarioPredioController.text.isNotEmpty &&
+        _idpropietarioPredioController.text.isNotEmpty && 
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&
         _correopropietarioPredioController.text.isNotEmpty) {

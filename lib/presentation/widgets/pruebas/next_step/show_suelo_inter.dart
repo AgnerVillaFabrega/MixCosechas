@@ -45,7 +45,7 @@ class ShowSuelo extends StatelessWidget {
             tabs: [
               Tab(text: 'Interpretacion'),
               Tab(text: 'Graficas'),
-              Tab(text: 'Plan fertilizacion'),
+              Tab(text: 'Plan Nutricion'),
             ],
           ),
         ),

@@ -389,7 +389,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _handleRegistroPredio() async {
     //Todo: agregar los valores de correo, telefono y nombre
-    if (_identificacionPropietarioController.text.isNotEmpty && _nombrePropietarioController.text.isNotEmpty && _telefonoPropietarioController.text.isNotEmpty && _correoPropietarioController.text.isNotEmpty) {
+    if (_identificacionPropietarioController.text.isNotEmpty && 
+    _nombrePropietarioController.text.isNotEmpty && 
+    _telefonoPropietarioController.text.isNotEmpty && 
+    _correoPropietarioController.text.isNotEmpty) {
       if (formKey.currentState!.validate()) {
         int idPredio = generateUniqueID(); // Genera un ID único
         bool isUnique = await _serviceFirebase.isIDUnique(idPredio.toString());
