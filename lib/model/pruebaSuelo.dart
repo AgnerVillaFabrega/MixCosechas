@@ -18,7 +18,8 @@ class PruebaSuelo {
   final String correoPropietario;
 
   final String idPrueba;
-  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba =
+      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String edad;
@@ -81,21 +82,24 @@ class PruebaSuelo {
     'P',
     'K',
     'Ca',
-    'S',
     'Mg',
   ];
-  late List<double> valorgraficaCompuestos = [
-    n,
-    nh4,
-    no2,
-    no3,
-    p,
-    k,
-    ca,
-    s,
-    mg,
-  ];
+  // late List<double> valorgraficaCompuestos = [
+  //   n,
+  //   nh4,
+  //   no2,
+  //   no3,
+  //   p,
+  //   k,
+  //   ca,
+  //   s,
+  //   mg,
+  // ];
+
+  late List<int> valorgraficaCompuestos = convertirValores(valorCompuestos);
+
   final List<String> graficaCompuestos2 = [
+    'S',
     'SO4',
     'Fe ',
     'Mn',
@@ -105,7 +109,9 @@ class PruebaSuelo {
     'Zn',
     'Na',
   ];
-  late List<double> valorgraficaCompuestos2 = [so4, fe, mn, cu, al, cl, zn, na];
+  //late List<double> valorgraficaCompuestos2 = [so4, fe, mn, cu, al, cl, zn, na];
+
+  late List<int> valorgraficaCompuestos2 = convertirValores2(valorCompuestos);
 
   final List<String> nombreCompuestos = [
     'Nitrato de Nitrógeno',
@@ -115,8 +121,8 @@ class PruebaSuelo {
     'Fósforo P',
     'Potasio K',
     'Calcio Ca',
-    'Azufre S',
     'Magnesio Mg',
+    'Azufre S',
     'Sulfato SO4',
     'Hierro Férrico Fe ',
     'Manganeso Mn',
@@ -134,7 +140,7 @@ class PruebaSuelo {
     'Ca/K',
     'Mg/K',
     'Ca+Mg+K/Al'
-    'Bases Totales',
+        'Bases Totales',
     'Saturacion Na',
     'Saturación  Al',
     'Saturacion  K',
@@ -156,8 +162,8 @@ class PruebaSuelo {
     p,
     k,
     ca,
-    s,
     mg,
+    s,
     so4,
     fe,
     mn,
@@ -197,8 +203,8 @@ class PruebaSuelo {
     pInterpretacion,
     kInterpretacion,
     caInterpretacion,
-    sInterpretacion,
     mgInterpretacion,
+    sInterpretacion,
     so4Interpretacion,
     feInterpretacion,
     mnInterpretacion,
@@ -370,11 +376,42 @@ class PruebaSuelo {
     caSaturacionInterpretacion = caSaturacionInterpretar(caSaturacion);
     mgSaturacionInterpretacion = mgSaturacionInterpretar(mgSaturacion);
     naSaturacionInterpretacion = naSaturacionInterpretar(naSaturacion);
-    basesTotalesSaturacionInterpretacion = basesTotalesSaturacionInterpretar(basesTotalesSaturacion);
+    basesTotalesSaturacionInterpretacion =
+        basesTotalesSaturacionInterpretar(basesTotalesSaturacion);
 
     humusInterpretacion = interpretarHumus(humus);
 
     textura = valorTextura(arcilla, limo, arena);
+  }
+
+  List<int> convertirValores(List<double> listaValores) {
+    List<int> valorGraficaCompuestos1 = [];
+    List<double> porcentajes = [50, 35.5, 5, 30, 35, 147, 2800, 150];
+
+    double aux = 0;
+
+    for (int i = 0; i < 8; i++) {
+      aux = (listaValores[i] / porcentajes[i]) * 10;
+
+      valorGraficaCompuestos1.add(aux.round());
+    }
+    return valorGraficaCompuestos1;
+  }
+
+  List<int> convertirValores2(List<double> listaValores) {
+    List<int> valorGraficaCompuestos2 = [];
+    List<double> porcentajes = [75,200, 25, 40, 4, 150, 500, 2, 1];
+
+    double aux = 0;
+    int j = 0;
+
+    for (int i = 8; i < 17; i++) {
+      aux = (listaValores[i] / porcentajes[j]) * 10;
+      j++;
+
+      valorGraficaCompuestos2.add(aux.round());
+    }
+    return valorGraficaCompuestos2;
   }
 
   String nInterpretar(double valor) {

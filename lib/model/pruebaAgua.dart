@@ -18,7 +18,8 @@ class PruebaAgua {
   final String correopropietario;
 
   final String idPrueba;
-  String? fechaPrueba ='${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba =
+      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String cultivo;
@@ -62,7 +63,8 @@ class PruebaAgua {
     'Mg',
     'SO4',
   ];
-  late List<double> valorgraficaCompuestos = [nh4, no2, no3, p, k, ca, mg, so4];
+  //late List<double> valorgraficaCompuestos = [nh4, no2, no3, p, k, ca, mg, so4];
+  late List<int> valorgraficaCompuestos = convertirValores(valorCompuestos);
   final List<String> graficaCompuestos2 = [
     'Fe',
     'Mn',
@@ -72,15 +74,17 @@ class PruebaAgua {
     'C.E',
     'Sales',
   ];
-  late List<double> valorgraficaCompuestos2 = [
-    fe,
-    mn,
-    cu,
-    cl,
-    ph,
-    ce,
-    salesDisueltas
-  ];
+  // late List<double> valorgraficaCompuestos2 = [
+  //   fe,
+  //   mn,
+  //   cu,
+  //   cl,
+  //   ph,
+  //   ce,
+  //   salesDisueltas
+  // ];
+
+  late List<int> valorgraficaCompuestos2 = convertirValores2(valorCompuestos);
 
   final List<String> nombreCompuestos = [
     'Nitrógeno - NH4+',
@@ -241,6 +245,36 @@ class PruebaAgua {
   //     return "Alto";
   //   }
   // }
+
+  List<int> convertirValores(List<double> listaValores) {
+    List<int> valorGraficaCompuestos1 = [];
+    List<double> porcentajes = [50, 35.5, 5, 30, 35, 147, 2800, 150, 75];
+
+    double aux = 0;
+
+    for (int i = 0; i < 9; i++) {
+      aux = (listaValores[i] / porcentajes[i]) * 10;
+
+      valorGraficaCompuestos1.add(aux.round());
+    }
+    return valorGraficaCompuestos1;
+  }
+
+  List<int> convertirValores2(List<double> listaValores) {
+    List<int> valorGraficaCompuestos1 = [];
+    List<double> porcentajes = [200, 25, 40, 4, 150, 500, 2];
+
+    double aux = 0;
+    int j = 0;
+
+    for (int i = 9; i < 16; i++) {
+      aux = (listaValores[i] / porcentajes[j]) * 10;
+      j++;
+      valorGraficaCompuestos1.add(aux.round());
+    }
+    return valorGraficaCompuestos1;
+  }
+
   String nh4Interpretar(double valor) {
     if (valor < 5) {
       return "(SR)";
@@ -433,50 +467,50 @@ class PruebaAgua {
     Map<String, dynamic> salesDisueltasData = map['Sales Disueltas'][0];
 
     return PruebaAgua(
-      idPrueba: map['IdPrueba'],
-      idPredio: map['IdPredio'],
-      nombrePredio: map['NombrePredio'],
-      corregimientoPredio: map['Corregimiento'],
-      municipioPredio: map['Municipio'],
-      dptoPredio: map['Departamento'],
-      latitud: map['Latitud'],
-      longitud: map['Longitud'],
-      msnm: map['MSNM'],
-      profundidadSB: map['ProfundidadSB'],
-      puntos: map['Puntos'],
-      temperatura: map['Temperatura'],
-      lotes: map['Lotes'],
-      cultivo: map['Cultivo'],
-      variedad: map['Variedad'],
-      edad: map['Edad'],
-      idPropietario: map['Idpropietario'],
-      nombrepropietario: map['Nombrepropietario'],
-      telefonopropietario: map['Telefono'],
-      correopropietario: map['Correo'],
-      lote: map['Lote'],
-      fechaTomaMuestra: map['FechaTomaMuestra'],
-      fechaRecibido: map['FechaRecibido'],
-      fechaPrueba: map['Fecha'],
-      interpretacion: map['Interpretacion'],
-      recomendaciones: map['Recomendaciones'],
-      restricciones: map['Restricciones'],
-      // N: N_Data['valor'],
-      nh4: double.parse(nh4Data['valor'].toString()),
-      no2: double.parse(no2Data['valor'].toString()),
-      no3: double.parse(no3Data['valor'].toString()),
-      p: double.parse(pData['valor'].toString()),
-      k: double.parse(kData['valor'].toString()),
-      ca: double.parse(caData['valor'].toString()),
-      mg: double.parse(mgData['valor'].toString()),
-      so4: double.parse(so4Data['valor'].toString()),
-      fe: double.parse(feData['valor'].toString()),
-      mn: double.parse(mnData['valor'].toString()),
-      cu: double.parse(cuData['valor'].toString()),
-      //   Al: Al_Data['valor'],
-      cl: double.parse(clData['valor'].toString()),
-      ph: double.parse(phData['valor'].toString()),
-      ce: double.parse(ceData['valor'].toString()),
-      salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
-      tipoAgua: map['TipoAgua']);
+        idPrueba: map['IdPrueba'],
+        idPredio: map['IdPredio'],
+        nombrePredio: map['NombrePredio'],
+        corregimientoPredio: map['Corregimiento'],
+        municipioPredio: map['Municipio'],
+        dptoPredio: map['Departamento'],
+        latitud: map['Latitud'],
+        longitud: map['Longitud'],
+        msnm: map['MSNM'],
+        profundidadSB: map['ProfundidadSB'],
+        puntos: map['Puntos'],
+        temperatura: map['Temperatura'],
+        lotes: map['Lotes'],
+        cultivo: map['Cultivo'],
+        variedad: map['Variedad'],
+        edad: map['Edad'],
+        idPropietario: map['Idpropietario'],
+        nombrepropietario: map['Nombrepropietario'],
+        telefonopropietario: map['Telefono'],
+        correopropietario: map['Correo'],
+        lote: map['Lote'],
+        fechaTomaMuestra: map['FechaTomaMuestra'],
+        fechaRecibido: map['FechaRecibido'],
+        fechaPrueba: map['Fecha'],
+        interpretacion: map['Interpretacion'],
+        recomendaciones: map['Recomendaciones'],
+        restricciones: map['Restricciones'],
+        // N: N_Data['valor'],
+        nh4: double.parse(nh4Data['valor'].toString()),
+        no2: double.parse(no2Data['valor'].toString()),
+        no3: double.parse(no3Data['valor'].toString()),
+        p: double.parse(pData['valor'].toString()),
+        k: double.parse(kData['valor'].toString()),
+        ca: double.parse(caData['valor'].toString()),
+        mg: double.parse(mgData['valor'].toString()),
+        so4: double.parse(so4Data['valor'].toString()),
+        fe: double.parse(feData['valor'].toString()),
+        mn: double.parse(mnData['valor'].toString()),
+        cu: double.parse(cuData['valor'].toString()),
+        //   Al: Al_Data['valor'],
+        cl: double.parse(clData['valor'].toString()),
+        ph: double.parse(phData['valor'].toString()),
+        ce: double.parse(ceData['valor'].toString()),
+        salesDisueltas: double.parse(salesDisueltasData['valor'].toString()),
+        tipoAgua: map['TipoAgua']);
   }
 }

@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 
   class CompuestosChart extends StatelessWidget {
   final List<String> graficaCompuestos;
-  final List<double> valorgraficaCompuestos;
+  final List<int> valorgraficaCompuestos;
   CompuestosChart(this.graficaCompuestos, this.valorgraficaCompuestos);
 
   @override
@@ -11,7 +11,7 @@ Widget build(BuildContext context) {
   return BarChart(
     BarChartData(
       alignment: BarChartAlignment.spaceAround,
-      maxY: 10.0, 
+      maxY: 16.0, 
       titlesData: FlTitlesData(
         leftTitles: SideTitles(showTitles: true),
         bottomTitles: SideTitles(
@@ -29,13 +29,14 @@ Widget build(BuildContext context) {
       borderData: FlBorderData(
         show: true,
       ),
+      
       barGroups: [
         for (int i = 0; i < graficaCompuestos.length; i++)
           BarChartGroupData(
             x: i,
             barRods: [
               BarChartRodData(
-                y: valorgraficaCompuestos[i],  // Valor del compuesto actual
+                y: double.parse(valorgraficaCompuestos[i].toString()),  // Valor del compuesto actual
                 colors: [Colors.greenAccent],  // Color de la barra
               ),
             ],

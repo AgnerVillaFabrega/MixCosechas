@@ -219,19 +219,32 @@ class _AguaWidgetState extends State<AguaWidget> {
                             return null;
                           }
                         ),
-                      TextFormField( 
-                          controller: _edadController,
-                          keyboardType: TextInputType.text,
+                      DropdownButtonFormField<String>(
+                          value: _edadController.text,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _edadController.text = newValue!;
+                            });
+                          },
                           decoration: const InputDecoration(
                             labelText: 'Edad',
                             labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                           ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: '',
+                              child: Text('Seleccione'),
+                            ),
+                            ...['Presiembra', 'Siembra'].map((role) {
+                              return DropdownMenuItem<String>(value: role, child: Text(role));
+                            }).toList(),
+                          ],
+                          validator: (value) {
+                            if (value == null||value.isEmpty ||value == 'Seleccione') {
+                              return 'Por favor, selecciona una edad';
                             }
                             return null;
-                          }
+                          },
                         ),
                       TextFormField(
                           controller: _loteController,

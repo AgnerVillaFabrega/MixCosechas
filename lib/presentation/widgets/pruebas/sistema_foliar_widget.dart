@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
-import 'package:mixcosechas_app/presentation/widgets/input_variables.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_predio.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
@@ -194,20 +193,32 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
                             return null;
                           }
                         ),
-
-                        TextFormField(
-                          controller: _edadController,
-                          keyboardType: TextInputType.text,
+                        DropdownButtonFormField<String>(
+                          value: _edadController.text,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _edadController.text = newValue!;
+                            });
+                          },
                           decoration: const InputDecoration(
                             labelText: 'Edad',
                             labelStyle: TextStyle(color: Color(0xFF19AA89),fontWeight: FontWeight.w600),
                           ),
-                          validator: (String? value){
-                            if (value ==null || value.isEmpty) {
-                              return "Campo requerido";
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: '',
+                              child: Text('Seleccione'),
+                            ),
+                            ...['Presiembra', 'Siembra'].map((role) {
+                              return DropdownMenuItem<String>(value: role, child: Text(role));
+                            }).toList(),
+                          ],
+                          validator: (value) {
+                            if (value == null||value.isEmpty ||value == 'Seleccione') {
+                              return 'Por favor, selecciona una edad';
                             }
                             return null;
-                          }
+                          },
                         ),
                         TextFormField(
                           controller: _loteController,
