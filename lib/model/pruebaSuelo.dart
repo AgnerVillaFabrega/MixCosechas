@@ -18,6 +18,7 @@ class PruebaSuelo {
   final String correoPropietario;
 
   final String idPrueba;
+  final String tipoPrueba = 'Suelo';
   String? fechaPrueba =
       '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;

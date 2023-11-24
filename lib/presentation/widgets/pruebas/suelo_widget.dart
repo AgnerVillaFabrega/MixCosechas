@@ -279,7 +279,7 @@ class _SueloWidgetState extends State<SueloWidget> {
                             controller: _loteController,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              labelText: "Lote_",
+                              labelText: "Lote",
                               labelStyle: TextStyle(
                                   color: Color(0xFF19AA89),
                                   fontWeight: FontWeight.w600),

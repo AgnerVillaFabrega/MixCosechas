@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/predios.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
+import 'package:mixcosechas_app/presentation/widgets/custom_text.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 
 class PredioProfileView extends StatelessWidget {
@@ -21,37 +22,83 @@ class PredioProfileView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                predio.nombre,
-                style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    predio.nombre,
+                    style:
+                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+                  ),
+                  Text(
+                    predio.id,
+                    style:
+                      const TextStyle(fontSize: 26),
+                  ),
+                  const SizedBox(height: 15),
+                ],
               ),
-              const SizedBox(height: 10),
-              Text('Id Predio: ${predio.id}'),
-              const SizedBox(height: 10),
-              Text('Propietario: ${predio.nombrePropietario}'),
-              const SizedBox(height: 10),
-              Text('Departamento: ${predio.departamento}'),
-              const SizedBox(height: 10),
-              Text('Municipio: ${predio.municipio}'),
-              const SizedBox(height: 10),
-              Text('Corregimiento/Vereda: ${predio.corregimientoVereda}'),
-              const SizedBox(height: 10),
-              Text('Latitud: ${predio.latitud}'),
-              const SizedBox(height: 10),
-              Text('Longitud: ${predio.longitud}'),
-              const SizedBox(height: 10),
-              Text('MSNM: ${predio.msnm}'),
+              Row(
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      CustomText(text: 'Propietario:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Departamento:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Municipio:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Corregimiento/Vereda:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Latitud:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Longitud:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'MSNM:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Profundidad Suelo Biotico:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Puntos:', fontSize: 15, color: Color(0xFF19AA89)),
+                      SizedBox(height: 5),
+                      CustomText(text: 'Temperatura:', fontSize: 15, color: Color(0xFF19AA89)),
+                      
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                  
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const SizedBox(height: 10),
+                      CustomText(text: predio.nombrePropietario, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.departamento, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.municipio, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.corregimientoVereda, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.latitud, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.longitud, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.msnm, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.profundidadSB, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.puntos, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 5),
+                      CustomText(text: predio.temperatura, fontSize: 15, color: Colors.black),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ],
+              ),
+              
+              
               const SizedBox(height: 16),
-              Text('Profundidad Suelo Biotico: ${predio.profundidadSB}'),
-              const SizedBox(height: 16),
-              Text('Puntos: ${predio.puntos}'),
-              const SizedBox(height: 16),
-              Text('Temperatura: ${predio.temperatura}'),
-              const SizedBox(height: 16),
-              Text('Temperatura: ${predio.lotes}'),
-              const SizedBox(height: 16),
-
               const Text(
                 "Historial de pruebas",
                 style: TextStyle(

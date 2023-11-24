@@ -18,6 +18,7 @@ class PruebaSistemaFoliar {
   final String correopropietario;
 
   final String idPrueba;
+  final String tipoPrueba = 'Sistema foliar';
   String? fechaPrueba =
       '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
