@@ -3,9 +3,7 @@ import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
-import 'package:mixcosechas_app/presentation/widgets/PDFs/prueba_suelo_pdf.dart';
-
-//import 'package:mixcosechas_app/presentation/widgets/PDFs/prueba_agua_pdf.dart';
+import 'package:mixcosechas_app/presentation/widgets/PDFs/prueba_agua_pdf.dart';
 import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_prueba.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
@@ -233,10 +231,14 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
               title: Text(filteredData[index].nombrePredio.toString()),
               subtitle: Text(filteredData[index].nombrepropietario.toString()),
               onTap: () {
-                // Acción al presionar el elemento
-                // Puedes abrir una pantalla de detalles o realizar alguna otra acción
-
-                createPruebaSueloPdf(filteredData[index]);
+                createPruebaAguaPdf(filteredData[index]);
+                // if (filteredData[index].tipo == 'Suelo') {
+                //   createPruebaSueloPdf(filteredData[index]);
+                // }else if(filteredData[index].tipo == 'Agua'){
+                //   createPruebaAguaPdf(filteredData[index]);
+                // }else{
+                //   //createPruebaSistemaFoliarPdf(filteredData[index]);
+                // }
               },
             );
           },

@@ -62,14 +62,14 @@ class ShowSuelo extends StatelessWidget {
                   columns: const [
                     DataColumn(
                       label: Text(
-                        'Nombre\nCompuesto',
+                        'Parametro',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
                     DataColumn(
                       label: Text(
-                        'Valor\nCompuesto',
+                        'Resultado',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),

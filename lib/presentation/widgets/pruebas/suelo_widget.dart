@@ -442,14 +442,11 @@ class _SueloWidgetState extends State<SueloWidget> {
         _puntosPredioController.text.isNotEmpty &&
         _temperaturaPredioController.text.isNotEmpty &&
         _lotesPredioController.text.isNotEmpty &&
-        // _cultivoController.text.isNotEmpty &&
-        // _variedadController.text.isNotEmpty &&
-        // _edadController.text.isNotEmpty &&
         _idpropietarioPredioController.text.isNotEmpty &&
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&
         _correopropietarioPredioController.text.isNotEmpty) {
-      if (formKey.currentState!.validate() || true) {
+      if (formKey.currentState!.validate()) {
         int idPrueba = generateUniqueID();
         bool isUnique =
             await _serviceFirebase.isIDUniquePruebaSuelo(idPrueba.toString());
@@ -513,60 +510,6 @@ class _SueloWidgetState extends State<SueloWidget> {
             limo: double.parse(_limoController.text),
             arena: double.parse(_arenaController.text),
             humus: double.parse(_humusController.text));
-
-        // PruebaSuelo pruebaSuelo2 = PruebaSuelo(
-        //     idPrueba: idPrueba.toString(),
-        //     idPredio: _idPredioController.text,
-        //     nombrePredio: _nombrePredioController.text,
-        //     corregimientoPredio: _corregimientoPredioController.text,
-        //     municipioPredio: _municipioPredioController.text,
-        //     dptoPredio: _dptoPredioController.text,
-        //     latitud: _latitudPredioController.text,
-        //     longitud: _longitudPredioController.text,
-        //     msnm: _msnmPredioController.text,
-        //     profundidadSB: _profundidadSBPredioController.text,
-        //     puntos: _puntosPredioController.text,
-        //     temperatura: _temperaturaPredioController.text,
-        //     lotes: int.parse(_lotesPredioController.text),
-        //     cultivo: 'Papa',
-        //     variedad: 'Var2',
-        //     edad: 'Presiembra',
-        //     recomendaciones: "",
-        //     presiembra: "",
-        //     siembra: "",
-        //     mantenimiento: "",
-        //     idPropietario: _idpropietarioPredioController.text,
-        //     nombrepropietario: _nombrepropietarioPredioController.text,
-        //     telefonoPropietario: _telefonopropietarioPredioController.text,
-        //     correoPropietario: _correopropietarioPredioController.text,
-        //     lote: _loteController.text,
-        //     fechaRecibido: '25-3-23',
-        //     fechaTomaMuestra: '23-2-22',
-        //     n: 1.03,
-        //     nh4: 1.06,
-        //     no2: 0.93,
-        //     no3: 1.77,
-        //     p: 0.1,
-        //     k: 0.9,
-        //     ca: 619,
-        //     mg: 36,
-        //     s: 34.6,
-        //     so4: 69.3,
-        //     fe: 4.3,
-        //     mn: 19.5,
-        //     cu: 5.81,
-        //     al: 0.04,
-        //     cl: 360,
-        //     zn: 0,
-        //     na: 0,
-        //     ph: 1,
-        //     ce: 0,
-        //     salesDisueltas: 0,
-        //     cice: 0,
-        //     arcilla: 20,
-        //     limo: 30,
-        //     arena: 50,
-        //     humus: 1);
 
         final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
         final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;

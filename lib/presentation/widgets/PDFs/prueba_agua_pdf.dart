@@ -7,7 +7,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-Future<void> createPruebaSueloPdf(PruebaAgua pruebaAgua) async {
+Future<void> createPruebaAguaPdf(PruebaAgua pruebaAgua) async {
   PdfDocument document = PdfDocument();
   final page = document.pages.add();
 
