@@ -189,8 +189,13 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
 
   Widget _buildListItem(dynamic prueba) {
     return ListTile(
-      title: Text(prueba.nombrePredio),
-      subtitle: Text(prueba.nombrepropietario),
+      title: Text(
+        "${prueba.tipoPrueba} - ${prueba.fechaPrueba}",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        "Predio: ${prueba.nombrePredio}\nID: ${prueba.idPrueba}",
+      ),
       onTap: () {
         if (prueba is PruebaSuelo) {
           createPruebaSueloPdf(prueba);
@@ -206,6 +211,7 @@ class _ViewPruebasPageState extends State<ViewPruebasPage> {
         }
       },
     );
+
   }
 
   void _filterPruebas(String searchText) {
