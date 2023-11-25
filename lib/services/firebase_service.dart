@@ -607,4 +607,17 @@ class ServiceFirebase {
       print("Error al agregar la prueba: $e");
     }
   }
+  Future<List<dynamic>> getAllPruebasPorPredio(String predioId) async {
+    try {
+      List<dynamic> pruebas = [];
+      pruebas.addAll(await getPruebaSueloPorPredio(predioId));
+      pruebas.addAll(await getPruebaAguaPorPredio(predioId));
+      pruebas.addAll(await getPruebaSistemaFoliarPorPredio(predioId));
+      return pruebas;
+    } catch (e) {
+      // Manejar errores aquí
+      print("Error al obtener las pruebas: $e");
+      throw e;
+    }
+  }
 }
