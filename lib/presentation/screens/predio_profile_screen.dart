@@ -150,7 +150,7 @@ class PredioProfileView extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return Container(
+                      return SizedBox(
                         height: 600,  
                         child: ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 14),
