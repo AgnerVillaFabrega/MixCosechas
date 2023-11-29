@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/view_pruebas_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/list_view_sceens/view_pruebas_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/pruebas/agua_widget.dart';
 import 'package:mixcosechas_app/presentation/widgets/pruebas/sistema_foliar_widget.dart';
 import 'package:mixcosechas_app/presentation/widgets/pruebas/suelo_widget.dart';

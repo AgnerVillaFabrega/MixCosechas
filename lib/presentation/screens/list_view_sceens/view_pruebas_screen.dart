@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
@@ -29,6 +30,7 @@ class ViewPruebasPage extends StatefulWidget {
 
 class _ViewPruebasPageState extends State<ViewPruebasPage> {
   bool _isLoading = true;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   final ServiceFirebase _serviceFirebase = ServiceFirebase();
   List<dynamic> _pruebas = [];
   String _selectedMuestra = 'Todos';

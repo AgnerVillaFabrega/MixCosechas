@@ -2,13 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mixcosechas_app/model/predios.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_predio.dart';
 import 'package:provider/provider.dart';
-import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
-import '../../model/predios.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
-
-import '../widgets/icons/icon_add_predio.dart';
 
 Widget cargarDatosPredios() {
   return StreamBuilder(

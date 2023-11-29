@@ -2,10 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/user_profile_screen.dart';
+import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_user_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_clientes.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
-import '../../model/clientes.dart';
-import '../widgets/icons/icon_add_clientes.dart';
 
 Widget cargarDatos(){
   return StreamBuilder(

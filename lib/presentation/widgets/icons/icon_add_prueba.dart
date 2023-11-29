@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../screens/registration_analisis_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_analisis_screen.dart';
 
 class IconAddPrueba extends StatelessWidget {
   const IconAddPrueba({

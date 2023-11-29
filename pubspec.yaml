@@ -2,12 +2,12 @@ name: mixcosechas_app
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   calendar_date_picker2: ^0.5.3
@@ -23,20 +23,22 @@ dependencies:
     sdk: flutter
   flutter_typeahead: ^4.7.0
   get: null
+  intl: null
+  open_file: ^3.2.1
+  path_provider: ^2.0.14
   provider: ^6.0.5
   quickalert: ^1.0.2
-  intl:
-  syncfusion_flutter_pdf:
-  path_provider: ^2.0.14
-  open_file: ^3.2.1
+  syncfusion_flutter_pdf: null
+  
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  mockito: ^5.4.3
+  test:
 
 flutter:
-
   uses-material-design: true
 
   assets:

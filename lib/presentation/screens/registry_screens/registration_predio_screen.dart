@@ -2,16 +2,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mixcosechas_app/model/predios.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/presentation/widgets/search_propietario.dart';
+import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:mixcosechas_app/theme/limpiarCampos.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 
 import 'dart:math';
-import '../../model/predios.dart';
-import '../../services/firebase_service.dart';
-import '../../theme/limpiarCampos.dart';
 import 'package:csv/csv.dart' as csv;
-
-import '../widgets/messages/quickalert_msg.dart';
 
 
 class RegistrationPredioScreen extends StatelessWidget {
@@ -423,7 +422,7 @@ class _RegisterPageState extends State<RegisterPage> {
         FormUtils.clearTextControllers([_identificacionPropietarioController,_nombrePropietarioController,_correoPropietarioController,
           _telefonoPropietarioController,_nombrePredioController,_corregimientoVeredaController,
           _departamentoController,_municipioController,_latitudController,_longitudController,_msnmController,
-           _profundidadSBController,_puntosController,_temperaturaController,_lotesController
+          _profundidadSBController,_puntosController,_temperaturaController,_lotesController
         ]);
         FocusScope.of(context).unfocus();
       }

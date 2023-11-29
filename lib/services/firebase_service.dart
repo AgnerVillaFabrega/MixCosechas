@@ -50,7 +50,16 @@ class ServiceFirebase {
       QuerySnapshot queryclientes = await db.collection('Usuarios').get();
       queryclientes.docs.forEach((documento) {
         Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
-        clientes.add(Cliente.fromMap(data));
+        Cliente user = Cliente(
+          uid: documento.id,
+          id: data['Id'],
+          nombre: data['Nombre'],
+          telefono: data['Telefono'],
+          correo: data['Correo'],
+          rol: data['Rol'],
+          password: data['Password']
+        );
+        clientes.add(user);
       });
     } catch (e) {
       print("Error al obtener la lista de clientes: $e");
@@ -173,6 +182,7 @@ class ServiceFirebase {
       return null;
     }
   }
+
 
   Future<void> addPeople(Cliente cliente, UserCredential userCredential) async {
     try {
@@ -607,6 +617,7 @@ class ServiceFirebase {
       print("Error al agregar la prueba: $e");
     }
   }
+
   Future<List<dynamic>> getAllPruebasPorPredio(String predioId) async {
     try {
       List<dynamic> pruebas = [];
@@ -620,4 +631,56 @@ class ServiceFirebase {
       throw e;
     }
   }
+
+  Future<void> updatePeople(Cliente in_cliente) async {
+    try {
+      List<Cliente> list_clientes = await getPeople();
+
+      Cliente? clienteEncontrado;
+      list_clientes.forEach((cliente) {
+        if (cliente.id == in_cliente.id) {
+          clienteEncontrado = cliente;
+        }
+      });
+      print(clienteEncontrado?.uid);
+      if (clienteEncontrado != null) {
+        // Cliente encontrado, actualiza la información en Firestore
+        await db.collection('Usuarios').doc(clienteEncontrado?.uid).set({
+          "Nombre": in_cliente.nombre,
+          "Telefono": in_cliente.telefono,
+          "Correo": in_cliente.correo,
+          "Rol": in_cliente.rol,
+        }, SetOptions(merge: true));
+      } else {
+        print("Cliente no encontrado");
+      }
+    } catch (e) {
+      print("Error al editar el cliente: $e");
+    }
+  }
+  
+  Future<bool> deletePeople(Cliente incliente) async {
+    try {
+      List<Cliente> list_clientes = await getPeople();
+      Cliente? clienteEncontrado;
+      list_clientes.forEach((cliente) {
+        if (cliente.id == incliente.id) {
+          clienteEncontrado = cliente;
+        }
+      });
+
+      if (clienteEncontrado != null) {
+        await db.collection('Usuarios').doc(clienteEncontrado?.uid).delete();
+        return true; // Indica que la eliminación fue exitosa
+      } else {
+        print("Cliente no encontrado");
+        return false; // Indica que el cliente no fue encontrado
+      }
+    } catch (e) {
+      print("Error al eliminar el cliente: $e");
+      return false; // Indica que ocurrió un error durante la eliminación
+    }
+  }
+
+
 }

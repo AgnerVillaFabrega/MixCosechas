@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
-import 'package:mixcosechas_app/presentation/screens/user_profile_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_user_screen.dart';
 
 class IconUserProfile extends StatelessWidget {
   final Cliente cliente;

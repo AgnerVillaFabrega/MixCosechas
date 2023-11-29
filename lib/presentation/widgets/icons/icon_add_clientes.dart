@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/registration_clients_scren.dart';
+import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_clients_scren.dart';
 
 class IconAddClientes extends StatelessWidget {
   const IconAddClientes({

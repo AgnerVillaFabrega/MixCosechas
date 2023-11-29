@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/view_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/list_view_sceens/view_predio_screen.dart';
 
 class IconPredioMenu extends StatelessWidget {
   const IconPredioMenu({

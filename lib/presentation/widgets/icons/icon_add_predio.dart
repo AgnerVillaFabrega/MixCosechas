@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixcosechas_app/presentation/screens/registration_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_predio_screen.dart';
 
 class IconAddPredio extends StatelessWidget {
   const IconAddPredio({

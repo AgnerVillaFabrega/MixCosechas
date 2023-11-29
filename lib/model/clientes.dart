@@ -1,6 +1,7 @@
 
 
 class Cliente{
+  String? uid;
   final String id;
   final String nombre;
   final String telefono;
@@ -9,12 +10,13 @@ class Cliente{
   final String password;
   
   Cliente({
-    required this.id, 
-    required this.nombre, 
-    required this.telefono, 
-    required this.correo, 
-    required this.rol, 
-    required this.password
+    this.uid,
+    required this.id,
+    required this.nombre,
+    required this.telefono,
+    required this.correo,
+    required this.rol,
+    required this.password,
   });
 
   factory Cliente.fromMap(Map<String, dynamic> map) {  

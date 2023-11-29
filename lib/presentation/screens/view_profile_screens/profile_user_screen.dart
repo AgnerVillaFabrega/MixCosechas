@@ -1,12 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
-import 'package:mixcosechas_app/presentation/screens/predio_profile_screen.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:mixcosechas_app/presentation/screens/edit_screens/edit_user_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_predio_screen.dart';
+import 'package:mixcosechas_app/presentation/widgets/img/img_admin.dart';
+import 'package:mixcosechas_app/presentation/widgets/img/img_agricultor.dart';
+import 'package:mixcosechas_app/presentation/widgets/img/img_analista.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/model/predios.dart';
-
-import '../widgets/img/img_admin.dart';
-import '../widgets/img/img_agricultor.dart';
-import '../widgets/img/img_analista.dart';
+import 'package:provider/provider.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class UserProfileView extends StatelessWidget {
   final Cliente usuario;
@@ -16,6 +22,7 @@ class UserProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ClienteProvider watch =  context.watch<ClienteProvider>();
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -56,11 +63,21 @@ class UserProfileView extends StatelessWidget {
                 ),
                 actions: [
                   PopupMenuButton<String>(
-                    onSelected: (value) {
+                    onSelected: (value) async {
                       if (value == 'editar') {
-                        // Agregar lógica para editar el perfil aquí
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditarClienteScreen(cliente:usuario ),
+                          ),
+                        );
                       } else if (value == 'eliminar') {
-                        // Agregar lógica para eliminar el perfil aquí
+                        bool eliminacionExitosa = await _serviceFirebase.deletePeople(usuario);
+                        if (eliminacionExitosa) {
+                          QuickAlertDialog.showAlert(context, QuickAlertType.success, "Cliente eliminado correctamente");
+                        } else {
+                          QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el cliente");
+                        }
                       }
                     },
                     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -71,13 +88,13 @@ class UserProfileView extends StatelessWidget {
                           title: Text('Editar'),
                         ),
                       ),
-                      const PopupMenuItem<String>(
-                        value: 'eliminar',
-                        child: ListTile(
-                          leading: Icon(Icons.delete),
-                          title: Text('Eliminar'),
+                      if(watch.cliente.rol == 'Admin')const PopupMenuItem<String>(
+                          value: 'eliminar',
+                          child: ListTile(
+                            leading: Icon(Icons.delete),
+                            title: Text('Eliminar'),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ],

@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
+import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_clients_scren.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import '../../model/clientes.dart';
 import '../../theme/limpiarCampos.dart';
-import 'registration_clients_scren.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
