@@ -19,8 +19,7 @@ class PruebaSuelo {
 
   final String idPrueba;
   final String tipoPrueba = 'Suelo';
-  String? fechaPrueba =
-      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String edad;
@@ -329,7 +328,7 @@ class PruebaSuelo {
       required this.limo,
       required this.arena,
       required this.humus,
-      fechaPrueba}) {
+      this.fechaPrueba}) {
     camg = (ca / mg);
     camgk = (ca + mg / k);
     cak = ca / k;
@@ -401,7 +400,7 @@ class PruebaSuelo {
 
   List<int> convertirValores2(List<double> listaValores) {
     List<int> valorGraficaCompuestos2 = [];
-    List<double> porcentajes = [75,200, 25, 40, 4, 150, 500, 2, 1];
+    List<double> porcentajes = [75, 200, 25, 40, 4, 150, 500, 2, 1];
 
     double aux = 0;
     int j = 0;

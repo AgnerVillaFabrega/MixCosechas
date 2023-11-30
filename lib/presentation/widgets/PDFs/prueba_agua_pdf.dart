@@ -405,14 +405,14 @@ Future<void> createPruebaAguaPdf(PruebaAgua pruebaAgua) async {
       }
 
       // Cambia el color de fondo de las celdas en la columna 1 excepto en las filas 1, 2, 11, 18
-      if (cellIndex == 0 && ![0, 1, 10, 17].contains(rowIndex)) {
+      if (cellIndex == 0 && ![0, 1].contains(rowIndex)) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
         cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
             style: PdfFontStyle.bold);
       }
 
       // Cambia el color de fondo de las celdas en la columna 4 excepto en las filas 3, 8, 9, 15, 16
-      if (cellIndex == 4 && ![0, 1, 2, 7, 8, 14].contains(rowIndex)) {
+      if (cellIndex == 4 && ![0,1, 6,].contains(rowIndex)) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
         cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
             style: PdfFontStyle.bold);
@@ -432,12 +432,12 @@ Future<void> createPruebaAguaPdf(PruebaAgua pruebaAgua) async {
       }
 
       // Pone color y subtitulos en cursiva de la columna 4
-      if (cellIndex == 4 && [0, 1, 2, 7, 8, 14].contains(rowIndex)) {
+      if (cellIndex == 4 && [1, 6].contains(rowIndex)) {
         cell.style = PdfGridCellStyle(
           font: PdfStandardFont(PdfFontFamily.helvetica, 6,
               style: PdfFontStyle.italic),
         );
-        if (cellIndex == 4 && [2, 7, 8, 14, 15].contains(rowIndex)) {
+        if (cellIndex == 4 && [1, 6].contains(rowIndex)) {
           cell.style =
               PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(55, 86, 58)));
         }
@@ -490,9 +490,61 @@ Future<void> createPruebaAguaPdf(PruebaAgua pruebaAgua) async {
 
   PdfGridRow rowNota = gridNota.rows.add();
   rowNota.cells[0].value =
-      'NOTA DATOS RESULTANTES: En la interpretación de resultados existen las siguientes (SR) Sin Riesgo, (CR) Con Riesgo, (P) Peligro.';
+      'NOTA DATOS RESULTANTES: En la interpretación de resultados existen las siguientes' +
+      ' (SR) Sin Riesgo, (CR) Con Riesgo, (P) Peligro.';
 
-  gridNota.draw(page: page, bounds: const Rect.fromLTWH(0, 590, 0, 0));
+  gridNota.draw(page: page, bounds: const Rect.fromLTWH(0, 400, 0, 0));
+
+  PdfGrid gridTituloInterpretacion = PdfGrid();
+
+  gridTituloInterpretacion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 10));
+
+  gridTituloInterpretacion.columns.add(count: 1);
+
+  PdfGridRow rowTituloInterpretacion = gridTituloInterpretacion.rows.add();
+  rowTituloInterpretacion.cells[0].value ='INTERPRETACION DE LAS PRUEBAS REALIZADAS';
+
+  rowTituloInterpretacion.style.backgroundBrush = PdfSolidBrush(PdfColor(55, 86, 58));
+  rowTituloInterpretacion.cells[0].style= PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(255, 255, 255)));
+  PdfStringFormat stringFormat = PdfStringFormat();
+  stringFormat.alignment = PdfTextAlignment.center;
+
+  rowTituloInterpretacion.cells[0].stringFormat = stringFormat;
+
+  gridTituloInterpretacion.draw(page: page, bounds: const Rect.fromLTWH(0, 430, 0, 0));
+
+  PdfGrid gridInterpretacion = PdfGrid();
+
+  gridInterpretacion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridInterpretacion.columns.add(count: 1);
+
+  PdfGridRow rowInterpretacion = gridInterpretacion.rows.add();
+  rowInterpretacion.cells[0].value =
+      'Una vez recibida la muestra de Agua de pozo tipo Subterránea, se realizaron pruebas de análisis a 15 parámetros '+ 
+      'importantes, se identificaron sus niveles de riesgo para su aplicación en relación de las restricciones de uso y '+ 
+      'se realizan recomendaciones para obtener resultados óptimos en el cultivo. Cualquier consulta, no dude en contactarnos.';
+
+  gridInterpretacion.draw(page: page, bounds: const Rect.fromLTWH(0, 460, 0, 0));
+
+  PdfGrid gridTituloRestriccionesRecomendaciones = PdfGrid();
+
+  gridTituloRestriccionesRecomendaciones.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 10));
+
+  gridTituloRestriccionesRecomendaciones.columns.add(count: 1);
+
+  PdfGridRow rowRestricciones = gridTituloRestriccionesRecomendaciones.rows.add();
+  rowRestricciones.cells[0].value ='Restricciones y Recomendaciones en el Uso del Agua para Riego ';
+  rowRestricciones.cells[0].style= PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(10, 191, 4)));
+  rowRestricciones.cells[0].stringFormat = stringFormat;
+
+  gridTituloRestriccionesRecomendaciones.draw(page: page, bounds: const Rect.fromLTWH(0, 510, 0, 0));
 
 
   List<int> bytes = await document.save();
