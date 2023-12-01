@@ -18,7 +18,7 @@ dependencies:
   firebase_auth: null
   firebase_core: null
   firebase_database: null
-  fl_chart: ^0.40.0
+  fl_chart: 
   flutter:
     sdk: flutter
   flutter_typeahead: ^4.7.0

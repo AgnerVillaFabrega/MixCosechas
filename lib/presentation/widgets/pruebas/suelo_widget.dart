@@ -446,7 +446,7 @@ class _SueloWidgetState extends State<SueloWidget> {
         _nombrepropietarioPredioController.text.isNotEmpty &&
         _telefonopropietarioPredioController.text.isNotEmpty &&
         _correopropietarioPredioController.text.isNotEmpty) {
-      if (formKey.currentState!.validate()) {
+    //  if (formKey.currentState!.validate()) {
         int idPrueba = generateUniqueID();
         bool isUnique =
             await _serviceFirebase.isIDUniquePruebaSuelo(idPrueba.toString());
@@ -457,7 +457,61 @@ class _SueloWidgetState extends State<SueloWidget> {
         }
 
         //Todo: LOGICA PARA EL ANALISIS Y REGISTRO
-        PruebaSuelo pruebaSuelo = PruebaSuelo(
+        // PruebaSuelo pruebaSuelo = PruebaSuelo(
+        //     idPrueba: idPrueba.toString(),
+        //     idPredio: _idPredioController.text,
+        //     nombrePredio: _nombrePredioController.text,
+        //     corregimientoPredio: _corregimientoPredioController.text,
+        //     municipioPredio: _municipioPredioController.text,
+        //     dptoPredio: _dptoPredioController.text,
+        //     latitud: _latitudPredioController.text,
+        //     longitud: _longitudPredioController.text,
+        //     msnm: _msnmPredioController.text,
+        //     profundidadSB: _profundidadSBPredioController.text,
+        //     puntos: _puntosPredioController.text,
+        //     temperatura: _temperaturaPredioController.text,
+        //     lotes: int.parse(_lotesPredioController.text),
+        //     cultivo: _cultivoController.text,
+        //     variedad: _variedadController.text,
+        //     edad: _edadController.text,
+        //     recomendaciones: "",
+        //     presiembra: "",
+        //     siembra: "",
+        //     mantenimiento: "",
+        //     idPropietario: _idpropietarioPredioController.text,
+        //     nombrepropietario: _nombrepropietarioPredioController.text,
+        //     telefonoPropietario: _telefonopropietarioPredioController.text,
+        //     correoPropietario: _correopropietarioPredioController.text,
+        //     lote: _loteController.text,
+        //     fechaRecibido: _fechaRecibidoController.text,
+        //     fechaTomaMuestra: _fechaTomaMuestraController.text,
+        //     n: double.parse(_nController.text),
+        //     nh4: double.parse(_nh4Controller.text),
+        //     no2: double.parse(_no2Controller.text),
+        //     no3: double.parse(_no3Controller.text),
+        //     p: double.parse(_pController.text),
+        //     k: double.parse(_kController.text),
+        //     ca: double.parse(_caController.text),
+        //     mg: double.parse(_mgController.text),
+        //     s: double.parse(_sController.text),
+        //     so4: double.parse(_so4Controller.text),
+        //     fe: double.parse(_feController.text),
+        //     mn: double.parse(_mnController.text),
+        //     cu: double.parse(_cuController.text),
+        //     al: double.parse(_alController.text),
+        //     cl: double.parse(_clController.text),
+        //     zn: double.parse(_znController.text),
+        //     na: double.parse(_naController.text),
+        //     ph: double.parse(_phController.text),
+        //     ce: double.parse(_ceController.text),
+        //     salesDisueltas: double.parse(_salesdisueltasController.text),
+        //     cice: double.parse(_ciceController.text),
+        //     arcilla: double.parse(_arcillaController.text),
+        //     limo: double.parse(_limoController.text),
+        //     arena: double.parse(_arenaController.text),
+        //     humus: double.parse(_humusController.text));
+
+        PruebaSuelo pruebaSuelo2 = PruebaSuelo(
             idPrueba: idPrueba.toString(),
             idPredio: _idPredioController.text,
             nombrePredio: _nombrePredioController.text,
@@ -470,10 +524,10 @@ class _SueloWidgetState extends State<SueloWidget> {
             profundidadSB: _profundidadSBPredioController.text,
             puntos: _puntosPredioController.text,
             temperatura: _temperaturaPredioController.text,
-            lotes: int.parse(_lotesPredioController.text),
-            cultivo: _cultivoController.text,
-            variedad: _variedadController.text,
-            edad: _edadController.text,
+            lotes: 1,
+            cultivo: 'YUCA',
+            variedad: 'Var2',
+            edad: 'Presiembra',
             recomendaciones: "",
             presiembra: "",
             siembra: "",
@@ -483,44 +537,43 @@ class _SueloWidgetState extends State<SueloWidget> {
             telefonoPropietario: _telefonopropietarioPredioController.text,
             correoPropietario: _correopropietarioPredioController.text,
             lote: _loteController.text,
-            fechaRecibido: _fechaRecibidoController.text,
-            fechaTomaMuestra: _fechaTomaMuestraController.text,
-            n: double.parse(_nController.text),
-            nh4: double.parse(_nh4Controller.text),
-            no2: double.parse(_no2Controller.text),
-            no3: double.parse(_no3Controller.text),
-            p: double.parse(_pController.text),
-            k: double.parse(_kController.text),
-            ca: double.parse(_caController.text),
-            mg: double.parse(_mgController.text),
-            s: double.parse(_sController.text),
-            so4: double.parse(_so4Controller.text),
-            fe: double.parse(_feController.text),
-            mn: double.parse(_mnController.text),
-            cu: double.parse(_cuController.text),
-            al: double.parse(_alController.text),
-            cl: double.parse(_clController.text),
-            zn: double.parse(_znController.text),
-            na: double.parse(_naController.text),
-            ph: double.parse(_phController.text),
-            ce: double.parse(_ceController.text),
-            salesDisueltas: double.parse(_salesdisueltasController.text),
-            cice: double.parse(_ciceController.text),
-            arcilla: double.parse(_arcillaController.text),
-            limo: double.parse(_limoController.text),
-            arena: double.parse(_arenaController.text),
-            humus: double.parse(_humusController.text));
+            fechaRecibido: '23/10/23',
+            fechaTomaMuestra: '12/5/23',
+            n: 20,
+            nh4: 30,
+            no2: 0.93,
+            no3: 12,
+            p: 20,
+            k: 100,
+            ca: 619,
+            mg: 36,
+            s: 34,
+            so4: 69.3,
+            fe: 4.3,
+            mn: 19.5,
+            cu: 3,
+            al: 0.04,
+            cl: 600,
+            zn: 10,
+            na: 15,
+            ph: 6.3,
+            ce: 19,
+            salesDisueltas: 108,
+            cice: 3.4,
+            arcilla: 37.22,
+            limo: 60,
+            arena: 9.1,
+            humus: 1);
         
-        final List<String> nombreCompuestos = pruebaSuelo.nombreCompuestos;
-        final List<double> valorCompuestos = pruebaSuelo.valorCompuestos;
-        final List<String> interpretacionCompuestos =
-            pruebaSuelo.interpretacionCompuestos;
+        final List<String> nombreCompuestos = pruebaSuelo2.nombreCompuestos;
+        final List<double> valorCompuestos = pruebaSuelo2.valorCompuestos;
+        final List<String> interpretacionCompuestos = pruebaSuelo2.interpretacionCompuestos;
 
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => ShowSuelo(
-                  pruebasuelo: pruebaSuelo,
+                  pruebasuelo: pruebaSuelo2,
                   nombreCompuestos: nombreCompuestos,
                   valorCompuestos: valorCompuestos,
                   interpretacionCompuestos: interpretacionCompuestos)),
@@ -529,9 +582,9 @@ class _SueloWidgetState extends State<SueloWidget> {
         QuickAlertDialog.showAlert(
           context, QuickAlertType.error, "Debes llenar todos los campos");
       }
-    } else {
-      QuickAlertDialog.showAlert(
-        context, QuickAlertType.warning, "Debes elegir un predio");
-    }
-  }
+    } //else {
+     // QuickAlertDialog.showAlert(
+      //  context, QuickAlertType.warning, "Debes elegir un predio");
+   // }
+ // }
 }

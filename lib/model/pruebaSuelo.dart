@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class PruebaSuelo {
   final String idPredio;
   final String nombrePredio;
@@ -19,7 +21,8 @@ class PruebaSuelo {
 
   final String idPrueba;
   final String tipoPrueba = 'Suelo';
-  String? fechaPrueba = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba =
+      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String edad;
@@ -392,8 +395,11 @@ class PruebaSuelo {
 
     for (int i = 0; i < 8; i++) {
       aux = (listaValores[i] / porcentajes[i]) * 10;
-
-      valorGraficaCompuestos1.add(aux.round());
+      if (aux.round() > 10) {
+        valorGraficaCompuestos1.add(10);
+      } else {
+        valorGraficaCompuestos1.add(aux.round());
+      }
     }
     return valorGraficaCompuestos1;
   }
@@ -409,7 +415,11 @@ class PruebaSuelo {
       aux = (listaValores[i] / porcentajes[j]) * 10;
       j++;
 
-      valorGraficaCompuestos2.add(aux.round());
+      if (aux.round() > 10) {
+        valorGraficaCompuestos2.add(10);
+      } else {
+        valorGraficaCompuestos2.add(aux.round());
+      }
     }
     return valorGraficaCompuestos2;
   }
