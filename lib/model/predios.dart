@@ -1,4 +1,5 @@
 class Predio{
+  String? uid;
   final String idPropietario;
   final String nombrePropietario;
   final String correoPropietario;
@@ -18,6 +19,7 @@ class Predio{
   final int lotes;
 
   Predio({
+    this.uid,
     required this.id, 
     required this.idPropietario, 
     required this.nombrePropietario, 

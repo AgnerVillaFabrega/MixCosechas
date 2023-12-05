@@ -1,14 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/predios.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/model/pruebaSistemaFoliar.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:mixcosechas_app/presentation/screens/list_view_sceens/view_predio_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/PDFs/prueba_agua_pdf.dart';
 import 'package:mixcosechas_app/presentation/widgets/PDFs/prueba_suelo_pdf.dart';
 import 'package:mixcosechas_app/presentation/widgets/custom_text.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class PredioProfileView extends StatelessWidget {
   final Predio predio;
@@ -18,9 +24,64 @@ class PredioProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ClienteProvider watch =  context.watch<ClienteProvider>();
     return Scaffold(
       appBar: AppBar(
-        //title: const Text('Detalles del Predio'),
+        title: const Text('Detalles del Predio'),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) async {
+              if (value == 'editar') {
+                // Lógica para la acción de editar
+              } else if (value == 'eliminar') {
+                QuickAlert.show(
+                  context: context,
+                  type: QuickAlertType.confirm,
+                  text: 'Seguro que quiere eliminar este usuario?',
+                  confirmBtnText: 'Si',
+                  cancelBtnText: 'No',
+                  onConfirmBtnTap: () async {
+                    bool eliminacionExitosa =  await _serviceFirebase.deletePredio(predio);
+                    if (eliminacionExitosa) {
+                      QuickAlert.show(    
+                        context: context,    
+                        type: QuickAlertType.success, 
+                        text: "Predio eliminado correctamente",
+                        onConfirmBtnTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => cargarDatosPredios()),
+                              );
+                        },
+                      );
+                    } else {
+                      QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el cliente");
+                    }
+                  },
+                  confirmBtnColor: Colors.red,
+                );  
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'editar',
+                child: ListTile(
+                  leading: Icon(Icons.edit),
+                  title: Text('Editar'),
+                ),
+              ),
+              if(watch.cliente.rol == 'Admin')const PopupMenuItem<String>(
+                value: 'eliminar',
+                child: ListTile(
+                  leading: Icon(Icons.delete),
+                  title: Text('Eliminar'),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

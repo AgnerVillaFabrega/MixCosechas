@@ -1,9 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 class EditarClienteScreen extends StatelessWidget {
@@ -46,6 +46,8 @@ class _EditarClientePageState extends State<EditarClientePage> {
 
   @override
   Widget build(BuildContext context) {
+    ClienteProvider watch =  context.watch<ClienteProvider>();
+    bool test = _isRolEnabled(watch);
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -89,7 +91,7 @@ class _EditarClientePageState extends State<EditarClientePage> {
                         TextFormField(
                           controller: _identificacionController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: 'Identificación',
                             labelStyle: TextStyle(color: Color(0xFF19AA89), fontWeight: FontWeight.w600),
                           ),
@@ -99,6 +101,7 @@ class _EditarClientePageState extends State<EditarClientePage> {
                             }
                             return null;
                           },
+                          enabled: _isIdentificacionEnabled(),
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
@@ -134,13 +137,16 @@ class _EditarClientePageState extends State<EditarClientePage> {
                           },
                         ),
                         const SizedBox(height: 10),
+                        
                         DropdownButtonFormField<String>(
-                          value: _rolController.text,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _rolController.text = newValue!;
-                            });
-                          },
+                          value: test ?  widget.cliente.rol : _rolController.text,
+                          onChanged:test
+                              ? null
+                              : (String? newValue) {
+                                  setState(() {
+                                    _rolController.text = newValue!;
+                                  });
+                                },
                           decoration: const InputDecoration(
                             labelText: 'Rol',
                             labelStyle: TextStyle(
@@ -148,20 +154,30 @@ class _EditarClientePageState extends State<EditarClientePage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          items: ['Analista', 'Agricultor', 'Admin'].map((role) {
-                            return DropdownMenuItem<String>(value: role, child: Text(role));
-                          }).toList(),
+                          items: [
+                            if (!test)
+                              const DropdownMenuItem<String>(
+                                value: '',
+                                child: Text('Seleccione'),
+                              ),
+                            ...['Analista', 'Agricultor', 'Admin'].map((role) {
+                              return DropdownMenuItem<String>(
+                                  value: role, child: Text(role));
+                            }).toList(),
+                          ],
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null || value.isEmpty || value == 'Seleccione') {
                               return 'Por favor, selecciona un rol';
                             }
                             return null;
                           },
                           onTap: () {
-                            FocusScope.of(context).unfocus();
+                            if (test) {
+                              FocusScope.of(context).unfocus();
+                            }
                           },
-                          isExpanded: true,
-                          icon: const Icon(Icons.arrow_drop_down),
+                          isExpanded: true, // Para asegurarse de que el DropdownButtonFormField tiene suficiente espacio para mostrar todos los elementos
+                          icon: test ? null : const Icon(Icons.arrow_drop_down),
                         ),
                       ],
                     ),
@@ -193,31 +209,39 @@ class _EditarClientePageState extends State<EditarClientePage> {
     );
   }
 
-  void _handleEditarCliente() async {  
-    if (formKey.currentState!.validate()) {  
-      // Crear un nuevo objeto Cliente con los nuevos datos  
-      Cliente updatedCliente = Cliente(  
-        id: _identificacionController.text,  
-        nombre: _nombreController.text,  
-        telefono: _telefonoController.text,  
-        correo: _correoController.text,  
-        rol: _rolController.text,  
-        password: widget.cliente.password, // Conservar la contraseña existente  
-      );  
-  
-      print(updatedCliente);
-      try {  
-        // Actualizar el cliente en la base de datos  
-        await _serviceFirebase.updatePeople(updatedCliente);  
-  
-        // Navegar de regreso a la pantalla de detalles o lista de clientes  
-        Navigator.pop(context);  
-      } catch (e) {  
-        // Manejar errores  
-        QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al actualizar los datos");  
-        print("Error al actualizar los datos del cliente: $e");  
-      }  
-    }  
-  }  
+  bool _isIdentificacionEnabled() {
+    return false; // Cambia esto según tu lógica
+  }
 
+  bool _isRolEnabled(ClienteProvider watch) {
+    if (watch.cliente.rol == 'Admin') {
+      return false;
+    }
+    return true;
+  }
+
+  void _handleEditarCliente() async {
+    if (formKey.currentState!.validate()) {
+      // Crear un nuevo objeto Cliente con los nuevos datos
+      Cliente updatedCliente = Cliente(
+        id: _identificacionController.text,
+        nombre: _nombreController.text,
+        telefono: _telefonoController.text,
+        correo: _correoController.text,
+        rol: _rolController.text,
+        password: widget.cliente.password, // Conservar la contraseña existente
+      );
+      try {
+        // Actualizar el cliente en la base de datos
+        await _serviceFirebase.updatePeople(updatedCliente);
+
+        // Navegar de regreso a la pantalla de detalles o lista de clientes
+        Navigator.pop(context);
+      } catch (e) {
+        // Manejar errores
+        QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al actualizar los datos");
+        print("Error al actualizar los datos del cliente: $e");
+      }
+    }
+  }
 }

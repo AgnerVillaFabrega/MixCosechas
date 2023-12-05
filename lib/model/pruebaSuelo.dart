@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 class PruebaSuelo {
   final String idPredio;
   final String nombrePredio;

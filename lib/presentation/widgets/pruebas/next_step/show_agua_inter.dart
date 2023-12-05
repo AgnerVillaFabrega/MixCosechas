@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaAgua.dart';
 import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_analisis_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 
 class ShowAgua extends StatelessWidget {
@@ -167,27 +170,47 @@ class ShowAgua extends StatelessWidget {
                             pruebaagua.interpretacion = _interpretacionController.text;
                             pruebaagua.restricciones = _restriccionesController.text;
                             _serviceFirebase.addPruebaAgua(pruebaagua);
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Registro exitoso'),
-                                  content: const Text('¡Tu registro se ha completado con éxito!'),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.pushReplacement( // Reemplaza la vista actual
-                                          context,
-                                          MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
-                                        );
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                            Future<bool> response = _serviceFirebase.addPruebaAgua(pruebaagua);
+
+                            if (response == true) {
+                              QuickAlert.show(    
+                                context: context,
+                                type: QuickAlertType.success,
+                                text: '¡Tu registro se ha completado con éxito!',
+                                onConfirmBtnTap: () {
+                                  Navigator.of(context).pop();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
+                                      );
+                                },
+                              );
+                            } else {
+                              QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al registrar la prueba");
+                            }
+                            
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return AlertDialog(
+                            //       title: const Text('Registro exitoso'),
+                            //       content: const Text('¡Tu registro se ha completado con éxito!'),
+                            //       actions: [
+                            //         ElevatedButton(
+                            //           onPressed: () {
+                            //             Navigator.of(context).pop();
+                            //             Navigator.pushReplacement( // Reemplaza la vista actual
+                            //               context,
+                            //               MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
+                            //             );
+                            //           },
+                            //           child: const Text('OK'),
+                            //         ),
+                            //       ],
+                            //     );
+                            //   },
+                            // );
+
                             FormUtils.clearTextControllers([]);
                           },
                           style: ElevatedButton.styleFrom(

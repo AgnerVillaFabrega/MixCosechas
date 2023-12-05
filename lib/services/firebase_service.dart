@@ -1,5 +1,4 @@
-// ignore_for_file: avoid_print
-
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
@@ -235,6 +234,7 @@ class ServiceFirebase {
       predios = queryPredios.docs
           .map((doc) => Predio.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
+
     } catch (e) {
       print("Error al obtener la lista de predios: $e");
     }
@@ -242,7 +242,7 @@ class ServiceFirebase {
     return predios;
   }
 
-  Future<void> addPruebaSuelo(PruebaSuelo pruebaSuelo) async {
+  Future<bool> addPruebaSuelo(PruebaSuelo pruebaSuelo) async {
     try {
       await db.collection('PruebaSuelo').add({
         'IdPrueba': pruebaSuelo.idPrueba,
@@ -434,12 +434,13 @@ class ServiceFirebase {
         ],
         'Textura': pruebaSuelo.textura
       });
+      return true;
     } catch (e) {
-      print("Error al agregar la prueba: $e");
+      return false;
     }
   }
 
-  Future<void> addPruebaAgua(PruebaAgua pruebaAgua) async {
+  Future<bool> addPruebaAgua(PruebaAgua pruebaAgua) async {
     try {
       await db.collection('PruebaAgua').add({
         'IdPrueba': pruebaAgua.idPrueba,
@@ -568,8 +569,9 @@ class ServiceFirebase {
           }
         ],
       });
+      return true;
     } catch (e) {
-      print("Error al agregar la prueba: $e");
+      return false;
     }
   }
 
@@ -644,7 +646,6 @@ class ServiceFirebase {
       });
       print(clienteEncontrado?.uid);
       if (clienteEncontrado != null) {
-        // Cliente encontrado, actualiza la información en Firestore
         await db.collection('Usuarios').doc(clienteEncontrado?.uid).set({
           "Nombre": in_cliente.nombre,
           "Telefono": in_cliente.telefono,
@@ -661,9 +662,9 @@ class ServiceFirebase {
   
   Future<bool> deletePeople(Cliente incliente) async {
     try {
-      List<Cliente> list_clientes = await getPeople();
+      List<Cliente> listClientes = await getPeople();
       Cliente? clienteEncontrado;
-      list_clientes.forEach((cliente) {
+      listClientes.forEach((cliente) {
         if (cliente.id == incliente.id) {
           clienteEncontrado = cliente;
         }
@@ -683,4 +684,62 @@ class ServiceFirebase {
   }
 
 
+
+
+
+
+
+  Future<List<Predio>> getPredio() async {
+    List<Predio> predios = [];
+    try {
+      QuerySnapshot querypredios = await db.collection('Predios').get();
+      querypredios.docs.forEach((documento) {
+        Map<String, dynamic> data = documento.data() as Map<String, dynamic>;
+        Predio predio =Predio(
+          uid: documento.id,
+          id: data['Id'],
+          idPropietario: data['IdPropietario'],
+          nombrePropietario: data['NombrePropietario'],
+          correoPropietario: data['CorreoPropietario'],
+          telefonoPropietario: data['TelefonoPropietario'],
+          nombre: data['Nombre'],
+          corregimientoVereda: data['CorregimientoVereda'],
+          departamento: data['Departamento'],
+          municipio: data['Municipio'],
+          latitud: data['Latitud'],
+          longitud: data['Longitud'],
+          msnm: data['MSNM'],
+          profundidadSB: data['ProfundidadSB'],
+          puntos: data['Puntos'],
+          temperatura: data['Temperatura'],
+          lotes: data['Lotes']
+        );
+        predios.add(predio);
+      });
+    } catch (e) {
+      print("Error al obtener la lista de clientes: $e");
+    }
+    return predios;
+  }
+
+  Future<bool> deletePredio(Predio inpredio) async {
+    try {
+      List<Predio> listClientes = await getPredio();
+      Predio? predioEncontrado;
+      listClientes.forEach((predio) {
+        if (predio.id == inpredio.id) {
+          predioEncontrado = predio;
+        }
+      });
+
+      if (predioEncontrado != null) {
+        await db.collection('Predios').doc(predioEncontrado?.uid).delete();
+        return true; // Indica que la eliminación fue exitosa
+      } else {
+        return false; // Indica que el cliente no fue encontrado
+      }
+    } catch (e) {
+      return false; // Indica que ocurrió un error durante la eliminación
+    }
+  }
 }

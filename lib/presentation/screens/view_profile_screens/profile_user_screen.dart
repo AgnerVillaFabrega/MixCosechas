@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
 import 'package:mixcosechas_app/presentation/screens/edit_screens/edit_user_screen.dart';
+import 'package:mixcosechas_app/presentation/screens/list_view_sceens/view_clientes_screen.dart';
 import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_predio_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/img/img_admin.dart';
 import 'package:mixcosechas_app/presentation/widgets/img/img_agricultor.dart';
@@ -13,6 +14,7 @@ import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/model/predios.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class UserProfileView extends StatelessWidget {
   final Cliente usuario;
@@ -71,13 +73,35 @@ class UserProfileView extends StatelessWidget {
                             builder: (context) => EditarClienteScreen(cliente:usuario ),
                           ),
                         );
-                      } else if (value == 'eliminar') {
-                        bool eliminacionExitosa = await _serviceFirebase.deletePeople(usuario);
-                        if (eliminacionExitosa) {
-                          QuickAlertDialog.showAlert(context, QuickAlertType.success, "Cliente eliminado correctamente");
-                        } else {
-                          QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el cliente");
-                        }
+                      }else if (value == 'eliminar') {
+                        
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.confirm,
+                          text: 'Seguro que quiere eliminar este usuario?',
+                          confirmBtnText: 'Si',
+                          cancelBtnText: 'No',
+                          onConfirmBtnTap: () async {
+                            bool eliminacionExitosa = await _serviceFirebase.deletePeople(usuario);
+                            if (eliminacionExitosa) {
+                              QuickAlert.show(    
+                                context: context,    
+                                type: QuickAlertType.success, 
+                                text: "Usuario eliminado correctamente",
+                                onConfirmBtnTap: () {
+                                  Navigator.of(context).pop();
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => cargarDatos()),
+                                      );
+                                },
+                              );
+                            } else {
+                              QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el cliente");
+                            }
+                          },
+                          confirmBtnColor: Colors.red,
+                        );                        
                       }
                     },
                     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -85,7 +109,7 @@ class UserProfileView extends StatelessWidget {
                         value: 'editar',
                         child: ListTile(
                           leading: Icon(Icons.edit),
-                          title: Text('Editar'),
+                          title: Text('Editar'), 
                         ),
                       ),
                       if(watch.cliente.rol == 'Admin')const PopupMenuItem<String>(

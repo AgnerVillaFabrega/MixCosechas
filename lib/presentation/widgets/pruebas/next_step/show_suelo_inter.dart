@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/pruebaSuelo.dart';
 import 'package:mixcosechas_app/presentation/screens/registry_screens/registration_analisis_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/graphics/pruebasueloGraphic.dart';
+import 'package:mixcosechas_app/presentation/widgets/messages/quickalert_msg.dart';
 import 'package:mixcosechas_app/services/firebase_service.dart';
 import 'package:mixcosechas_app/theme/limpiarCampos.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class ShowSuelo extends StatelessWidget {
   ShowSuelo(
@@ -172,38 +177,54 @@ class ShowSuelo extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 9),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           pruebasuelo.recomendaciones = _recomendacionesController.text;
                           pruebasuelo.presiembra = _presiembraController.text;
                           pruebasuelo.siembra = _siembraController.text;
                           pruebasuelo.mantenimiento = _mantenimientoController.text;
-                          _serviceFirebase.addPruebaSuelo(pruebasuelo);
-                         
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text('Registro exitoso'),
-                                content: const Text(
-                                    '¡Tu registro se ha completado con éxito!'),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.pushReplacement(
-                                        // Reemplaza la vista actual
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegistrationPruebaScreen()),
-                                      );
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          Future<bool> response = _serviceFirebase.addPruebaSuelo(pruebasuelo);
+
+                          if (await response) {
+                            QuickAlert.show(    
+                              context: context,    
+                              type: QuickAlertType.success, 
+                              text: '¡Tu registro se ha completado con éxito!',
+                              onConfirmBtnTap: () {
+                                Navigator.of(context).pop();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
+                                    );
+                              },
+                            );
+                          } else {
+                            QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al registrar la prueba");
+                          }
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return AlertDialog(
+                          //       title: const Text('Registro exitoso'),
+                          //       content: const Text(
+                          //           '¡Tu registro se ha completado con éxito!'),
+                          //       actions: [
+                          //         ElevatedButton(
+                          //           onPressed: () {
+                          //             Navigator.of(context).pop();
+                          //             Navigator.pushReplacement(
+                          //               // Reemplaza la vista actual
+                          //               context,
+                          //               MaterialPageRoute(
+                          //                   builder: (context) =>
+                          //                       const RegistrationPruebaScreen()),
+                          //             );
+                          //           },
+                          //           child: const Text('OK'),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // );
                           FormUtils.clearTextControllers([]);
                         },
                         style: ElevatedButton.styleFrom(
