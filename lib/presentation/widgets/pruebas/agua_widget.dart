@@ -431,6 +431,7 @@ class _AguaWidgetState extends State<AguaWidget> {
             lote: _loteController.text,
             fechaRecibido: _fechaRecibidoController.text,
             fechaTomaMuestra: _fechaTomaMuestraController.text,
+            fechaPrueba: '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
             interpretacion: '',
             recomendaciones: '',
             restricciones: '',

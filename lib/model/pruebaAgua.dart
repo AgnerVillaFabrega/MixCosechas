@@ -19,8 +19,7 @@ class PruebaAgua {
 
   final String idPrueba;
   final String tipoPrueba = 'Agua';
-  String? fechaPrueba =
-      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba;
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String cultivo;
@@ -213,7 +212,7 @@ class PruebaAgua {
       required this.ce,
       required this.salesDisueltas,
       required this.tipoAgua,
-      fechaPrueba}) {
+      required this.fechaPrueba}) {
     nh4Interpretacion = nh4Interpretar(nh4);
     no2Interpretacion = no2Interpretar(no2);
     no3Interpretacion = no3Interpretar(no3);

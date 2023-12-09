@@ -38,7 +38,7 @@ class CompuestosChart extends StatelessWidget {
               x: i,
               barRods: [
                 BarChartRodData(
-                  y: double.parse(valorgraficaCompuestos[i].toString()),
+                  y: validarValorGrafica(double.parse(valorgraficaCompuestos[i].toString())),
                   colors: [getBarColor(i)],
                   width: 20.0,
                 ),
@@ -47,6 +47,15 @@ class CompuestosChart extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double validarValorGrafica(double valor){
+    
+    if(valor > 10){
+      return 10;
+    }else{
+      return valor;
+    }
   }
 
   Color getBarColor(int index) {

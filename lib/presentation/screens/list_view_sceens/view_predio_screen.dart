@@ -23,7 +23,7 @@ Widget cargarDatosPredios() {
           if (snapshot.hasError) return const Text('Error');
           if (snapshot.data != null) {
             //* Se condiciona la lista de consulta dependiendo del rol
-            if (watch.cliente.rol == 'Admin') return ViewPredioScreen(predios:conversiondelista(snapshot.data!.docs));
+            if (watch.cliente.rol == 'Admin' || watch.cliente.rol == 'Analista') return ViewPredioScreen(predios:conversiondelista(snapshot.data!.docs));
             final predios = conversiondelista(snapshot.data!.docs);
               final clienteId = watch.cliente.id;
               final prediosFiltrados = predios.where((predio) => predio.idPropietario == clienteId).toList();
