@@ -191,10 +191,10 @@ class ShowSuelo extends StatelessWidget {
                               text: '¡Tu registro se ha completado con éxito!',
                               onConfirmBtnTap: () {
                                 Navigator.of(context).pop();
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
-                                    );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const RegistrationPruebaScreen()),
+                                );
                               },
                             );
                           } else {

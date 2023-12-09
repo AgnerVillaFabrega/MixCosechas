@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixcosechas_app/model/clientes.dart';
+import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
 import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_user_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_clientes.dart';
 import 'package:mixcosechas_app/presentation/widgets/indicador_circle_progress.dart';
@@ -73,6 +74,16 @@ class _ViewClientScreenState extends State<ViewClientScreen> {
           //* Ejemplo: "if (user.userType == UserType.Cliente) IconAddClientes(),"
           IconAddClientes(),
         ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
