@@ -323,7 +323,7 @@ class PredioProfileView extends StatelessWidget {
                                       ],
                                     ),
                                     subtitle: Text(
-                                        prueba.fechaPrueba.toString()),
+                                        prueba.tipoPrueba.toString()),
                                   ),
                                 ),
                               ),

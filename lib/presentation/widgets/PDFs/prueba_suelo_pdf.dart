@@ -435,7 +435,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba13.cells[3].value = pruebaSuelo.znInterpretacion;
   rowDatosPrueba13.cells[4].value = 'Ca+Mg+K/Al';
   rowDatosPrueba13.cells[5].value = 'Und';
-  rowDatosPrueba13.cells[6].value = pruebaSuelo.camgkal.toString();
+  rowDatosPrueba13.cells[6].value = pruebaSuelo.camgkal.toStringAsFixed(2);
   rowDatosPrueba13.cells[7].value = pruebaSuelo.camgkalInterpretacion;
 
   PdfGridRow rowDatosPrueba14 = gridDatosPrueba.rows.add();
@@ -443,7 +443,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba14.cells[0].value = 'Cobre Cu';
   rowDatosPrueba14.cells[1].value = 'ppm';
-  rowDatosPrueba14.cells[2].value = pruebaSuelo.cu.toString();
+  rowDatosPrueba14.cells[2].value = pruebaSuelo.cu.toStringAsFixed(2);
   rowDatosPrueba14.cells[3].value = pruebaSuelo.cuInterpretacion;
   rowDatosPrueba14.cells[4].value = 'BASES INTERCAMBIABLES';
   rowDatosPrueba14.cells[5].value = ' ';
@@ -455,11 +455,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba15.cells[0].value = 'Cloruro Cl';
   rowDatosPrueba15.cells[1].value = 'ppm';
-  rowDatosPrueba15.cells[2].value = pruebaSuelo.cl.toString();
+  rowDatosPrueba15.cells[2].value = pruebaSuelo.cl.toStringAsFixed(2);
   rowDatosPrueba15.cells[3].value = pruebaSuelo.clInterpretacion;
   rowDatosPrueba15.cells[4].value = 'Bases Totales';
   rowDatosPrueba15.cells[5].value = 'Und';
-  rowDatosPrueba15.cells[6].value = pruebaSuelo.basesTotales.toString();
+  rowDatosPrueba15.cells[6].value = pruebaSuelo.basesTotales.toStringAsFixed(2);
   rowDatosPrueba15.cells[7].value = pruebaSuelo.basesTotalesInterpretacion;
 
   PdfGridRow rowDatosPrueba16 = gridDatosPrueba.rows.add();
@@ -467,11 +467,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba16.cells[0].value = 'Aluminio Al';
   rowDatosPrueba16.cells[1].value = 'T Color';
-  rowDatosPrueba16.cells[2].value = pruebaSuelo.al.toString();
+  rowDatosPrueba16.cells[2].value = pruebaSuelo.al.toStringAsFixed(2);
   rowDatosPrueba16.cells[3].value = pruebaSuelo.alInterpretacion;
   rowDatosPrueba16.cells[4].value = 'Saturacion Na';
   rowDatosPrueba16.cells[5].value = '%';
-  rowDatosPrueba16.cells[6].value = pruebaSuelo.naSaturacion.toString();
+  rowDatosPrueba16.cells[6].value = pruebaSuelo.naSaturacion.toStringAsFixed(2);
   rowDatosPrueba16.cells[7].value = pruebaSuelo.naSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba17 = gridDatosPrueba.rows.add();
@@ -483,7 +483,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba17.cells[3].value = ' ';
   rowDatosPrueba17.cells[4].value = 'Saturación de Al';
   rowDatosPrueba17.cells[5].value = '%';
-  rowDatosPrueba17.cells[6].value = pruebaSuelo.alSaturacion.toString();
+  rowDatosPrueba17.cells[6].value = pruebaSuelo.alSaturacion.toStringAsFixed(2);
   rowDatosPrueba17.cells[7].value = pruebaSuelo.alSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba18 = gridDatosPrueba.rows.add();
@@ -491,11 +491,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba18.cells[0].value = 'Arcilla';
   rowDatosPrueba18.cells[1].value = '%';
-  rowDatosPrueba18.cells[2].value = pruebaSuelo.arcilla.toString();
+  rowDatosPrueba18.cells[2].value = pruebaSuelo.arcilla.toStringAsFixed(2);
   rowDatosPrueba18.cells[3].value = 'NA';
   rowDatosPrueba18.cells[4].value = 'Saturacion de K';
   rowDatosPrueba18.cells[5].value = '%';
-  rowDatosPrueba18.cells[6].value = pruebaSuelo.kSaturacion.toString();
+  rowDatosPrueba18.cells[6].value = pruebaSuelo.kSaturacion.toStringAsFixed(2);
   rowDatosPrueba18.cells[7].value = pruebaSuelo.kSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba19 = gridDatosPrueba.rows.add();
@@ -503,11 +503,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba19.cells[0].value = 'Limo';
   rowDatosPrueba19.cells[1].value = '%';
-  rowDatosPrueba19.cells[2].value = pruebaSuelo.limo.toString();
+  rowDatosPrueba19.cells[2].value = pruebaSuelo.limo.toStringAsFixed(2);
   rowDatosPrueba19.cells[3].value = 'NA';
   rowDatosPrueba19.cells[4].value = 'Saturación de Ca';
   rowDatosPrueba19.cells[5].value = '%';
-  rowDatosPrueba19.cells[6].value = pruebaSuelo.caSaturacion.toString();
+  rowDatosPrueba19.cells[6].value = pruebaSuelo.caSaturacion.toStringAsFixed(2);
   rowDatosPrueba19.cells[7].value = pruebaSuelo.caSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba20 = gridDatosPrueba.rows.add();
@@ -515,11 +515,11 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
 
   rowDatosPrueba20.cells[1].value = '%';
   rowDatosPrueba20.cells[0].value = 'Arena';
-  rowDatosPrueba20.cells[2].value = pruebaSuelo.arena.toString();
+  rowDatosPrueba20.cells[2].value = pruebaSuelo.arena.toStringAsFixed(2);
   rowDatosPrueba20.cells[3].value = 'NA';
   rowDatosPrueba20.cells[4].value = 'Saturación de Mg';
   rowDatosPrueba20.cells[5].value = '%';
-  rowDatosPrueba20.cells[6].value = pruebaSuelo.mgSaturacion.toString();
+  rowDatosPrueba20.cells[6].value = pruebaSuelo.mgSaturacion.toStringAsFixed(2);
   rowDatosPrueba20.cells[7].value = pruebaSuelo.mgSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba21 = gridDatosPrueba.rows.add();
@@ -531,7 +531,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   rowDatosPrueba21.cells[3].value = pruebaSuelo.textura;
   rowDatosPrueba21.cells[4].value = 'Saturación BT';
   rowDatosPrueba21.cells[5].value = '%';
-  rowDatosPrueba21.cells[6].value = pruebaSuelo.basesTotalesSaturacion.toString();
+  rowDatosPrueba21.cells[6].value = pruebaSuelo.basesTotalesSaturacion.toStringAsFixed(2);
   rowDatosPrueba21.cells[7].value = pruebaSuelo.basesTotalesSaturacionInterpretacion;
 
   PdfGridRow rowDatosPrueba22 = gridDatosPrueba.rows.add();

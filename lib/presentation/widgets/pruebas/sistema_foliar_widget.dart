@@ -681,6 +681,7 @@ class _SistemaFoliarWidgetState extends State<SistemaFoliarWidget> {
           lote: _loteController.text,
           fechaRecibido: _fechaRecibidoController.text,
           fechaTomaMuestra: _fechaTomaMuestraController.text,
+          fechaPrueba: '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
           ca: _caController.text,
           mg: _mgController.text,
           na: _naController.text,

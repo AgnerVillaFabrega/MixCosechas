@@ -19,8 +19,7 @@ class PruebaSuelo {
 
   final String idPrueba;
   final String tipoPrueba = 'Suelo';
-  String? fechaPrueba =
-      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba;
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String edad;
@@ -329,7 +328,7 @@ class PruebaSuelo {
       required this.limo,
       required this.arena,
       required this.humus,
-      this.fechaPrueba}) {
+      required this.fechaPrueba}) {
     camg = (ca / mg);
     camgk = (ca + mg / k);
     cak = ca / k;

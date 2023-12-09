@@ -19,8 +19,7 @@ class PruebaSistemaFoliar {
 
   final String idPrueba;
   final String tipoPrueba = 'Sistema foliar';
-  String? fechaPrueba =
-      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
+  String? fechaPrueba;
   final String fechaTomaMuestra;
   final String fechaRecibido;
   final String lote;
@@ -91,7 +90,7 @@ class PruebaSistemaFoliar {
       required this.zn,
       required this.mn,
       required this.b,
-      fechaPrueba});
+      required this.fechaPrueba});
 
   factory PruebaSistemaFoliar.fromMap(Map<String, dynamic> map) {
     return PruebaSistemaFoliar(
