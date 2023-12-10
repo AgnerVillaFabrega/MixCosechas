@@ -547,6 +547,60 @@ Future<void> createPruebaAguaPdf(PruebaAgua pruebaAgua) async {
   gridTituloRestriccionesRecomendaciones.draw(page: page, bounds: const Rect.fromLTWH(0, 510, 0, 0));
 
 
+//=========================================================================================================================================
+
+PdfGrid gridRestriccionesRecomendaciones = PdfGrid();
+
+  gridRestriccionesRecomendaciones.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 5, bottom: 0),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridRestriccionesRecomendaciones.columns.add(count: 2);
+
+  PdfGridRow rowRestriccionesRecomendaciones = gridRestriccionesRecomendaciones.rows.add();
+  rowRestriccionesRecomendaciones.cells[0].value ='Recomendaciones';
+  rowRestriccionesRecomendaciones.cells[1].value =pruebaAgua.recomendaciones.toString();
+
+  rowRestriccionesRecomendaciones = gridRestriccionesRecomendaciones.rows.add();
+  rowRestriccionesRecomendaciones.cells[0].value ='Restricciones';
+  rowRestriccionesRecomendaciones.cells[1].value =pruebaAgua.restricciones.toString();
+
+  // Verificar si el valor de la recomendación es nulo o vacío
+  if (pruebaAgua.recomendaciones == null || pruebaAgua.recomendaciones.isEmpty) {
+    gridRestriccionesRecomendaciones.rows[0].cells[1].value = 'Pendiente por recomendación';
+  }
+
+  if (pruebaAgua.restricciones == null || pruebaAgua.restricciones.isEmpty) {
+    gridRestriccionesRecomendaciones.rows[1].cells[1].value = 'Pendiente por restricción';
+  }
+
+
+
+  for (int rowIndex = 0;rowIndex < 2;rowIndex++) {
+    PdfGridRow row = gridRestriccionesRecomendaciones.rows[rowIndex];
+
+    for (int cellIndex = 0; cellIndex < 2; cellIndex++) {
+      PdfGridCell cell = row.cells[cellIndex];
+      
+      gridRestriccionesRecomendaciones.rows[rowIndex].height = 90;
+
+      if (cellIndex == 0) {
+        cell.style.cellPadding = PdfPaddings(left: 5, right: 2, top: 40, bottom: 0);
+      }
+
+      if (cellIndex == 0) {
+        gridRestriccionesRecomendaciones.columns[cellIndex].width = 110;
+        cell.stringFormat = stringFormat;
+      }
+
+    }
+  }
+  gridRestriccionesRecomendaciones.draw(page: page, bounds: const Rect.fromLTWH(0, 540, 0, 0));
+
+
+
+//=========================================================================================================================================
+
   List<int> bytes = await document.save();
   document.dispose();
   await FileSaveHelper.saveAndLaunchFile(bytes, 'TablaPDFSyncfusion.pdf');

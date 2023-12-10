@@ -38,12 +38,12 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   gridEncabezado.columns.add(count: 2);
 
   PdfGridRow rowEncabezado = gridEncabezado.rows.add();
-  rowEncabezado.cells[0].value ='                PROCESO: Análisis de Suelo Agricola';
-  rowEncabezado.cells[1].value ='                CODIGO: FIRAS-01';
+  rowEncabezado.cells[0].value ='                Proceso: Análisis de Suelo Agricola';
+  rowEncabezado.cells[1].value ='                Código: FIRAS-01';
 
   rowEncabezado = gridEncabezado.rows.add();
-  rowEncabezado.cells[0].value ='       \t\t FECHA DE ACTUALIZACIÓN: 20/05/2023';
-  rowEncabezado.cells[1].value ='                VERSIÓN: 002';
+  rowEncabezado.cells[0].value ='       \t\t Fecha de actualización: 20/05/2023';
+  rowEncabezado.cells[1].value ='                Versión: 002';
 
   for (int cellIndex = 0; cellIndex < 2; cellIndex++) {
     
@@ -200,9 +200,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
   row.cells[4].value = 'Temperatura:';
   row.cells[5].value = pruebaSuelo.temperatura;
 
-  for (int rowIndex = 0;
-      rowIndex < gridInformacionGeneral.rows.count;
-      rowIndex++) {
+  for (int rowIndex = 0;rowIndex < gridInformacionGeneral.rows.count;rowIndex++) {
     PdfGridRow row = gridInformacionGeneral.rows[rowIndex];
     for (int cellIndex = 0; cellIndex < row.cells.count; cellIndex++) {
       PdfGridCell cell = row.cells[cellIndex];
@@ -210,11 +208,7 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
         dashStyle: PdfDashStyle.custom,
         PdfColor(255, 255, 255), // Cambia el color a blanco
       );
-      if (cellIndex == 0 ||
-          cellIndex == 4 ||
-          ((cellIndex == 2 && rowIndex != 0) &&
-              (cellIndex == 2 && rowIndex != 1) &&
-              (cellIndex == 2 && rowIndex != 2))) {
+      if (cellIndex == 0 ||cellIndex == 4 ||((cellIndex == 2 && rowIndex != 0) &&(cellIndex == 2 && rowIndex != 1) &&(cellIndex == 2 && rowIndex != 2))) {
         cell.style.backgroundBrush = PdfSolidBrush(PdfColor(196, 217, 176));
         cell.style.font = PdfStandardFont(PdfFontFamily.timesRoman, 6,
             style: PdfFontStyle.bold);
@@ -688,9 +682,129 @@ Future<void> createPruebaSueloPdf(PruebaSuelo pruebaSuelo) async {
       PdfBitmap(await _readImageData('Test Colorimetro.png')),
       const Rect.fromLTWH(80, 660, 300, 100));
 
+  final page2 = document.pages.add();
+
+  PdfGrid gridTituloRecomendacion = PdfGrid();
+
+  gridTituloRecomendacion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 11));
+
+  gridTituloRecomendacion.columns.add(count: 1);
+
+  PdfGridRow rowTituloRecomendacion = gridTituloRecomendacion.rows.add();
+  rowTituloRecomendacion.cells[0].value ='RECOMENDACIONES DE NUTRICIÓN DEL ANÁLISIS DE SUELOS';
+
+  rowTituloRecomendacion.style.backgroundBrush = PdfSolidBrush(PdfColor(55, 86, 58));
+  rowTituloRecomendacion.cells[0].style= PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(255, 255, 255)));
+  PdfStringFormat stringFormat = PdfStringFormat();
+  stringFormat.alignment = PdfTextAlignment.center;
+
+  rowTituloRecomendacion.cells[0].stringFormat = stringFormat;
+
+  gridTituloRecomendacion.draw(page: page2, bounds: const Rect.fromLTWH(0, 0, 0, 0));
+
+  PdfGrid gridRecomendacion = PdfGrid();
+
+  gridRecomendacion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridRecomendacion.columns.add(count: 1);
+
+  PdfGridRow rowRecomendacion = gridRecomendacion.rows.add();
+  rowRecomendacion.cells[0].value =pruebaSuelo.recomendaciones.toString();
+  gridRecomendacion.rows[0].height = 80;
+
+  if (pruebaSuelo.recomendaciones == null || pruebaSuelo.recomendaciones.isEmpty) {
+   rowRecomendacion.cells[0].value  = 'Pendiente por recomendación';
+  }
+
+  gridRecomendacion.draw(page: page2, bounds: const Rect.fromLTWH(0, 30, 0, 0));
+
+
+  PdfGrid gridTituloPlanDeNutricion = PdfGrid();
+
+  gridTituloPlanDeNutricion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 2, bottom: 2),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 11));
+
+  gridTituloPlanDeNutricion.columns.add(count: 1);
+
+  PdfGridRow rowTituloPlanDeNutricion = gridTituloPlanDeNutricion.rows.add();
+  rowTituloPlanDeNutricion.cells[0].value ='Plan de Nutrición - Siembra - Mantenimiento en gr/pl (gramos por planta) ';
+  rowTituloPlanDeNutricion.cells[0].style= PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(10, 191, 4)));
+  rowTituloPlanDeNutricion.cells[0].stringFormat = stringFormat;
+
+  gridTituloPlanDeNutricion.draw(page: page2, bounds: const Rect.fromLTWH(0, 120, 0, 0));
+
+
+  PdfGrid gridPlanDeNutricion = PdfGrid();
+
+  gridPlanDeNutricion.style = PdfGridStyle(
+      cellPadding: PdfPaddings(left: 5, right: 2, top: 5, bottom: 0),
+      font: PdfStandardFont(PdfFontFamily.timesRoman, 9));
+
+  gridPlanDeNutricion.columns.add(count: 2);
+
+  PdfGridRow rowPlanDeNutricion = gridPlanDeNutricion.rows.add();
+  rowPlanDeNutricion.cells[0].value ='ETAPA';
+  rowPlanDeNutricion.cells[1].value ='Observaciones';
+
+  rowPlanDeNutricion = gridPlanDeNutricion.rows.add();
+  rowPlanDeNutricion.cells[0].value ='Presiembra';
+  rowPlanDeNutricion.cells[1].value =pruebaSuelo.presiembra.toString();
+
+  rowPlanDeNutricion = gridPlanDeNutricion.rows.add();
+  rowPlanDeNutricion.cells[0].value ='Siembra';
+  rowPlanDeNutricion.cells[1].value =pruebaSuelo.siembra.toString();
+
+  rowPlanDeNutricion = gridPlanDeNutricion.rows.add();
+  rowPlanDeNutricion.cells[0].value ='Mantenimiento';
+  rowPlanDeNutricion.cells[1].value =pruebaSuelo.mantenimiento.toString();
+
+  if (pruebaSuelo.presiembra == null || pruebaSuelo.presiembra.isEmpty) {
+    gridPlanDeNutricion.rows[1].cells[1].value = 'Pendiente por observación';
+  }
+
+  if (pruebaSuelo.siembra == null || pruebaSuelo.siembra.isEmpty) {
+    gridPlanDeNutricion.rows[2].cells[1].value = 'Pendiente por observación';
+  }
+  if (pruebaSuelo.mantenimiento == null || pruebaSuelo.mantenimiento.isEmpty) {
+    gridPlanDeNutricion.rows[3].cells[1].value = 'Pendiente por observación';
+  }
+
+  for (int rowIndex = 0;rowIndex < 4;rowIndex++) {
+    PdfGridRow row = gridPlanDeNutricion.rows[rowIndex];
+
+    for (int cellIndex = 0; cellIndex < 2; cellIndex++) {
+      PdfGridCell cell = row.cells[cellIndex];
+      
+      if (rowIndex == 0) {
+        cell.style = PdfGridCellStyle(textBrush: PdfSolidBrush(PdfColor(255, 255, 255)));
+        cell.style.backgroundBrush = PdfSolidBrush(PdfColor(55, 86, 58));
+        cell.stringFormat = stringFormat;
+      }
+
+      if (rowIndex != 0) {
+        gridPlanDeNutricion.rows[rowIndex].height = 90;
+      }
+
+      if (rowIndex != 0 && cellIndex == 0) {
+        cell.style.cellPadding = PdfPaddings(left: 5, right: 2, top: 40, bottom: 0);
+      }
+
+      if (cellIndex == 0) {
+        gridPlanDeNutricion.columns[cellIndex].width = 110;
+        cell.stringFormat = stringFormat;
+      }
+    }
+  }
+  gridPlanDeNutricion.draw(page: page2, bounds: const Rect.fromLTWH(0, 150, 0, 0));
+
   List<int> bytes = await document.save();
   document.dispose();
-  await FileSaveHelper.saveAndLaunchFile(bytes, 'TablaPDFSyncfusion.pdf');
+  await FileSaveHelper.saveAndLaunchFile(bytes, 'S${pruebaSuelo.idPrueba}.pdf');
 }
 
 class FileSaveHelper {
