@@ -106,6 +106,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (value ==null || value.isEmpty) {
                               return "Campo requerido";
                             }
+                            if (value.length >10 || value.length < 8) {
+                              return "Identificacion no valida";
+                            }
                             return null;
                           }
                         ),
@@ -120,6 +123,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           validator: (String? value){
                             if (value ==null || value.isEmpty) {
                               return "Campo requerido";
+                            }
+                            if (value.length != 10 ) {
+                              return "Numero telefonico no valida";
                             }
                             return null;
                           }
@@ -151,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   setState(() {
                                     _rolController.text = newValue!;
                                   });
-                                },
+                              },
                           decoration: const InputDecoration(
                             labelText: 'Rol',
                             labelStyle: TextStyle(
@@ -167,7 +173,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ...['Analista', 'Agricultor', 'Admin'].map((role) {
                               return DropdownMenuItem<String>(
-                                  value: role, child: Text(role));
+                                value: role,
+                                child: Text(role),
+                              );
                             }).toList(),
                           ],
                           validator: (value) {
@@ -181,8 +189,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               FocusScope.of(context).unfocus();
                             }
                           },
-                          isExpanded: true, // Para asegurarse de que el DropdownButtonFormField tiene suficiente espacio para mostrar todos los elementos
+                          isExpanded: true,
                           icon: widget.isFirstTime ? null : const Icon(Icons.arrow_drop_down),
+                          // Desactivar interactividad cuando isFirstTime es true
+                          disabledHint: widget.isFirstTime ? const Text('Agricultor') : null,
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
@@ -261,6 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
             email: _correoController.text,
             password: _passwordController.text,
           );
+          if(widget.isFirstTime) _rolController.text = "Agricultor";
           if (userCredential.user != null) {
             Cliente cliente = Cliente(id: _identificacionController.text, 
               nombre: _nombreController.text, 

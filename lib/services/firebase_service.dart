@@ -660,30 +660,44 @@ class ServiceFirebase {
     }
   }
   
-  Future<bool> deletePeople(Cliente incliente) async {
-    try {
-      List<Cliente> listClientes = await getPeople();
-      Cliente? clienteEncontrado;
-      listClientes.forEach((cliente) {
-        if (cliente.id == incliente.id) {
-          clienteEncontrado = cliente;
-        }
-      });
+Future<bool> deletePeople(Cliente incliente) async {
+  try {
+    List<Cliente> listClientes = await getPeople();
+    Cliente? clienteEncontrado;
 
-      if (clienteEncontrado != null) {
-        await db.collection('Usuarios').doc(clienteEncontrado?.uid).delete();
+    // Buscar al cliente en la lista
+    for (var cliente in listClientes) {
+      if (cliente.id == incliente.id) {
+        clienteEncontrado = cliente;
+        break;
+      }
+    }
+
+    if (clienteEncontrado != null) {
+      // Obtener referencia al usuario que se desea eliminar
+      User? userToDelete = FirebaseAuth.instance.currentUser;
+
+      if (userToDelete != null) {
+        // Eliminar el usuario del sistema de autenticación
+        await userToDelete.delete();
+
+        // Eliminar el documento correspondiente en Firestore
+        await db.collection('Usuarios').doc(clienteEncontrado.uid).delete();
+
         return true; // Indica que la eliminación fue exitosa
       } else {
-        print("Cliente no encontrado");
-        return false; // Indica que el cliente no fue encontrado
+        print("Usuario no autenticado encontrado");
+        return false; // Indica que el usuario no está autenticado
       }
-    } catch (e) {
-      print("Error al eliminar el cliente: $e");
-      return false; // Indica que ocurrió un error durante la eliminación
+    } else {
+      print("Cliente no encontrado");
+      return false; // Indica que el cliente no fue encontrado
     }
+  } catch (e) {
+    print("Error al eliminar el cliente: $e");
+    return false; // Indica que ocurrió un error durante la eliminación
   }
-
-
+}
 
 
 

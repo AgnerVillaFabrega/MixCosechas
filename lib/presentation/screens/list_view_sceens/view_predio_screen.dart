@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mixcosechas_app/model/predios.dart';
 import 'package:mixcosechas_app/presentation/provider/ClienteProvider.dart';
+import 'package:mixcosechas_app/presentation/screens/home_sceen.dart';
 import 'package:mixcosechas_app/presentation/screens/view_profile_screens/profile_predio_screen.dart';
 import 'package:mixcosechas_app/presentation/widgets/icons/icon_add_predio.dart';
 import 'package:provider/provider.dart';
@@ -104,6 +105,16 @@ class _PredioPageState extends State<ViewPredioScreen> {
           //* Ejemplo: "if (user.userType == UserType.Cliente) IconAddPredio(),"
           IconAddPredio(),
         ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

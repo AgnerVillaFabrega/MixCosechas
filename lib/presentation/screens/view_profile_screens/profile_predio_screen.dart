@@ -37,9 +37,13 @@ class PredioProfileView extends StatelessWidget {
                 QuickAlert.show(
                   context: context,
                   type: QuickAlertType.confirm,
-                  text: 'Seguro que quiere eliminar este usuario?',
+                  title: "Eilimar predio",
+                  text: 'Seguro que quiere eliminar este predio?',
                   confirmBtnText: 'Si',
                   cancelBtnText: 'No',
+                  onCancelBtnTap: () {
+                    Navigator.of(context).pop();
+                  },
                   onConfirmBtnTap: () async {
                     bool eliminacionExitosa =  await _serviceFirebase.deletePredio(predio);
                     if (eliminacionExitosa) {
@@ -49,15 +53,15 @@ class PredioProfileView extends StatelessWidget {
                         text: "Predio eliminado correctamente",
                         onConfirmBtnTap: () {
                           Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => cargarDatosPredios()),
-                              );
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => cargarDatosPredios()),
+                            (route) => false,
+                          );
                         },
                       );
                     } else {
-                      QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el cliente");
+                      QuickAlertDialog.showAlert(context, QuickAlertType.error, "Error al eliminar el predio");
                     }
                   },
                   confirmBtnColor: Colors.red,

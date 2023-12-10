@@ -74,26 +74,30 @@ class UserProfileView extends StatelessWidget {
                           ),
                         );
                       }else if (value == 'eliminar') {
-                        
                         QuickAlert.show(
                           context: context,
                           type: QuickAlertType.confirm,
+                          title: "Eilimar usuario",
                           text: 'Seguro que quiere eliminar este usuario?',
                           confirmBtnText: 'Si',
                           cancelBtnText: 'No',
+                          onCancelBtnTap: () {
+                            Navigator.of(context).pop();
+                          },
                           onConfirmBtnTap: () async {
                             bool eliminacionExitosa = await _serviceFirebase.deletePeople(usuario);
                             if (eliminacionExitosa) {
-                              QuickAlert.show(    
-                                context: context,    
-                                type: QuickAlertType.success, 
+                              QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.success,
                                 text: "Usuario eliminado correctamente",
                                 onConfirmBtnTap: () {
                                   Navigator.of(context).pop();
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => cargarDatos()),
-                                      );
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => cargarDatos()),
+                                    (route) => false,
+                                  );
                                 },
                               );
                             } else {
@@ -101,7 +105,7 @@ class UserProfileView extends StatelessWidget {
                             }
                           },
                           confirmBtnColor: Colors.red,
-                        );                        
+                        );
                       }
                     },
                     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
